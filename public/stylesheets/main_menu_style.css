@@ -1,0 +1,50 @@
+body{
+	background:#2C3E50;
+}
+
+.name-user{
+	background:black;
+	color:white;
+	font-size: 1em;
+	padding-left: 11px;
+}
+
+.countdown-time{
+	/*height: 450px;*/
+	background:white;
+	font-size: 7em;
+	text-align: center;
+	font-color: white;
+}
+
+.two-button-left{
+	width:48.5%;
+	height:400px;
+	margin:1%;
+	margin-right:0.5%;
+	margin-bottom:0px;
+	display:inline-block;
+}
+
+.two-button-right{
+	width:48.5%;
+	height:400px;
+	margin:1%;
+	margin-left:0.5%;
+	margin-bottom:0px;
+	display:inline-block;
+}
+
+.box{
+	margin:0px;
+	padding: 0px;
+	width: 100%;
+	display:table;
+}
+
+.one-button{
+	height:400px;
+	width:98%;
+	margin:1%;
+	margin-bottom:0px;
+}

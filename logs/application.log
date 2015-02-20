@@ -1,0 +1,21 @@
+2015-02-26 17:03:01,650 - [INFO] - from play in pool-4-thread-5 
+Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+2015-02-26 17:03:31,921 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:postgresql://ec2-23-21-219-209.compute-1.amazonaws.com:5432/d4q2652hkil24d?user=kzcfjfthukwifz&password=AFwbl3H3an_tZ8bCJkF2n3oKef&ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory
+
+2015-02-26 17:03:33,417 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2015-02-26 17:05:35,671 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:postgresql://ec2-23-21-219-209.compute-1.amazonaws.com:5432/d4q2652hkil24d?user=kzcfjfthukwifz&password=AFwbl3H3an_tZ8bCJkF2n3oKef&ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory
+
+2015-02-26 17:05:36,615 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2015-02-26 17:05:59,037 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:postgresql://ec2-23-21-219-209.compute-1.amazonaws.com:5432/d4q2652hkil24d?user=kzcfjfthukwifz&password=AFwbl3H3an_tZ8bCJkF2n3oKef&ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory
+
+2015-02-26 17:05:59,887 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+

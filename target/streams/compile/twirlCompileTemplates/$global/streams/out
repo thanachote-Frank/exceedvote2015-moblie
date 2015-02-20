@@ -1,0 +1,4 @@
+[error] /Users/Frank/Documents/softspec/exceedvote2015-moblie/app/views/login.scala.html:26: Expected ')' but found 'EOF'
+[error] }
+[error]  ^
+[error] (compile:twirlCompileTemplates) Twirl compilation failed

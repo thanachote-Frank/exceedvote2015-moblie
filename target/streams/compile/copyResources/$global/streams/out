@@ -1,0 +1,6 @@
+[debug] Copy resource mappings: 
+[debug] 	(/Users/Frank/Documents/softspec/exceedvote2015-moblie/conf/application.conf,/Users/Frank/Documents/softspec/exceedvote2015-moblie/target/scala-2.11/classes/application.conf)
+[debug] 	(/Users/Frank/Documents/softspec/exceedvote2015-moblie/conf/evolutions,/Users/Frank/Documents/softspec/exceedvote2015-moblie/target/scala-2.11/classes/evolutions)
+[debug] 	(/Users/Frank/Documents/softspec/exceedvote2015-moblie/conf/routes,/Users/Frank/Documents/softspec/exceedvote2015-moblie/target/scala-2.11/classes/routes)
+[debug] 	(/Users/Frank/Documents/softspec/exceedvote2015-moblie/conf/evolutions/default,/Users/Frank/Documents/softspec/exceedvote2015-moblie/target/scala-2.11/classes/evolutions/default)
+[debug] 	(/Users/Frank/Documents/softspec/exceedvote2015-moblie/conf/evolutions/default/1.sql,/Users/Frank/Documents/softspec/exceedvote2015-moblie/target/scala-2.11/classes/evolutions/default/1.sql)
