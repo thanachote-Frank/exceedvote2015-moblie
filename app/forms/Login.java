@@ -7,12 +7,12 @@ import play.mvc.*;
  * Created by Frank on 2/26/15 AD.
  */
 public class Login {
-    public String username;
+    public String email;
     public String password;
 
     public String validate() {
-        if (Account.authenticate(username, password) == null) {
-            return "Invalid user or password";
+        if (Account.authenticate(email, password) == null) {
+            return "Invalid email or password";
         }
         return null;
     }

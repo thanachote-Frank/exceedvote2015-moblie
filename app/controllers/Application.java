@@ -38,7 +38,7 @@ public class Application extends Controller {
             return badRequest(login.render(loginForm));
         } else {
             session().clear();
-            session("username", loginForm.get().username);
+            session("email", loginForm.get().email);
             return redirect(
                     routes.Application.mainMenu()
             );

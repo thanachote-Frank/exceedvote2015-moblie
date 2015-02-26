@@ -1,11 +1,11 @@
 @(form: Form[forms.Login])
 
 @main("Welcome to Exceed Vote")(css) {
-    <div style="text-align : center ; background : #ffffff ; padding-top : 30px ; padding-bottom : 30px ; margin-top : 40px ;">
-        <h1 style="text-align : center ; margin-bottom : 50px ;">Exceed camp 12</h1>
 
+        <h1 style="text-align : center ; margin-bottom : 50px ; margin-top:70px; color: #ffffff;">Exceed camp 12</h1>
+    <div style="text-align : center">
+    <div style="background : #ffffff ; padding:20px; padding-bottom: 30px; display: inline-block; border-radius:5px; ">
 
-        <div style="text-align : center">
             @if(form.hasGlobalErrors) {
                 <p class="error">
                 @form.globalError.message
@@ -15,18 +15,20 @@
                 <div style="text-align : left ; display : inline-block ;">
                     Email
                     <br>
-                    <input type="text" name="username" style="margin-bottom : 10px ; width : 200px ;">
+                    <input class="form-control" type="email" name="email" style="margin-bottom : 10px ; width : 200px ;">
                     <br>
                     Password<br>
-                    <input type="password" name="password" style="width : 200px ;">
+                    <input class="form-control" type="password" name="password" style="width : 200px ;">
                 </div>
+            </div>
                 <br>
+
                 <button class="btn btn-default" type="submit" style="margin-top : 20px ; width : 130px ; background : #3498DB ;
                 color : white ;
                 ">Login</button>
             }
         </div>
-    </div>
+
 }
 
 @css = {
