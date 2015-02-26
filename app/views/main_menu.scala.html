@@ -2,33 +2,60 @@
 
 @main("Main menu")(css) {
 <div class="name-user">
-    b56105465693&#64ku.ac.th
+    @message
 </div>
 
 <div class="countdown-time">
-    00:15
+    <div id="clock"></div>
+    <script>
+    $('#clock').countdown("2015/03/10 00:00:00", function(event) {
+    var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+    $(this).html(event.strftime(totalHours + ' hr %M min %S sec'));
+    });
+    </script>
 </div>
 <div class="box">
     <div class="two-button-left" style="background:#2ECC71;height:150px;">
-
+        <div style="padding: 20px;text-align: center;height:150px;">
+        <img type="image/png" src="@routes.Assets.at("images/QR.png")" style="height: 90px;margin-bottom: 10px;">
+            <p>QR</p>
+        </div>
     </div>
     <div class="two-button-right" style="background:#3498DB;height:150px;">
+        <div style="padding: 20px; text-align: center;">
+        <img type="image/png" src="@routes.Assets.at("images/PIN.png")" style="height: 90px;margin-bottom: 10px;">
+            <p>PIN</p>
+            </div>
     </div>
 </div>
 
 <div class="one-button" style="background:#F1C40F;height:150px;">
-
+    <div style="padding: 20px; text-align: center;">
+    <img type="image/png" src="@routes.Assets.at("images/group.png")" style="height: 90px;margin-bottom: 10px;">
+    <p>Group list</p>
 </div>
+    </div>
+
 
 <div class="box" style="margin-bottom:20px">
     <div class="two-button-left" style="background:#832d51;height:150px;width:56.5%;">
+        <div style="padding: 20px; text-align: center;">
+            <img type="image/png" src="@routes.Assets.at("images/achievement.png")" style="height: 90px;margin-bottom: 10px;">
+            <p>Achievement</p>
+        </div>
+    </div>
 
-    </div>
     <div class="two-button-right" style="background:#C0392B;height:150px;width:40.5%;">
+        <div style="padding: 20px; text-align: center;">
+            <img type="image/png" src="@routes.Assets.at("images/logout.png")" style="height: 90px;margin-bottom: 10px;">
+            <p>Log out</p>
+        </div>
     </div>
+
 </div>
 }
 
 @css = {
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main_menu_style.css")">
+    <script src="@routes.Assets.at("javascripts/jquery.countdown.min.js")" type="text/javascript"></script>
 }

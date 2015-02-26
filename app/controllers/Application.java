@@ -13,7 +13,7 @@ public class Application extends Controller {
     }
 
     public static Result mainMenu() {
-        return ok(main_menu.render("Main menu"));
+        return ok(main_menu.render(session().get("email")));
     }
 
     public static Result login() {

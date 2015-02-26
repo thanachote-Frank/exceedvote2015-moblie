@@ -12,7 +12,7 @@ body{
 .countdown-time{
 	/*height: 450px;*/
 	background:white;
-	font-size: 7em;
+	font-size: 2em;
 	text-align: center;
 	font-color: white;
 }
@@ -47,4 +47,8 @@ body{
 	width:98%;
 	margin:1%;
 	margin-bottom:0px;
+}
+
+p{
+    color: #ffffff;
 }
