@@ -1,6 +1,7 @@
 package controllers;
 
 import forms.Login;
+import models.GroupList;
 import play.data.*;
 import play.mvc.*;
 import views.html.*;
@@ -14,6 +15,10 @@ public class Application extends Controller {
 
     public static Result mainMenu() {
         return ok(main_menu.render(session().get("email")));
+    }
+
+    public static Result groupList() {
+        return ok(group_list.render(GroupList.getAll()));
     }
 
     public static Result login() {
