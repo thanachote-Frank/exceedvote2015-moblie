@@ -23,10 +23,23 @@ public class Account extends Model {
     public static Finder<Long, Account> find =
             new Finder<Long, Account>(Long.class, Account.class);
 
+    public Account(String name, String lastname, String email, String password, Team team) {
+        this.name = name;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.team = team;
+    }
+
 
     public static Account authenticate(
             String email, String password) {
         return Account.find.where().eq("email", email).eq("password", password).findUnique();
     }
+
+    public static Account findEmail(String email) {
+        return Account.find.where().eq("email", email).findUnique();
+    }
+
 }
 

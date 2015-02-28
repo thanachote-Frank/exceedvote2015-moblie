@@ -1,36 +1,46 @@
 @(form: Form[forms.Login])
 
 @main("Welcome to Exceed Vote")(css) {
-
-        <h1 style="text-align : center ; margin-bottom : 50px ; margin-top:70px; color: #ffffff;">Exceed camp 12</h1>
-    <div style="text-align : center">
-    <div style="background : #ffffff ; padding:20px; padding-bottom: 30px; display: inline-block; border-radius:5px; ">
-
+    <div class="uk-grid uk-margin-large-top" data-uk-grid-margin>
+        <div class="uk-width-9-10 uk-container-center" style="text-align: center; color: #ffffff">
+            <h1 class="uk-display-inline-block" style="color: #ffffff">Exceed Vote</h1>
+        </div>
+    </div>
+    <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+        <div class="uk-width-9-10 uk-container-center">
             @if(form.hasGlobalErrors) {
-                <p class="error">
+                <div class="uk-alert uk-alert-danger">
                 @form.globalError.message
-                </p>
+                </div>
             }
             @helper.form(routes.Application.authenticate) {
-                <div style="text-align : left ; display : inline-block ;">
-                    Email
-                    <br>
-                    <input class="form-control" type="email" name="email" style="margin-bottom : 10px ; width : 200px ;">
-                    <br>
-                    Password<br>
-                    <input class="form-control" type="password" name="password" style="width : 200px ;">
+                <div class="uk-panel uk-panel-box">
+
+                    <div class="form-group">
+                        Email
+                        <input class="form-control" type="email" name="email"">
+                    </div>
+                    <div class="form-group">
+                        Password
+                        <input class="form-control" type="password" name="password"">
+                    </div>
                 </div>
             </div>
-                <br>
-
-                    <button class="btn btn-primary" type="submit" style="margin-top : 20px ; width : 130px ; background : #3498DB ;
-                color : white ;
-                ">Login</button>
-            }
+    </div>
+    <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+        <div class="uk-width-9-10 uk-container-center">
+            <button class="uk-button uk-button-primary uk-button-large uk-width-1-1" type="submit">Login</button> </div>
+    </div>
+    <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+        <div class="uk-width-9-10 uk-container-center">
+            <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.regis()">Register</a>
         </div>
+    </div>
+}
+
 
 }
 
 @css = {
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/login_style.css")">
+
 }

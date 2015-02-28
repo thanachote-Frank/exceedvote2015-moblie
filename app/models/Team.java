@@ -1,9 +1,9 @@
 package models;
 
-import play.db.ebean.Model;
+import play.db.ebean.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -38,4 +38,12 @@ public class Team {
     public static List<Account> getAllMember(Long teamID) {
         return Account.find.where().eq("team_id", teamID).findList();
     }
+
+    public static Team getByID(Long id){
+        return Team.find.where().eq("id", id).findUnique();
+    }
+
+
+
+
 }

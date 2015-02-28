@@ -1,10 +1,15 @@
 package controllers;
 
 import forms.Login;
+import forms.Register;
+import models.Account;
 import models.Team;
 import play.data.*;
 import play.mvc.*;
 import views.html.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Application extends Controller {
@@ -30,6 +35,11 @@ public class Application extends Controller {
 //        return ok();
     }
 
+    public static Result regis() {
+        return ok(register.render(Form.form(Register.class), Team.getAll()));
+//        return ok();
+    }
+
 //    public static Result checkLogin() {
 //        // map data from HTTP request to an object.
 //        DynamicForm form = Form.form().bindFromRequest();
@@ -50,6 +60,21 @@ public class Application extends Controller {
             session("email", loginForm.get().email);
             return redirect(
                     routes.Application.mainMenu()
+            );
+        }
+    }
+
+    public static Result enroll() {
+        Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
+        if (registerForm.hasGlobalErrors()) {
+            return badRequest(register.render(registerForm, Team.getAll()));
+        } else {
+            Account account = new Account(registerForm.get().name, registerForm.get().lastname, registerForm.get().email,
+                    registerForm.get().password,
+                    Team.find.byId(registerForm.get().team));
+            account.save();
+            return redirect(
+                    routes.Application.login()
             );
         }
     }
