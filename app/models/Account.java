@@ -12,17 +12,21 @@ import javax.persistence.*;
 public class Account extends Model {
     @Id
     public Long id;
-    public String username;
+    public String name;
+    public String lastname;
+    public String email;
     public String password;
 
+    @ManyToOne
+    public Team team;
     // Finder will help us easily query data from database.
     public static Finder<Long, Account> find =
             new Finder<Long, Account>(Long.class, Account.class);
 
 
     public static Account authenticate(
-            String username, String password) {
-        return Account.find.where().eq("username", username).eq("password", password).findUnique();
+            String email, String password) {
+        return Account.find.where().eq("email", email).eq("password", password).findUnique();
     }
 }
 

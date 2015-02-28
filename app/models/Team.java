@@ -10,15 +10,15 @@ import java.util.List;
  * Created by thanachote on 27/2/2558.
  */
 @Entity
-public class GroupList {
+public class Team {
     @Id
     public Long id;
     public String name;
     public String description;
 
     // Finder will help us easily query data from database.
-    public static Model.Finder<Long, GroupList> find =
-            new Model.Finder<Long, GroupList>(Long.class, GroupList.class);
+    public static Model.Finder<Long, Team> find =
+            new Model.Finder<Long, Team>(Long.class, Team.class);
 
 
 //    public static Account authenticate(
@@ -26,7 +26,16 @@ public class GroupList {
 //        return Account.find.where().eq("username", username).eq("password", password).findUnique();
 //    }
 
-    public static List<GroupList> getAll() {
-        return GroupList.find.all();
+    public static List<Team> getAll() {
+        return Team.find.all();
+    }
+
+    public static Team getDescription(Long teamID) {
+        System.out.print(teamID);
+        return Team.find.where().eq("id", teamID).findUnique();
+    }
+
+    public static List<Account> getAllMember(Long teamID) {
+        return Account.find.where().eq("team_id", teamID).findList();
     }
 }

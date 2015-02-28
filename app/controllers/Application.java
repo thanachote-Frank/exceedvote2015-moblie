@@ -1,7 +1,7 @@
 package controllers;
 
 import forms.Login;
-import models.GroupList;
+import models.Team;
 import play.data.*;
 import play.mvc.*;
 import views.html.*;
@@ -17,8 +17,12 @@ public class Application extends Controller {
         return ok(main_menu.render(session().get("email")));
     }
 
-    public static Result groupList() {
-        return ok(group_list.render(GroupList.getAll()));
+    public static Result teamList() {
+        return ok(team_list.render(Team.getAll()));
+    }
+
+    public static Result team(Long teamID) {
+        return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID)));
     }
 
     public static Result login() {

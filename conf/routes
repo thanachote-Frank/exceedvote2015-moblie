@@ -6,8 +6,9 @@
 GET         /                    controllers.Application.index()
 GET         /main_menu           controllers.Application.mainMenu()
 GET         /login               controllers.Application.login()
-GET         /group_list               controllers.Application.groupList()
+GET         /team_list           controllers.Application.teamList()
 #POST       /check_login        controllers.Application.checkLogin()
 POST        /login               controllers.Application.authenticate()
+GET         /team/:teamID        controllers.Application.team(teamID: Long)
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file        controllers.Assets.at(path="/public", file)
