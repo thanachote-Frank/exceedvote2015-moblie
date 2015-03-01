@@ -37,6 +37,7 @@ public class Account extends Model {
         return Account.find.where().eq("email", email).eq("password", password).findUnique();
     }
 
+
     public static Account findEmail(String email) {
         return Account.find.where().eq("email", email).findUnique();
     }

@@ -1,5 +1,6 @@
 package controllers;
 
+import forms.EditDescription;
 import forms.Login;
 import forms.Register;
 import models.Account;
@@ -32,12 +33,27 @@ public class Application extends Controller {
 
     public static Result login() {
         return ok(login.render(Form.form(Login.class)));
-//        return ok();
     }
 
     public static Result regis() {
         return ok(register.render(Form.form(Register.class), Team.getAll()));
-//        return ok();
+    }
+
+    public static Result editDescription() {
+        if (request().method().equals("GET")) {
+            System.out.println(Team.findTeam(session("email")).name);
+            return ok(edit_description.render(Form.form(EditDescription.class), Team.findTeam(session("email")).name));
+        } else {
+            Form<EditDescription> form = Form.form(EditDescription.class).bindFromRequest();
+            if (form.hasErrors()) {
+                return badRequest(edit_description.render(form, Team.findTeam(session("email")).name));
+            } else {
+                Team.findTeam(session("email")).setDescription(form.get().content);
+                return redirect(
+                        routes.Application.mainMenu()
+                );
+            }
+        }
     }
 
 //    public static Result checkLogin() {
@@ -62,6 +78,13 @@ public class Application extends Controller {
                     routes.Application.mainMenu()
             );
         }
+    }
+
+    public static Result logout() {
+        session().clear();
+        return redirect(
+                routes.Application.login());
+
     }
 
     public static Result enroll() {
