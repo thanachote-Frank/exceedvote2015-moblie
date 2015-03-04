@@ -12,8 +12,13 @@ POST        /login                   controllers.Application.authenticate()
 GET         /team/:teamID            controllers.Application.team(teamID: Long)
 GET         /register                controllers.Application.regis()
 POST        /register                controllers.Application.enroll()
+
+POST        /create_team             controllers.Application.createTeam()
+GET         /create_team             controllers.Application.createTeam()
+
 POST        /edit_description        controllers.Application.editDescription()
 GET         /edit_description        controllers.Application.editDescription()
-GET         /logout        controllers.Application.logout()
+
+GET         /logout                  controllers.Application.logout()
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file            controllers.Assets.at(path="/public", file)
