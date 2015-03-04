@@ -15,11 +15,11 @@ public class Register {
 
     public String validate() {
         String temp = "";
-        if (Account.findEmail(email) != null) {
-            temp += "This email was used already. ";
-        }
         if (email == null) {
             temp += "Fill email. ";
+        }
+        if (Account.findEmail(email) != null) {
+            temp += "This email was used already. ";
         }
         if (name == null) {
             temp += "Fill name. ";
