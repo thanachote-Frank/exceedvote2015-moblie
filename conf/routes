@@ -3,9 +3,9 @@
 # ~~~~
 
 # Home page
-GET         /                        controllers.Application.index()
+#GET         /                      controllers.Application.index()
 GET         /main_menu               controllers.Application.mainMenu()
-GET         /login                   controllers.Application.login()
+GET         /                       controllers.Application.login()
 GET         /team_list               controllers.Application.teamList()
 #POST       /check_login        controllers.Application.checkLogin()
 POST        /login                   controllers.Application.authenticate()
