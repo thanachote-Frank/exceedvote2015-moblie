@@ -1,5 +1,6 @@
 html, body{
     background: #2C3E50;
+    font-family: 'Signika', sans-serif;
 }
 .ui-red{
     background: #c0392b;
@@ -15,4 +16,35 @@ html, body{
     background: #27ae60;
     border-radius: 0px;
     border-width: 0px;
+    background: #2C3E50;
+    font-family: 'Signika', sans-serif;
+
+}
+a{
+    color: #ffffff;
+}
+a:hover{
+    color: #d3d3d3;
+}
+.ui-text-white{
+    color: #ffffff;
+}
+.ui-limegreen{
+    background: limegreen;
+}
+.ui-dodgerblue{
+    background: dodgerblue;
+}
+.ui-darkorange{
+    background: darkorange;
+}
+.ui-darkviolet{
+    background: #a94442;
+}
+.ui-redpink{
+    background: #da314b;
+}
+.ui-button:hover{
+    color: #ffffff;
+    background-color: #d3d3d3;
 }

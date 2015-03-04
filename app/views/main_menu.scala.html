@@ -3,17 +3,17 @@
 @main("Main menu")(css) {
     <div class="uk-grid uk-grid-collapse">
         <div class="uk-width-1-1">
-            <div class="uk-panel uk-panel-box">@message</div>
+            <div class="uk-panel uk-panel-box" style="background: #000000; ;color: #ffffff">@message</div>
         </div>
     </div>
     <div class="uk-grid uk-grid-collapse">
         <div class="uk-width-1-1">
-            <div class="uk-panel uk-panel-box">
+            <div class="uk-panel uk-panel-box uk-text-center" style="background: #ffffff; color: #000000; font-size: 500%">
                 <div id="clock"></div>
                 <script>
                 $ ( '#clock' ).countdown ( "2015/03/10 00:00:00", function ( event ) {
                 var totalHours = event.offset.totalDays * 24 + event.offset.hours ;
-                $ ( this ).html ( event.strftime ( totalHours + ' hr %M min %S sec' ) ) ;
+                $ ( this ).html ( event.strftime ( totalHours + ' : %M : %S') ) ;
                 } ) ;
                 </script>
             </div>
@@ -21,53 +21,38 @@
     </div>
     <div class="uk-text-center">
         <div class="uk-grid uk-grid-margin uk-grid-small">
-            <div class="uk-width-1-2">
-                <div class="uk-panel uk-panel-box">
-                <a href="" class="uk-icon-hover uk-icon-qrcode uk-margin-small-bottom" style="font-size: 500%"></a>
-                <br>
-                <div class="uk-text-bottom">QR</div>
-                    </div>
+            <div class="uk-panel uk-width-1-2">
+                <a href="" class="uk-button uk-icon-qrcode uk-margin-small-bottom ui-text-white ui-button ui-limegreen" style="width:100%; font-size: 500%; padding: 20px;">
+                    <div class="uk-text-bottom" style="color: #ffffff; font-size: 50%; font-family: 'Signika', sans-serif;">QR</div>
+                </a>
             </div>
-
-
-            <div class="uk-width-1-2">
-                <div class="uk-panel uk-panel-box">
-                <a href="" class="uk-icon-hover uk-icon-key uk-margin-small-bottom" style="font-size: 500%"></a>
-                <br>
-                <div class="uk-text-bottom">PIN</div>
-                    </div>
+            <div class="uk-panel uk-width-1-2">
+                <a href="" class="uk-button uk-icon-key uk-margin-small-bottom ui-text-white ui-button ui-dodgerblue" style="width:100%; font-size: 500%; padding: 20px;">
+                    <div class="uk-text-bottom" style="color: #ffffff; font-size: 50%; font-family: 'Signika', sans-serif;">PIN</div>
+                </a>
             </div>
-
         </div>
     </div>
 
     <div class="uk-text-center">
         <div class="uk-grid uk-margin-small-top">
-            <div class="uk-width-1-1">
-                <div class="uk-panel uk-panel-box">
-                    <a href="" class="uk-icon-hover uk-icon-group uk-margin-small-bottom" style="font-size: 500%"></a>
-                    <br>
-                    <div class="uk-text-bottom">Group list</div>
-                </div>
-            </div>
+            <a href="@routes.Application.teamList" class="uk-button uk-width-1-1 uk-icon-group uk-margin-small-bottom ui-text-white ui-button ui-darkorange" style="font-size: 500%; padding: 20px;">
+                <div class="uk-text-bottom" style="color: #ffffff; font-size: 50%; font-family: 'Signika', sans-serif;">Team list</div>
+            </a>
         </div>
     </div>
 
     <div class="uk-text-center">
         <div class="uk-grid uk-grid-small uk-margin-small-top">
-            <div class="uk-width-6-10">
-                <div class="uk-panel uk-panel-box">
-                <a href="" class="uk-icon-hover uk-icon-archive uk-margin-small-bottom" style="font-size: 500%"></a>
-                <br>
-                <div class="uk-text-bottom">Achievement</div>
-                    </div>
+            <div class="uk-panel uk-width-6-10">
+            <a href="" class="uk-button uk-icon-archive uk-margin-small-bottom ui-text-white ui-button ui-darkviolet" style="width:100%; font-size: 500%; padding: 20px;">
+                <div class="uk-text-bottom" style="color: #ffffff; font-size: 50%; font-family: 'Signika', sans-serif;">Achievement</div>
+            </a>
             </div>
-            <div class="uk-width-4-10">
-                <div class="uk-panel uk-panel-box">
-                <a href="" class="uk-icon-hover uk-icon-power-off uk-margin-small-bottom" style="font-size: 500%"></a>
-                <br>
-                <div class="uk-text-bottom">Logout</div>
-                    </div>
+            <div class="uk-panel uk-width-4-10">
+            <a href="@routes.Application.logout" class="uk-button uk-width-4-10 uk-icon-power-off uk-margin-small-bottom ui-text-white ui-button ui-redpink" style="width:100%; font-size: 500%; padding: 20px;">
+                <div class="uk-text-bottom" style="color: #ffffff; font-size: 50%; font-family: 'Signika', sans-serif;">Logout</div>
+            </a>
             </div>
 
         </div>
