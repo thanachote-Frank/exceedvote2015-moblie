@@ -69,7 +69,7 @@ public class Application extends Controller {
                 return badRequest(create_team.render(form));
             } else {
                 return redirect(
-                        routes.Application.index()
+                        routes.Application.login()
                 );
             }
         }
