@@ -1,8 +1,8 @@
 package controllers;
 
-import forms.EditDescription;
-import forms.Login;
-import forms.Register;
+//import forms.EditDescription;
+import forms.*;
+//import forms.Register;
 import models.Account;
 import models.Team;
 import play.data.*;
@@ -41,9 +41,8 @@ public class Application extends Controller {
 
     public static Result editDescription() {
         if (request().method().equals("GET")) {
-            System.out.println(Team.findTeam(session("email")).name);
             return ok(edit_description.render(Form.form(EditDescription.class), Team.findTeam(session("email")).name));
-        } else {
+        } else if (request().method().equals("POST")) {
             Form<EditDescription> form = Form.form(EditDescription.class).bindFromRequest();
             if (form.hasErrors()) {
                 return badRequest(edit_description.render(form, Team.findTeam(session("email")).name));
@@ -54,6 +53,23 @@ public class Application extends Controller {
                 );
             }
         }
+        return null;
+    }
+
+    public static Result createTeam() {
+        if (request().method().equals("GET")) {
+            return ok(create_team.render(Form.form(CreateTeam.class)));
+        } else if (request().method().equals("POST")){
+            Form<CreateTeam> form = Form.form(CreateTeam.class).bindFromRequest();
+            if (form.hasErrors()) {
+                return badRequest(create_team.render(form));
+            } else {
+                return redirect(
+                        routes.Application.index()
+                );
+            }
+        }
+        return null;
     }
 
 //    public static Result checkLogin() {
@@ -101,16 +117,6 @@ public class Application extends Controller {
             );
         }
     }
-//    public static class Login {
-//        public String username;
-//        public String password;
-//
-//        public String validate() {
-//            if (Account.authenticate(username, password) == null) {
-//                return "Invalid user or password";
-//            }
-//            return null;
-//        }
-//    }
+
 }
 
