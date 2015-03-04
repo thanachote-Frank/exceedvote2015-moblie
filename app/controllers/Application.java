@@ -27,6 +27,10 @@ public class Application extends Controller {
         return ok(team_list.render(Team.getAll()));
     }
 
+    public static Result voting() {
+        return ok(Vote.render());
+    }
+
     public static Result team(Long teamID) {
         return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID)));
     }
