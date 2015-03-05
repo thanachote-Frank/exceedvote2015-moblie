@@ -20,6 +20,9 @@ public class Team extends Model {
     public static Model.Finder<Long, Team> find =
             new Model.Finder<Long, Team>(Long.class, Team.class);
 
+    public Team(String name){
+        this.name = name;
+    }
 
 //    public static Account authenticate(
 //            String username, String password) {

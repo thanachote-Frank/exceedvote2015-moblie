@@ -4,7 +4,7 @@
     @*<h1>Register</h1>*@
     @helper.form(routes.Application.enroll) {
 
-        <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+        <div class="uk-grid uk-grid-small uk-margin-large-top" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
 
                 <div class="uk-panel uk-panel-box">
@@ -28,7 +28,7 @@
 
                             <input name="lastname" type="text" placeholder="lastname" class="uk-width-1-1" value="@form.data.get("lastname")">
 
-                            <select name="team" class="uk-width-1-1">
+                            <select name="team" class="uk-width-1-1 uk-margin-bottom">
                             @teams.map { team =>
 
                                     <option value="@team.id">@team.name</option>

@@ -68,6 +68,8 @@ public class Application extends Controller {
             if (form.hasErrors()) {
                 return badRequest(create_team.render(form));
             } else {
+                Team team = new Team(form.get().name);
+                team.save();
                 return redirect(
                         routes.Application.login()
                 );
@@ -109,7 +111,7 @@ public class Application extends Controller {
 
     public static Result enroll() {
         Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
-        if (registerForm.hasGlobalErrors()) {
+        if (registerForm.hasErrors()) {
             return badRequest(register.render(registerForm, Team.getAll()));
         } else {
             Account account = new Account(registerForm.get().name, registerForm.get().lastname, registerForm.get().email,
