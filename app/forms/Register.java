@@ -30,7 +30,7 @@ public class Register {
         if (password == null) {
             temp += "Fill password. ";
         }
-        else if (password == repassword) {
+        else if (password != repassword) {
             temp += "The passwords aren't same.";
         }
         if (temp.equals("")) {
