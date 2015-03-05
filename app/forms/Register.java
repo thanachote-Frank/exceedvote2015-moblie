@@ -15,22 +15,22 @@ public class Register {
 
     public String validate() {
         String temp = "";
+        if (email.equals("")) {
+            temp += "Fill email. ";
+        }
         if (Account.findEmail(email) != null) {
             temp += "This email was used already. ";
         }
-        if (email == null) {
-            temp += "Fill email. ";
-        }
-        if (name == null) {
+        if (name.equals("")) {
             temp += "Fill name. ";
         }
-        if (lastname == null) {
+        if (lastname.equals("")) {
             temp += "Fill email. ";
         }
-        if (password == null) {
+        if (password.equals("")) {
             temp += "Fill password. ";
         }
-        else if (password != repassword) {
+        else if (!password.equals(repassword)) {
             temp += "The passwords aren't same.";
         }
         if (temp.equals("")) {
