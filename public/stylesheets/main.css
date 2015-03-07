@@ -4,18 +4,15 @@ html, body{
 }
 .ui-red{
     background: #c0392b;
-    border-radius: 0px;
-    border-width: 0px;
 }
 .ui-yellow{
     background: #f1c40f;
-    border-radius: 0px;
-    border-width: 0px;
 }
 .ui-green{
     background: #27ae60;
-    border-radius: 0px;
-    border-width: 0px;
+}
+.ui-black{
+    background: #141414;
 }
 a{
     color: #ffffff;
@@ -43,5 +40,5 @@ a:hover{
 }
 .ui-button:hover{
     color: #ffffff;
-    background-color: #d3d3d3;
+    background-color: #7f8c8d;
 }

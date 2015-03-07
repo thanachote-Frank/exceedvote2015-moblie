@@ -2,13 +2,11 @@
 
 @main("Group List")(css) {
     <div class="uk-grid uk-text-center uk-grid-collapse">
-        <div class="uk-width-1-6">
-            <div class="uk-panel uk-panel-box ui-red">
-                <a href="@routes.Application.teamList()" class="uk-icon-hover uk-icon-small uk-icon-arrow-left" ></a>
-            </div>
+        <div class="uk-panel uk-width-1-6">
+            <a href="@routes.Application.teamList()" class="uk-button uk-icon-arrow-left uk-margin-small-bottom ui-text-white ui-button ui-redpink" style="width:100%; padding: 18px; border-width: 0; height: 100%"></a>
         </div>
         <div class="uk-width-5-6">
-            <div class="uk-panel uk-panel-box ui-yellow">
+            <div class="uk-panel uk-panel-box ui-yellow" style="border-width: 0; color: #ffffff">
             @group.name
             </div>
         </div>
