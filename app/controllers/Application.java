@@ -5,6 +5,7 @@ import forms.*;
 //import forms.Register;
 import models.Account;
 import models.Team;
+import play.api.mvc.Session$;
 import play.data.*;
 import play.mvc.*;
 import views.html.*;
@@ -20,7 +21,7 @@ public class Application extends Controller {
     }
 
     public static Result mainMenu() {
-        return ok(main_menu.render(session().get("email")));
+        return ok(main_menu.render(session().get("email"), session().get("team")));
     }
 
     public static Result teamList() {
@@ -95,7 +96,9 @@ public class Application extends Controller {
             return badRequest(login.render(loginForm));
         } else {
             session().clear();
-            session("email", loginForm.get().email);
+            Account account = Account.findEmail(loginForm.get().email);
+            session("email", account.email);
+            session("team", account.team.name);
             return redirect(
                     routes.Application.mainMenu()
             );
@@ -122,6 +125,14 @@ public class Application extends Controller {
                     routes.Application.login()
             );
         }
+    }
+
+    public static Result uploadLogo() {
+        Form<UploadLogo> form = Form.form(UploadLogo.class).bindFromRequest();
+        Team.findTeam(session().get("email")).setLogo(form.get().url);
+        return redirect(
+                routes.Application.mainMenu()
+        );
     }
 
 }

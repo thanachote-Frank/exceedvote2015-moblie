@@ -15,6 +15,7 @@ public class Team extends Model {
     public Long id;
     public String name;
     public String description;
+    public String logo;
 
     // Finder will help us easily query data from database.
     public static Model.Finder<Long, Team> find =
@@ -56,6 +57,12 @@ public class Team extends Model {
         this.description = description;
         this.update();
     }
+
+    public void setLogo(String url) {
+        this.logo = url;
+        this.update();
+    }
+
 
     public static Team getByID(Long id) {
         return Team.find.where().eq("id", id).findUnique();
