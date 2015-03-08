@@ -16,24 +16,15 @@
     <div class="uk-text-center">
         <div class="uk-grid uk-grid-margin uk-grid-small">
             @teams.map { team =>
-
+                @if(!team.name.equals("No Team")){
                 <div class="uk-panel uk-width-1-2">
                 <a href="@routes.Application.team(team.id)" class="uk-button uk-width-1-1 uk-margin-small-bottom ui-text-white ui-button ui-black" style="font-size: 500%; padding: 20px;">
-                    <img src="@team.logo" style="height: 100px; width: auto;">
+                    <img src="@team.logo">
                     <div class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">@team.name</div>
                 </a>
                 </div>
-
-        @*<div class="uk-grid uk-grid-small" data-uk-grid-margin>*@
-            @*<div class="uk-width-9-10 uk-container-center">*@
-                @*<a href="@routes.Application.team(team.id)">*@
-                @*<div class="uk-panel uk-panel-box ui-green" style="color: #ffffff; border-width: 0;">*@
                     @*@team.name*@
-                @*</div>*@
-                @*</a>*@
-            @*</div>*@
-        @*</div>*@
-
+                }
             }
         </div>
     </div>

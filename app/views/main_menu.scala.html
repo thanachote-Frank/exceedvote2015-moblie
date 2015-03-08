@@ -63,17 +63,17 @@
             function upload() {
                 filepicker.pick ({
                     mimetype: 'image/*',
-                    maxSize: 70*70
+                    maxSize: 100*100
                 },
                 function ( data ) {
-                    $.post( "@routes.Application.uploadLogo()",
-                        function(data) {
+                        $.post( "@routes.Application.uploadLogo()",
                         {
                             url : data.url
                         }
-                        }
-                    );
-                    },
+                        ).done(function() {
+//                         alert( "done" );
+                        });
+                },
                 function(FPError){
                     console.log(FPError.toString());
                 }

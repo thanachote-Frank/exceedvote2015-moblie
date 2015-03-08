@@ -129,10 +129,9 @@ public class Application extends Controller {
 
     public static Result uploadLogo() {
         Form<UploadLogo> form = Form.form(UploadLogo.class).bindFromRequest();
+        System.out.print(form);
         Team.findTeam(session().get("email")).setLogo(form.get().url);
-        return redirect(
-                routes.Application.mainMenu()
-        );
+        return ok();
     }
 
 }
