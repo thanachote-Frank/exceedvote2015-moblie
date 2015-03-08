@@ -42,3 +42,17 @@ a:hover{
     color: #ffffff;
     background-color: #7f8c8d;
 }
+.ui-mountain-meadow{
+    background: #1BBC9B;
+}
+
+.ui-hoki{
+    background: #67809F;
+}
+.border-zero-width{
+    border-width: 0px;
+}
+
+.ui-eucalyptus{
+    background: #26A65B;
+}
