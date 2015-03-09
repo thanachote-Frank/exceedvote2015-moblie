@@ -10,8 +10,7 @@ import play.data.*;
 import play.mvc.*;
 import views.html.*;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -151,7 +150,13 @@ public class Application extends Controller {
                 String fileName = picture.getFilename();
                 String contentType = picture.getContentType();
                 File file = picture.getFile();
-                file.renameTo(new File("/app/public/pic-cloud/" + fileName));
+                File temp = new File("/app/public/pic-cloud/" + fileName);
+                try {
+                    copyFileUsingFileStreams(file, temp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+//                file.renameTo(new File("/app/public/pic-cloud/" + fileName));
                 Team.findTeam(session("email")).setLogo("pic-cloud/" + fileName);
                 return redirect(routes.Application.mainMenu());
             } else {
@@ -160,6 +165,24 @@ public class Application extends Controller {
             }
         }
         return ok();
+    }
+
+    private static void copyFileUsingFileStreams(File source, File dest)
+            throws IOException {
+        InputStream input = null;
+        OutputStream output = null;
+        try {
+            input = new FileInputStream(source);
+            output = new FileOutputStream(dest);
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = input.read(buf)) > 0) {
+                output.write(buf, 0, bytesRead);
+            }
+        } finally {
+            input.close();
+            output.close();
+        }
     }
 
 }
