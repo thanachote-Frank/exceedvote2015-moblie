@@ -145,7 +145,7 @@ public class Application extends Controller {
                 String fileName = picture.getFilename();
                 String contentType = picture.getContentType();
                 File file = picture.getFile();
-                file.renameTo(new File("public/pic-cloud/" + fileName));
+                file.renameTo(new File("/app/public/pic-cloud/" + fileName));
                 Team.findTeam(session("email")).setLogo("pic-cloud/" + fileName);
                 return redirect(routes.Application.mainMenu());
             } else {
