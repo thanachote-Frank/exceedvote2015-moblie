@@ -151,8 +151,8 @@ public class Application extends Controller {
                 String fileName = picture.getFilename();
                 String contentType = picture.getContentType();
                 File file = picture.getFile();
-                file.renameTo(new File("/app/public/pic-cloud/" + file.getName()));
-                Team.findTeam(session("email")).setLogo("pic-cloud/" + file.getName());
+                file.renameTo(new File("/app/public/pic-cloud/" + fileName));
+                Team.findTeam(session("email")).setLogo("pic-cloud/" + fileName);
                 return redirect(routes.Application.mainMenu());
             } else {
                 flash("error", "Missing file");
