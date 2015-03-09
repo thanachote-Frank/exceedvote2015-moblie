@@ -39,13 +39,6 @@ public class Application extends Controller {
     }
 
     public static Result login() {
-        File file = new File("pic-cloud/taest11.txt");
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         return ok(login.render(Form.form(Login.class)));
     }
 
@@ -137,9 +130,29 @@ public class Application extends Controller {
     }
 
     public static Result uploadLogo() {
-        Form<UploadLogo> form = Form.form(UploadLogo.class).bindFromRequest();
-        System.out.print(form);
-        Team.findTeam(session().get("email")).setLogo(form.get().url);
+        if (request().method().equals("GET")){
+            return ok(upload_logo.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
+        }
+        else if (request().method().equals("POST")){
+//            File file = new File("/home/dokku/exceedvote2015-moblie/pic-cloud/taest.txt");
+            Http.MultipartFormData body = request().body().asMultipartFormData();
+            Http.MultipartFormData.FilePart picture = body.getFile("file");
+            if (picture != null) {
+                Team team = Team.findTeam(session("email"));
+                if (!team.logo.equals("")){
+                    new File("public/" + team.logo).delete();
+                }
+                String fileName = picture.getFilename();
+                String contentType = picture.getContentType();
+                File file = picture.getFile();
+                file.renameTo(new File("public/pic-cloud/" + fileName));
+                Team.findTeam(session("email")).setLogo("pic-cloud/" + fileName);
+                return redirect(routes.Application.mainMenu());
+            } else {
+                flash("error", "Missing file");
+                return redirect(routes.Application.uploadLogo());
+            }
+        }
         return ok();
     }
 
