@@ -149,7 +149,7 @@ public class Application extends Controller {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Team.findTeam(session("email")).setLogo("128.199.101.67:8800/" + fileName);
+                Team.findTeam(session("email")).setLogo("http://128.199.101.67:8800/" + fileName);
                 return redirect(routes.Application.mainMenu());
             } else {
                 flash("error", "Missing file");
