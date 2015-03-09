@@ -39,7 +39,7 @@ public class Application extends Controller {
     }
 
     public static Result login() {
-        File file = new File("/home/dokku/exceedvote2015-moblie/pic-cloud/taest.txt");
+        File file = new File("pic-cloud/taest11.txt");
         try {
             file.createNewFile();
         } catch (IOException e) {
