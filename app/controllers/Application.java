@@ -133,7 +133,7 @@ public class Application extends Controller {
             return ok(upload_logo.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
         }
         else if (request().method().equals("POST")){
-            File file123 = new File("/app/public/cloud/taest.txt");
+            File file123 = new File("public/cloud/taest.txt");
             try {
                 file123.createNewFile();
             } catch (IOException e) {
@@ -150,14 +150,14 @@ public class Application extends Controller {
                 String fileName = picture.getFilename();
                 String contentType = picture.getContentType();
                 File file = picture.getFile();
-                File temp = new File("/app/public/cloud/" + fileName);
+                File temp = new File("public/cloud/" + fileName);
                 try {
                     copyFileUsingFileStreams(file, temp);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 //                file.renameTo(new File("/app/public/pic-cloud/" + fileName));
-                Team.findTeam(session("email")).setLogo( fileName);
+                Team.findTeam(session("email")).setLogo("128.199.101.67:8800" + fileName);
                 return redirect(routes.Application.mainMenu());
             } else {
                 flash("error", "Missing file");
