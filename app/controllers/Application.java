@@ -39,7 +39,7 @@ public class Application extends Controller {
     }
 
     public static Result login() {
-        File file = new File("pic-cloud\\test.txt");
+        File file = new File("pic-cloud/taest.txt");
         try {
             file.createNewFile();
         } catch (IOException e) {
