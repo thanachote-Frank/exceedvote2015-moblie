@@ -157,7 +157,7 @@ public class Application extends Controller {
                     e.printStackTrace();
                 }
 //                file.renameTo(new File("/app/public/pic-cloud/" + fileName));
-                Team.findTeam(session("email")).setLogo("/app/public/pic-cloud/" + fileName);
+                Team.findTeam(session("email")).setLogo("pic-cloud/" + fileName);
                 return redirect(routes.Application.mainMenu());
             } else {
                 flash("error", "Missing file");
