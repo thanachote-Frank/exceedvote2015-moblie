@@ -10,6 +10,8 @@ import play.data.*;
 import play.mvc.*;
 import views.html.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +39,13 @@ public class Application extends Controller {
     }
 
     public static Result login() {
+        File file = new File("\\pic-cloud\test.txt");
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return ok(login.render(Form.form(Login.class)));
     }
 
