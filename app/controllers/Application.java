@@ -134,6 +134,7 @@ public class Application extends Controller {
             return ok(upload_logo.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
         }
         else if (request().method().equals("POST")){
+            /app/public/pic-cloud
 //            File file = new File("/home/dokku/exceedvote2015-moblie/pic-cloud/taest.txt");
             Http.MultipartFormData body = request().body().asMultipartFormData();
             Http.MultipartFormData.FilePart picture = body.getFile("file");
@@ -145,7 +146,7 @@ public class Application extends Controller {
                 String fileName = picture.getFilename();
                 String contentType = picture.getContentType();
                 File file = picture.getFile();
-                file.renameTo(new File("/app/public/pic-cloud/" + fileName));
+                System.out.print(file.renameTo(new File("/app/public/pic-cloud/" + fileName)));
                 Team.findTeam(session("email")).setLogo("pic-cloud/" + fileName);
                 return redirect(routes.Application.mainMenu());
             } else {
