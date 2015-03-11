@@ -129,32 +129,12 @@ public class Application extends Controller {
     }
 
     public static Result uploadLogo() {
-        if (request().method().equals("GET")){
+        if (request().method().equals("GET")) {
             return ok(upload_logo.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
-        }
-        else if (request().method().equals("POST")){
-            Http.MultipartFormData body = request().body().asMultipartFormData();
-            Http.MultipartFormData.FilePart picture = body.getFile("file");
-            if (picture != null) {
-                Team team = Team.findTeam(session("email"));
-                if (!team.logo.equals("")){
-                    new File("public/cloud/" + team.logo).delete();
-                }
-                String fileName = picture.getFilename();
-                String contentType = picture.getContentType();
-                File file = picture.getFile();
-                File temp = new File("public/cloud/" + fileName);
-                try {
-                    copyFileUsingFileStreams(file, temp);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Team.findTeam(session("email")).setLogo("http://128.199.101.67:8800/" + fileName);
-                return redirect(routes.Application.mainMenu());
-            } else {
-                flash("error", "Missing file");
-                return redirect(routes.Application.uploadLogo());
-            }
+        } else if (request().method().equals("POST")) {
+            Team team = Team.findTeam(session("email"));
+            Form<UploadLogo> registerForm = Form.form(UploadLogo.class).bindFromRequest();
+            team.setLogo(registerForm.get().url);
         }
         return ok();
     }
