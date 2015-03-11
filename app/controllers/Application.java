@@ -5,10 +5,12 @@ import forms.*;
 //import forms.Register;
 import models.Account;
 import models.Team;
+import play.api.mvc.Session$;
 import play.data.*;
 import play.mvc.*;
 import views.html.*;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +22,7 @@ public class Application extends Controller {
     }
 
     public static Result mainMenu() {
-        return ok(main_menu.render(session().get("email")));
+        return ok(main_menu.render(session().get("email"), session().get("team")));
     }
 
     public static Result teamList() {
@@ -95,7 +97,9 @@ public class Application extends Controller {
             return badRequest(login.render(loginForm));
         } else {
             session().clear();
-            session("email", loginForm.get().email);
+            Account account = Account.findEmail(loginForm.get().email);
+            session("email", account.email);
+            session("team", account.team.name);
             return redirect(
                     routes.Application.mainMenu()
             );
@@ -121,6 +125,35 @@ public class Application extends Controller {
             return redirect(
                     routes.Application.login()
             );
+        }
+    }
+
+    public static Result uploadLogo() {
+        if (request().method().equals("GET")) {
+            return ok(upload_logo.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
+        } else if (request().method().equals("POST")) {
+            Team team = Team.findTeam(session("email"));
+            Form<UploadLogo> registerForm = Form.form(UploadLogo.class).bindFromRequest();
+            team.setLogo(registerForm.get().url);
+        }
+        return ok();
+    }
+
+    private static void copyFileUsingFileStreams(File source, File dest)
+            throws IOException {
+        InputStream input = null;
+        OutputStream output = null;
+        try {
+            input = new FileInputStream(source);
+            output = new FileOutputStream(dest);
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = input.read(buf)) > 0) {
+                output.write(buf, 0, bytesRead);
+            }
+        } finally {
+            input.close();
+            output.close();
         }
     }
 

@@ -2,14 +2,12 @@
 
 @main("Group List")(css) {
     <div class="uk-grid uk-text-center uk-grid-collapse">
-        <div class="uk-width-1-6">
-            <div class="uk-panel uk-panel-box ui-red">
-                <a href="@routes.Application.teamList()" class="uk-icon-hover uk-icon-small uk-icon-arrow-left" ></a>
-            </div>
+        <div class="uk-panel uk-width-1-6">
+            <a href="@routes.Application.teamList()" class="uk-button uk-icon-arrow-left uk-margin-small-bottom ui-text-white ui-button ui-redpink" style="width:100%; padding: 18px; border-width: 0; height: 100%"></a>
         </div>
         <div class="uk-width-5-6">
-            <div class="uk-panel uk-panel-box ui-yellow">
-            @group.name
+            <div class="uk-panel uk-panel-box ui-yellow ui-text-white" style="border-width: 0;">
+                <b>@group.name</b>
             </div>
         </div>
     </div>
@@ -17,11 +15,11 @@
 
     <div class="uk-grid uk-grid-small" data-uk-grid-margin>
         <div class="uk-width-9-10 uk-container-center">
-            <div class="panel panel-default">
-                <div class="panel-heading" style="background-color:#FF6262">
-                    <h3 class="panel-title">Description</h3>
+            <div class="panel panel-default border-zero-width">
+                <div class="panel-heading border-zero-width" style="background-color:#FF6262">
+                    <h3 class="panel-title ui-text-white"><b>Description</b></h3>
                 </div>
-                <div class="panel-body" style="background-color:#ff8484">
+                <div class="panel-body border-zero-width ui-text-white" style="background-color:#ff8484">
                 @group.description
                 </div>
             </div>
@@ -30,12 +28,12 @@
 
     <div class="uk-grid uk-grid-small" data-uk-grid-margin>
         <div class="uk-width-9-10 uk-container-center">
-            <div class="panel panel-default" >
-                <div class="panel-heading"  style="background-color:#B894FF">
-                    <h3 class="panel-title">Member</h3>
+            <div class="panel panel-default border-zero-width" >
+                <div class="panel-heading border-zero-width"  style="background-color:#B894FF">
+                    <h3 class="panel-title ui-text-white"><b>Member</b></h3>
                 </div>
-                <div class="panel-body"  style="background-color:#D6C2FF">
-                    <ul>
+                <div class="panel-body border-zero-width"  style="background-color:#D6C2FF">
+                    <ul class="ui-text-white">
                     @members.map { member =>
                         <li>@member.name @member.lastname</li>
                     }
@@ -46,7 +44,7 @@
     </div>
     <div class="uk-grid uk-grid-small" data-uk-grid-margin>
         <div class="uk-width-9-10 uk-container-center">
-            <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.voting">Vote</a>
+            <a class="uk-button uk-button-large uk-width-1-1 ui-eucalyptus ui-text-white ui-button" href="@routes.Application.voting">Vote</a>
         </div>
     </div>
 

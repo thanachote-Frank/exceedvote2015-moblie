@@ -32,6 +32,7 @@ public class Account extends Model {
     }
 
 
+
     public static Account authenticate(
             String email, String password) {
         return Account.find.where().eq("email", email).eq("password", password).findUnique();
