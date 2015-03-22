@@ -1,0 +1,103 @@
+@(form: Form[forms.UploadLogo])(name: String)
+@main("Upload team screenshot")(css) {
+    <form id="data" method='POST' enctype='multipart/form-data'>
+
+        <div class="uk-grid uk-grid-small uk-margin-large-top" data-uk-grid-margin>
+            <div class="uk-width-9-10 uk-container-center">
+
+                <div class="uk-panel uk-panel-box">
+                    <div class="uk-form">
+
+                        <fieldset data-uk-margin>
+                            <legend>Upload @name screenshot</legend>
+                            @if(form.hasGlobalErrors) {
+                                <div class="uk-alert uk-alert-danger">
+                                @form.globalError.message
+                                </div>
+                            }
+                        </fieldset>
+
+
+                        <a class="uk-form-file uk-button uk-button-primary uk-button-large uk-icon-cloud-upload uk-width-1-1 ui-button" style="font-size: 500%; padding: 20px;">
+                            <div class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">
+                                Select a file
+                                <input id="upload-select" type="file">
+                            </div>
+                        </a>
+
+                        <div id="progressbar" class="uk-progress uk-hidden">
+                            <div class="uk-progress-bar" style="width: 0%;">...</div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="uk-grid uk-grid-small uk-margin-top" data-uk-grid-margin>
+            <div class="uk-width-9-10 uk-container-center">
+                <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.mainMenu">Cancel</a>
+            </div>
+        </div></form>
+
+    <script>
+
+    </script>
+
+    <script>
+
+    $ ( function ( ) {
+
+    var progressbar = $ ( "#progressbar" ),
+    bar = progressbar.find ( '.uk-progress-bar' ),
+    settings = {
+
+    action : 'http://cloud.exceedvote2015.cf/upload.php', // upload url
+
+    allow : '*.(jpg|jpeg|gif|png)', // allow only images
+
+
+
+    loadstart : function ( ) {
+    bar.css ( "width", "0%" ).text ( "0%" ) ;
+    progressbar.removeClass ( "uk-hidden" ) ;
+    },
+
+    progress : function ( percent ) {
+    percent = Math.ceil ( percent ) ;
+    bar.css ( "width", percent + "%" ).text ( percent + "%" ) ;
+    },
+
+    allcomplete : function ( response ) {
+
+    bar.css ( "width", "100%" ).text ( "100%" ) ;
+
+    setTimeout ( function ( ) {
+    progressbar.addClass ( "uk-hidden" ) ;
+    }, 250 ) ;
+    var obj = jQuery.parseJSON ( response ) ;
+    $.post (
+    " @routes.Application.uploadLogo() ", { url : obj.url } )
+    .done ( function ( data ) {
+    window.location.replace ( " @routes.Application.mainMenu ");
+    } )
+    }
+    } ;
+
+
+
+    var select = UIkit.uploadSelect ( $ ( "#upload-select" ), settings ),
+    drop = UIkit.uploadDrop ( $ ( "#upload-drop" ), settings ) ;
+    } ) ;
+
+    </script>
+
+}
+@css = {
+    <script src="@routes.Assets.at("uikit-2.17.0/js/components/upload.min.js")" type="text/javascript"></script>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/progress.almost-flat.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/form-file.almost-flat.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/placeholder.almost-flat.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/upload.almost-flat.min.css")">
+
+}

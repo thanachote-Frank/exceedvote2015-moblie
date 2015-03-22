@@ -4,7 +4,7 @@
 # --- !Ups
 
 create table account (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   name                      varchar(255),
   lastname                  varchar(255),
   email                     varchar(255),
@@ -13,30 +13,37 @@ create table account (
   constraint pk_account primary key (id))
 ;
 
+create table screenshot (
+  id                        bigint auto_increment not null,
+  team_id                   bigint,
+  url                       varchar(255),
+  constraint pk_screenshot primary key (id))
+;
+
 create table team (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   name                      varchar(255),
   description               varchar(255),
   logo                      varchar(255),
   constraint pk_team primary key (id))
 ;
 
-create sequence account_seq;
-
-create sequence team_seq;
-
-alter table account add constraint fk_account_team_1 foreign key (team_id) references team (id);
+alter table account add constraint fk_account_team_1 foreign key (team_id) references team (id) on delete restrict on update restrict;
 create index ix_account_team_1 on account (team_id);
+alter table screenshot add constraint fk_screenshot_team_2 foreign key (team_id) references team (id) on delete restrict on update restrict;
+create index ix_screenshot_team_2 on screenshot (team_id);
 
 
 
 # --- !Downs
 
-drop table if exists account cascade;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists team cascade;
+drop table account;
 
-drop sequence if exists account_seq;
+drop table screenshot;
 
-drop sequence if exists team_seq;
+drop table team;
+
+SET FOREIGN_KEY_CHECKS=1;
 

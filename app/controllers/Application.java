@@ -4,6 +4,7 @@ package controllers;
 import forms.*;
 //import forms.Register;
 import models.Account;
+import models.Screenshot;
 import models.Team;
 import play.api.mvc.Session$;
 import play.data.*;
@@ -135,6 +136,18 @@ public class Application extends Controller {
             Team team = Team.findTeam(session("email"));
             Form<UploadLogo> registerForm = Form.form(UploadLogo.class).bindFromRequest();
             team.setLogo(registerForm.get().url);
+        }
+        return ok();
+    }
+
+    public static Result uploadScreenshot() {
+        if (request().method().equals("GET")) {
+            return ok(upload_screenshot.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
+        } else if (request().method().equals("POST")) {
+            Team team = Team.findTeam(session("email"));
+            Form<UploadScreenshot> form = Form.form(UploadScreenshot.class).bindFromRequest();
+            Screenshot screenshot = new Screenshot(team, form.get().url);
+            screenshot.save();
         }
         return ok();
     }
