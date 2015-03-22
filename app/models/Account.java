@@ -18,6 +18,9 @@ public class Account extends Model {
     public String password;
 
     @ManyToOne
+    public UserType type;
+
+    @ManyToOne
     public Team team;
     // Finder will help us easily query data from database.
     public static Finder<Long, Account> find =

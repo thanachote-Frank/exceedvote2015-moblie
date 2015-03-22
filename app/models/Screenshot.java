@@ -2,10 +2,7 @@ package models;
 
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /**
  * Created by Frank on 3/22/15 AD.
@@ -16,7 +13,7 @@ public class Screenshot extends Model{
     @Id
     public Long id;
 
-    @OneToOne
+    @ManyToOne
     public Team team;
 
     public String url;
