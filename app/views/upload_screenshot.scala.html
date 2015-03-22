@@ -36,7 +36,7 @@
         </div>
         <div class="uk-grid uk-grid-small uk-margin-top" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
-                <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.mainMenu">Cancel</a>
+                <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.editDescription()">Cancel</a>
             </div>
         </div></form>
 
@@ -79,7 +79,7 @@
     $.post (
     " @routes.Application.uploadLogo() ", { url : obj.url } )
     .done ( function ( data ) {
-    window.location.replace ( " @routes.Application.mainMenu ");
+    window.location.replace ( "  @routes.Application.editDescription() ");
     } )
     }
     } ;
