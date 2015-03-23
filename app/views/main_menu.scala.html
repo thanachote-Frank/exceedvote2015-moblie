@@ -44,17 +44,11 @@
 
     @if(!team.equals("No Team")){
         <div class="uk-text-center">
-            <div class="uk-grid uk-margin-small-top uk-grid-small">
-                <div class="uk-panel uk-width-1-2">
-                    <a href="@routes.Application.editDescription()" class="uk-button uk-icon-edit uk-margin-small-bottom ui-text-white ui-button ui-mountain-meadow" style="width:100%; font-size: 500%; padding: 20px;">
-                        <div class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">Description</div>
-                    </a>
-                </div>
-                <div class="uk-panel uk-width-1-2">
-                    <a href="@routes.Application.uploadLogo()" class="uk-button uk-icon-image uk-margin-small-bottom ui-text-white ui-button ui-hoki" style="width:100%; font-size: 500%; padding: 20px;">
-                        <div class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">Team Logo</div>
-                    </a>
-                </div>
+            <div class="uk-grid uk-margin-small-top">
+                <a href="@routes.Application.editDescription()" class="uk-button uk-width-1-1 uk-icon-edit uk-margin-small-bottom ui-text-white ui-button ui-mountain-meadow" style="width : 100 % ; font-size : 500 % ; padding : 20 px ;">
+                    <div class="uk-text-bottom" style="color : #ffffff ; font-size : 30 % ; font-family : 'Signika', sans-serif ;">
+                        Edit Team Description</div>
+                </a>
             </div>
         </div>
     }

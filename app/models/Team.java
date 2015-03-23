@@ -21,8 +21,9 @@ public class Team extends Model {
     public static Model.Finder<Long, Team> find =
             new Model.Finder<Long, Team>(Long.class, Team.class);
 
-    public Team(String name){
+    public Team(String name, String logo) {
         this.name = name;
+        this.logo = logo;
     }
 
 //    public static Account authenticate(
