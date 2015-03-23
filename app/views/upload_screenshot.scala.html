@@ -9,7 +9,7 @@
                     <div class="uk-form">
 
                         <fieldset data-uk-margin>
-                            <legend>Upload @name screenshot</legend>
+                            <legend>Upload @name screenshot <span id="msg"></span></legend>
                             @if(form.hasGlobalErrors) {
                                 <div class="uk-alert uk-alert-danger">
                                 @form.globalError.message
@@ -21,7 +21,7 @@
                         <a class="uk-form-file uk-button uk-button-primary uk-button-large uk-icon-cloud-upload uk-width-1-1 ui-button" style="font-size: 500%; padding: 20px;">
                             <div class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">
                                 Select a file
-                                <input id="upload-select" type="file">
+                                <input id="upload-select" type="file" multiple>
                             </div>
                         </a>
 
@@ -36,58 +36,52 @@
         </div>
         <div class="uk-grid uk-grid-small uk-margin-top" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
-                <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.editDescription()">Cancel</a>
+                <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.mainMenu">Back</a>
             </div>
         </div></form>
 
     <script>
-
     </script>
 
     <script>
-
     $ ( function ( ) {
-
+    var count = 0;
     var progressbar = $ ( "#progressbar" ),
     bar = progressbar.find ( '.uk-progress-bar' ),
     settings = {
-
+    type : 'json',
+    filelimit : '4',
     action : 'http://cloud.exceedvote2015.cf/upload.php', // upload url
-
     allow : '*.(jpg|jpeg|gif|png)', // allow only images
-
-
-
     loadstart : function ( ) {
     bar.css ( "width", "0%" ).text ( "0%" ) ;
     progressbar.removeClass ( "uk-hidden" ) ;
     },
-
     progress : function ( percent ) {
     percent = Math.ceil ( percent ) ;
     bar.css ( "width", percent + "%" ).text ( percent + "%" ) ;
     },
-
-    allcomplete : function ( response ) {
-
+    complete : function ( response ) {
+    console.log(response.url);
     bar.css ( "width", "100%" ).text ( "100%" ) ;
-
+    $.post (
+    " @routes.Application.uploadScreenshot() ", { url : response.url } )
+    .done ( function ( data ) {
+    bar.css ( "width", "0%" ).text ( "0%" ) ;
+    $('#msg' ).text('- [uploaded '+ ++count +' file(s)]');
+        @*window.location.replace ( " @routes.Application.mainMenu ");*@
+    } )
+    },
+    allcomplete : function ( response ) {
     setTimeout ( function ( ) {
     progressbar.addClass ( "uk-hidden" ) ;
     }, 250 ) ;
-   
-    window.location.replace ( "  @routes.Application.editDescription() ");
-    
-    
+    window.location.replace ( " @routes.Application.editDescription() ");
     }
-    };
-
-
-
+    } ;
     var select = UIkit.uploadSelect ( $ ( "#upload-select" ), settings ),
     drop = UIkit.uploadDrop ( $ ( "#upload-drop" ), settings ) ;
     } ) ;
-
     </script>
 
 }
