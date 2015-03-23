@@ -72,7 +72,7 @@ public class Application extends Controller {
             if (form.hasErrors()) {
                 return badRequest(create_team.render(form));
             } else {
-                Team team = new Team(form.get().name);
+                Team team = new Team(form.get().name, "" + routes.Assets.at("images/logo.png"));
                 team.save();
                 return redirect(
                         routes.Application.login()
