@@ -35,7 +35,7 @@ public class Application extends Controller {
     }
 
     public static Result team(Long teamID) {
-        return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID)));
+        return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID), Screenshot.getURL(teamID)));
     }
 
     public static Result login() {
@@ -141,6 +141,7 @@ public class Application extends Controller {
     }
 
     public static Result uploadScreenshot() {
+        System.out.println(request().method());
         if (request().method().equals("GET")) {
             return ok(upload_screenshot.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
         } else if (request().method().equals("POST")) {
@@ -148,6 +149,7 @@ public class Application extends Controller {
             Form<UploadScreenshot> form = Form.form(UploadScreenshot.class).bindFromRequest();
             Screenshot screenshot = new Screenshot(team, form.get().url);
             screenshot.save();
+            System.out.println("COM " + form.data());
         }
         return ok();
     }

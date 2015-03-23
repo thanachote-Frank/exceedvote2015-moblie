@@ -3,6 +3,7 @@ package models;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Frank on 3/22/15 AD.
@@ -25,4 +26,10 @@ public class Screenshot extends Model{
         this.team = team;
         this.url = url;
     }
+
+    public static List<Screenshot> getURL(Long teamID){
+        Team team = Team.getByID(teamID);
+        return Screenshot.find.where().eq("team", team).orderBy().desc("id").setMaxRows(4).findList();
+    }
+
 }
