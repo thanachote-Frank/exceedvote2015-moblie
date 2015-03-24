@@ -19,8 +19,8 @@ GET         /create_team             controllers.Application.createTeam()
 POST        /edit_description        controllers.Application.editDescription()
 GET         /edit_description        controllers.Application.editDescription()
 
-POST        /vote                    controllers.Application.voting()
-GET         /vote                    controllers.Application.voting()
+POST        /rating                    controllers.Application.rating()
+GET         /rating                    controllers.Application.rating()
 
 GET         /logout                  controllers.Application.logout()
 

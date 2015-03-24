@@ -28,6 +28,7 @@ public class Criteria extends Model{
         return Criteria.find.all();
     }
     public static String toStringId(Long id,int num){
-        return "rating-"+((id-1)*5+num);
+        return "rating-"+(id*5+num);
     }
+
 }

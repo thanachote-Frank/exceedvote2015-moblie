@@ -41,12 +41,12 @@
         @criterias.map { criteria =>
             @if(!criteria.name.equals("No Rate")){
                 <div class="uk-panel uk-width-1-1 uk-margin-small">
-                    <a href="@routes.Application.voting()" class="uk-width-9-10 uk-container-center">
+                    <a href="@routes.Application.rating()" class="uk-width-9-10 uk-container-center">
                         <div class="uk-grid uk-grid-small">
                             <div class="uk-width-9-10 uk-container-center">
                                 <div class="uk-panel uk-panel-box ">
                                     <legend>@criteria.name</legend>
-                                    <form class="rating-form" action="#" method="post" name="rating-movie" >
+                                    <form class="rating-form" action="#" method="post" name="rating-star" >
                                     <fieldset class="form-group">
 
                                         <legend class="form-legend">Rating:</legend>
@@ -118,9 +118,38 @@
         </div>
     </div>
 
+    <div class="uk-container-center">
+        <div class="uk-grid uk-grid-margin uk-grid-collapse uk-text-center uk-grid-small">
+            <button type="button"  onclick="post()" class="uk-container-center" style="width:90%; padding: 18px; height: 90%; font-size: large;">Submit Rating</button>
+            <script>
+            function post() {
+            var arr = "";
+                @criterias.map { criteria =>
+                    @if(!criteria.name.equals("No Rate")) {
+                        var str = "#rating-" ;
+                        var num= @criteria.Id*5;
+                        for(var a =1;a<6;a++){
+                        var temp = str + (num+a) ;
+                        if ( $ ( temp ).is(':checked') ) {
+                        console.log("@criteria.name" + " : " + a );
+                        arr+= "\""+ @criteria.Id +"\": \"" + a + "\" ,";
+
+                        }
+                        }
+                    }
+            }
+                arr+="\"end\": \"true\" ";
+            var obj = jQuery.parseJSON( '{ '+arr+' }' );
+            console.log(obj);
+            $.post ( "rating", obj , function( data ){});
+            }
+            </script>
+        </div>
+    </div>
 
 
 }
+
 @css = {
     <script type="text/javascript" src="@routes.Assets.at("bootstrap-rating/bootstrap-rating.min.js")"></script>
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("bootstrap-rating/bootstrap-rating.css")">
@@ -132,5 +161,6 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="@routes.Assets.at("materialize/js/materialize.min.js")"></script>
+
 
 }

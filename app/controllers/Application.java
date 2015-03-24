@@ -4,12 +4,19 @@ package controllers;
 import forms.*;
 //import forms.Register;
 import models.*;
+import models.*;
+import play.api.mvc.Session$;
 import play.data.*;
 import play.mvc.*;
 import views.html.*;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
+import static models.Criteria.*;
 
 public class Application extends Controller {
 
@@ -25,7 +32,24 @@ public class Application extends Controller {
         return ok(team_list.render(Team.getAll()));
     }
 
-    public static Result voting() { return ok(Vote.render(Criteria.getall())); }
+    public static Result rating() {
+         if (request().method().equals("GET")) {
+            return ok(rating.render(Criteria.getall()));
+        } else if (request().method().equals("POST")){
+           
+            for(Map.Entry<String,String[]> entry : request().body().asFormUrlEncoded().entrySet()) {
+                String key = entry.getKey();
+                String[] value = entry.getValue();
+                if(!key.equals("end")) {
+                    Rating obj = new Rating(Account.findEmail(session().get("email")), Criteria.find.byId(Long.parseLong(key)), Integer.parseInt(value[0]));
+                    obj.save();
+                }
+            }
+
+            return ok();
+        }
+        else return ok();
+    }
 
     public static Result team(Long teamID) {
         return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID), Screenshot.getURL(teamID)));
