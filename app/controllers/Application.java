@@ -4,6 +4,7 @@ package controllers;
 import forms.*;
 //import forms.Register;
 import models.*;
+import models.*;
 import play.api.mvc.Session$;
 import play.data.*;
 import play.mvc.*;
@@ -17,7 +18,6 @@ import java.util.Map;
 
 import static models.Criteria.*;
 
-
 public class Application extends Controller {
 
     public static Result index() {
@@ -29,18 +29,14 @@ public class Application extends Controller {
     }
 
     public static Result teamList() {
-
-        System.out.print("Run : ");
         return ok(team_list.render(Team.getAll()));
     }
 
     public static Result rating() {
-        System.out.println("Run : 1111");
-        if (request().method().equals("GET")) {
-            System.out.println("Get : 0000");
+         if (request().method().equals("GET")) {
             return ok(rating.render(Criteria.getall()));
         } else if (request().method().equals("POST")){
-            System.out.println("Debug");
+           
             for(Map.Entry<String,String[]> entry : request().body().asFormUrlEncoded().entrySet()) {
                 String key = entry.getKey();
                 String[] value = entry.getValue();
@@ -64,7 +60,7 @@ public class Application extends Controller {
     }
 
     public static Result regis() {
-        return ok(register.render(Form.form(Register.class), Team.getAll()));
+        return ok(register.render(Form.form(Register.class), Team.getAll(), UserType.getAll()));
     }
 
     public static Result editDescription() {
@@ -138,7 +134,7 @@ public class Application extends Controller {
     public static Result enroll() {
         Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
         if (registerForm.hasErrors()) {
-            return badRequest(register.render(registerForm, Team.getAll()));
+            return badRequest(register.render(registerForm, Team.getAll(), UserType.getAll()));
         } else {
             Account account = new Account(registerForm.get().name, registerForm.get().lastname, registerForm.get().email,
                     registerForm.get().password,
