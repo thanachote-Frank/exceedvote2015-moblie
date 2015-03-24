@@ -12317,7 +12317,7 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#apply-macro;0.13.5!apply-macro.jar
 [debug] 	[NOT REQUIRED] org.scala-lang#jline;2.10.4!jline.jar
 [debug] 	[NOT REQUIRED] org.fusesource.jansi#jansi;1.4!jansi.jar
-[debug] :: resolution report :: resolve 15431ms :: artifacts dl 1015ms
+[debug] :: resolution report :: resolve 3011ms :: artifacts dl 108ms
 [debug] 	report for default#exceedvote2015-moblie-build;0.1-SNAPSHOT compile produced in D:\Project\exceedvote2015-moblie\project\target\resolution-cache\reports\default-exceedvote2015-moblie-build-compile.xml
 [debug] 	report for default#exceedvote2015-moblie-build;0.1-SNAPSHOT runtime produced in D:\Project\exceedvote2015-moblie\project\target\resolution-cache\reports\default-exceedvote2015-moblie-build-runtime.xml
 [debug] 	report for default#exceedvote2015-moblie-build;0.1-SNAPSHOT test produced in D:\Project\exceedvote2015-moblie\project\target\resolution-cache\reports\default-exceedvote2015-moblie-build-test.xml
@@ -12331,5 +12331,5 @@
 [debug] 	report for default#exceedvote2015-moblie-build;0.1-SNAPSHOT docs produced in D:\Project\exceedvote2015-moblie\project\target\resolution-cache\reports\default-exceedvote2015-moblie-build-docs.xml
 [debug] 	report for default#exceedvote2015-moblie-build;0.1-SNAPSHOT pom produced in D:\Project\exceedvote2015-moblie\project\target\resolution-cache\reports\default-exceedvote2015-moblie-build-pom.xml
 [debug] 	report for default#exceedvote2015-moblie-build;0.1-SNAPSHOT scala-tool produced in D:\Project\exceedvote2015-moblie\project\target\resolution-cache\reports\default-exceedvote2015-moblie-build-scala-tool.xml
-[debug] 	resolve done (15431ms resolve - 1015ms download)
+[debug] 	resolve done (3011ms resolve - 108ms download)
 [info] Done updating.
