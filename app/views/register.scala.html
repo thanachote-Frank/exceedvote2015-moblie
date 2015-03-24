@@ -1,4 +1,4 @@
-@(form: Form[forms.Register])(teams: List[Team])
+@(form: Form[forms.Register])(teams: List[Team])(userType: List[UserType])
 
 @main("Register")(css) {
     @*<h1>Register</h1>*@
@@ -28,20 +28,21 @@
 
                             <input name="lastname" type="text" placeholder="lastname" class="uk-width-1-1" value="@form.data.get("lastname")">
 
-                            <select name="team" class="uk-width-1-1 uk-margin-bottom">
-                            @teams.map { team =>
-
-                                    <option value="@team.id">@team.name</option>
-
-
-
-                            }
-
+                            </select>
+                            <select name="type" value ="type" class="uk-width-1-1 ">
+                                <option value="" disabled selected>&#60;type&#62;</option>
+                                @userType.map { userType =>
+                                    <option value="@userType.name">@userType.name</option>
+                                }
 
                             </select>
 
-                            @*<button class="uk-button uk-width-1-1">Submit</button>*@
-                            @*<label><input type="checkbox"> ...</label>*@
+                            <select name="team" class="uk-width-1-1 uk-margin-bottom">
+                                <option value="" disabled selected>&#60;team&#62;</option>
+                            @teams.map { team =>
+                                    <option value="@team.id">@team.name</option>
+                            }
+                            </select>
                         </fieldset>
 
                     </div>

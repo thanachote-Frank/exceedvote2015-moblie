@@ -3,20 +3,12 @@ package controllers;
 //import forms.EditDescription;
 import forms.*;
 //import forms.Register;
-import models.Account;
-import models.Criteria;
-import models.Screenshot;
-import models.Team;
-import play.api.mvc.Session$;
+import models.*;
 import play.data.*;
 import play.mvc.*;
 import views.html.*;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-
-import static models.Criteria.*;
 
 
 public class Application extends Controller {
@@ -44,7 +36,7 @@ public class Application extends Controller {
     }
 
     public static Result regis() {
-        return ok(register.render(Form.form(Register.class), Team.getAll()));
+        return ok(register.render(Form.form(Register.class), Team.getAll(), UserType.getAll()));
     }
 
     public static Result editDescription() {
@@ -118,7 +110,7 @@ public class Application extends Controller {
     public static Result enroll() {
         Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
         if (registerForm.hasErrors()) {
-            return badRequest(register.render(registerForm, Team.getAll()));
+            return badRequest(register.render(registerForm, Team.getAll(), UserType.getAll()));
         } else {
             Account account = new Account(registerForm.get().name, registerForm.get().lastname, registerForm.get().email,
                     registerForm.get().password,

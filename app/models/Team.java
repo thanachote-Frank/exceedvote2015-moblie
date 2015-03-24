@@ -32,7 +32,7 @@ public class Team extends Model {
 //    }
 
     public static List<Team> getAll() {
-        return Team.find.all();
+        return Team.find.orderBy("name").findList();
     }
 
     public static Team getDescription(Long teamID) {
