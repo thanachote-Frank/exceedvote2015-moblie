@@ -4,6 +4,7 @@ package controllers;
 import forms.*;
 //import forms.Register;
 import models.Account;
+import models.Criteria;
 import models.Screenshot;
 import models.Team;
 import play.api.mvc.Session$;
@@ -14,6 +15,8 @@ import views.html.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+
+import static models.Criteria.*;
 
 
 public class Application extends Controller {
@@ -30,12 +33,10 @@ public class Application extends Controller {
         return ok(team_list.render(Team.getAll()));
     }
 
-    public static Result voting() {
-        return ok(Vote.render());
-    }
+    public static Result voting() { return ok(Vote.render(Criteria.getall())); }
 
     public static Result team(Long teamID) {
-        return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID)));
+        return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID), Screenshot.getURL(teamID)));
     }
 
     public static Result login() {
@@ -71,7 +72,7 @@ public class Application extends Controller {
             if (form.hasErrors()) {
                 return badRequest(create_team.render(form));
             } else {
-                Team team = new Team(form.get().name);
+                Team team = new Team(form.get().name, "" + routes.Assets.at("images/logo.png"));
                 team.save();
                 return redirect(
                         routes.Application.login()
@@ -141,6 +142,7 @@ public class Application extends Controller {
     }
 
     public static Result uploadScreenshot() {
+        System.out.println(request().method());
         if (request().method().equals("GET")) {
             return ok(upload_screenshot.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
         } else if (request().method().equals("POST")) {
@@ -148,6 +150,7 @@ public class Application extends Controller {
             Form<UploadScreenshot> form = Form.form(UploadScreenshot.class).bindFromRequest();
             Screenshot screenshot = new Screenshot(team, form.get().url);
             screenshot.save();
+            System.out.println("COM " + form.data());
         }
         return ok();
     }

@@ -1,50 +1,16 @@
-
+@(criterias: List[Criteria])
 
 @main("Rating")(css) {
-    <div class="uk-grid uk-grid-collapse uk-text-center" data-uk-grid-margin>
-        <div class="uk-width-1-6">
-            <div class="uk-panel uk-panel-box ui-red">
-                <a href="@routes.Application.mainMenu()" class="uk-icon-hover uk-icon-small uk-icon-arrow-left"></a>
-            </div>
+    <div class="uk-grid uk-text-center uk-grid-collapse" style="font-size: large;">
+        <div class="uk-panel uk-width-1-6">
+            <a href="@routes.Application.teamList()" class="uk-button uk-icon-arrow-left uk-margin-small-bottom ui-text-white ui-button ui-redpink" style="width:100%; padding: 18px; border-width: 0; height: 100%; font-size: large;"></a>
         </div>
         <div class="uk-width-5-6">
-            <div class="uk-panel uk-panel-box ui-yellow">
-               Team name
+            <div class="uk-panel uk-panel-box ui-yellow ui-text-white" style="border-width: 0;">
+                <b>Rating</b>
             </div>
         </div>
     </div>
-
-    <div class="uk-grid uk-grid-small" data-uk-grid-margin>
-        <div class="uk-width-9-10 uk-container-center">
-                <div class="uk-panel uk-panel-box ">
-                    <h3>Rating</h3>
-                    @*<input type="hidden" class="rating" data-filled="uk-icon-large uk-icon-star" data-empty="uk-icon-large uk-icon-star-o" data-fractions="3"/>*@
-                    @*<form action="#">*@
-                        @*<p>*@
-                            @*<input class="with-gap" name="group1" type="radio" id="test1" />*@
-                            @*<label for="test1">1</label>*@
-                        @*</p>*@
-                        @*<p>*@
-                            @*<input class="with-gap" name="group1" type="radio" id="test2" />*@
-                            @*<label for="test2">2</label>*@
-                        @*</p>*@
-                        @*<p>*@
-                            @*<input class="with-gap" name="group1" type="radio" id="test3"  />*@
-                            @*<label for="test3">3</label>*@
-                        @*</p>*@
-                        @*<p>*@
-                            @*<input class="with-gap" name="group1" type="radio" id="test4" />*@
-                            @*<label for="test4">4</label>*@
-                        @*</p>*@
-                        @*<p>*@
-                            @*<input class="with-gap" name="group1" type="radio" id="test5" />*@
-                            @*<label for="test5">5</label>*@
-                        @*</p>*@
-                    @*</form>*@
-                </div>
-        </div>
-    </div>
-
 
     @*<script>*@
     @*$(function () {*@
@@ -70,150 +36,90 @@
     @*});*@
     @*});*@
     @*</script>*@
+    <div class="uk-text-center">
+        <div class="uk-grid uk-grid-margin uk-grid-small">
+        @criterias.map { criteria =>
+            @if(!criteria.name.equals("No Rate")){
+                <div class="uk-panel uk-width-1-1 uk-margin-small">
+                    <a href="@routes.Application.voting()" class="uk-width-9-10 uk-container-center">
+                        <div class="uk-grid uk-grid-small">
+                            <div class="uk-width-9-10 uk-container-center">
+                                <div class="uk-panel uk-panel-box ">
+                                    <legend>@criteria.name</legend>
+                                    <form class="rating-form" action="#" method="post" name="rating-movie" >
+                                    <fieldset class="form-group">
 
-    <div class="uk-grid uk-grid-small" data-uk-grid-margin>
-        <div class="uk-width-9-10 uk-container-center">
-            <div class="uk-panel uk-panel-box ">
-                <legend>Creativity</legend>
+                                        <legend class="form-legend">Rating:</legend>
 
+                                        <div class="form-item">
 
-                    <!-- RATING - Form -->
-                <form class="rating-form" action="#" method="post" name="rating-movie" >
-                    <fieldset class="form-group">
+                                            <input id="@Criteria.toStringId(criteria.Id , 5 )" name="rating" type="radio" value="5" />
+                                            <label for="@Criteria.toStringId(criteria.Id , 5 )" data-value="5">
+                                                <span class="rating-star">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </span>
+                                                <span class="ir">5</span>
+                                            </label>
+                                            <input id="@Criteria.toStringId(criteria.Id , 4 )" name="rating" type="radio" value="4" />
+                                            <label for="@Criteria.toStringId(criteria.Id , 4 )" data-value="4">
+                                                <span class="rating-star">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </span>
+                                                <span class="ir">4</span>
+                                            </label>
+                                            <input id="@Criteria.toStringId(criteria.Id , 3 )" name="rating" type="radio" value="3" />
+                                            <label for="@Criteria.toStringId(criteria.Id , 3 )" data-value="3">
+                                                <span class="rating-star">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </span>
+                                                <span class="ir">3</span>
+                                            </label>
+                                            <input id="@Criteria.toStringId(criteria.Id , 2 )" name="rating" type="radio" value="2" />
+                                            <label for="@Criteria.toStringId(criteria.Id , 2 )" data-value="2">
+                                                <span class="rating-star">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </span>
+                                                <span class="ir">2</span>
+                                            </label>
+                                            <input id="@Criteria.toStringId(criteria.Id , 1 )" name="rating" type="radio" value="1" />
+                                            <label for="@Criteria.toStringId(criteria.Id , 1 )" data-value="1">
+                                                <span class="rating-star">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </span>
+                                                <span class="ir">1</span>
+                                            </label>
 
-                        <legend class="form-legend">Rating:</legend>
+                                            @*<div class="form-action">*@
+                                            @*<input class="btn-reset" type="reset" value="Reset" />*@
+                                            @*</div>*@
 
-                        <div class="form-item">
+                                            @*<div class="form-output">*@
+                                            @*? / 5*@
+                                            @*</div>*@
 
-                            <input id="rating-5" name="rating" type="radio" value="5" />
-                            <label for="rating-5" data-value="5">
-                                <span class="rating-star">
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span class="ir">5</span>
-                            </label>
-                            <input id="rating-4" name="rating" type="radio" value="4" />
-                            <label for="rating-4" data-value="4">
-                                <span class="rating-star">
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span class="ir">4</span>
-                            </label>
-                            <input id="rating-3" name="rating" type="radio" value="3" />
-                            <label for="rating-3" data-value="3">
-                                <span class="rating-star">
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span class="ir">3</span>
-                            </label>
-                            <input id="rating-2" name="rating" type="radio" value="2" />
-                            <label for="rating-2" data-value="2">
-                                <span class="rating-star">
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span class="ir">2</span>
-                            </label>
-                            <input id="rating-1" name="rating" type="radio" value="1" />
-                            <label for="rating-1" data-value="1">
-                                <span class="rating-star">
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span class="ir">1</span>
-                            </label>
+                                        </div>
 
-                            @*<div class="form-action">*@
-                                @*<input class="btn-reset" type="reset" value="Reset" />*@
-                            @*</div>*@
+                                    </fieldset>
+                                </form>
 
-                            @*<div class="form-output">*@
-                                @*? / 5*@
-                            @*</div>*@
-
+                                </div>
+                            </div>
                         </div>
-
-                    </fieldset>
-                </form>
-
-            </div>
+                    </a>
+                </div>
+                @*@criteria.name*@
+            }
+        }
         </div>
     </div>
 
-    @*<div class="uk-grid uk-grid-small" data-uk-grid-margin>*@
-        @*<div class="uk-width-9-10 uk-container-center">*@
-            @*<div class="uk-panel uk-panel-box ">*@
-                @*<legend>Innovation</legend>*@
 
 
-                    @*<!-- RATING - Form -->*@
-                @*<form class="rating-form" action="#" method="post" name="rating-movie" >*@
-                    @*<fieldset class="form-group2">*@
-
-                        @*<legend class="form-legend">Rating:</legend>*@
-
-                        @*<div class="form-item">*@
-
-                            @*<input id="rating-5" name="rating" type="radio" value="5" />*@
-                            @*<label for="rating-5" data-value="5">*@
-                                @*<span class="rating-star">*@
-                                    @*<i class="fa fa-star-o"></i>*@
-                                    @*<i class="fa fa-star"></i>*@
-                                @*</span>*@
-                                @*<span class="ir">5</span>*@
-                            @*</label>*@
-                            @*<input id="rating-4" name="rating" type="radio" value="4" />*@
-                            @*<label for="rating-4" data-value="4">*@
-                                @*<span class="rating-star">*@
-                                    @*<i class="fa fa-star-o"></i>*@
-                                    @*<i class="fa fa-star"></i>*@
-                                @*</span>*@
-                                @*<span class="ir">4</span>*@
-                            @*</label>*@
-                            @*<input id="rating-3" name="rating" type="radio" value="3" />*@
-                            @*<label for="rating-3" data-value="3">*@
-                                @*<span class="rating-star">*@
-                                    @*<i class="fa fa-star-o"></i>*@
-                                    @*<i class="fa fa-star"></i>*@
-                                @*</span>*@
-                                @*<span class="ir">3</span>*@
-                            @*</label>*@
-                            @*<input id="rating-2" name="rating" type="radio" value="2" />*@
-                            @*<label for="rating-2" data-value="2">*@
-                                @*<span class="rating-star">*@
-                                    @*<i class="fa fa-star-o"></i>*@
-                                    @*<i class="fa fa-star"></i>*@
-                                @*</span>*@
-                                @*<span class="ir">2</span>*@
-                            @*</label>*@
-                            @*<input id="rating-1" name="rating" type="radio" value="1" />*@
-                            @*<label for="rating-1" data-value="1">*@
-                                @*<span class="rating-star">*@
-                                    @*<i class="fa fa-star-o"></i>*@
-                                    @*<i class="fa fa-star"></i>*@
-                                @*</span>*@
-                                @*<span class="ir">1</span>*@
-                            @*</label>*@
-
-                            @*<div class="form-action">*@
-                            @*<input class="btn-reset" type="reset" value="Reset" />*@
-                            @*</div>*@
-
-                            @*<div class="form-output">*@
-                            @*? / 5*@
-                            @*</div>*@
-
-                        @*</div>*@
-
-                    @*</fieldset>*@
-                @*</form>*@
-
-            @*</div>*@
-        @*</div>*@
-    @*</div>*@
 }
 @css = {
     <script type="text/javascript" src="@routes.Assets.at("bootstrap-rating/bootstrap-rating.min.js")"></script>
