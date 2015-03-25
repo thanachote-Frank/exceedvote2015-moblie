@@ -1,4 +1,4 @@
-@(criterias: List[Criteria])
+@(criterias: List[Criteria])(uid: String)
 
 @main("Rating")(css) {
     <div class="uk-grid uk-text-center uk-grid-collapse">
@@ -12,30 +12,6 @@
         </div>
     </div>
 
-    @*<script>*@
-    @*$(function () {*@
-    @*$('input.check').on('change', function () {*@
-    @*alert('Rating: ' + $(this).val());*@
-    @*});*@
-    @*$('.rating-tooltip').rating({*@
-    @*extendSymbol: function (rate) {*@
-    @*$(this).tooltip({*@
-    @*container: 'body',*@
-    @*placement: 'bottom',*@
-    @*title: 'Rate ' + rate*@
-    @*});*@
-    @*}*@
-    @*});*@
-    @*$('.rating').each(function () {*@
-    @*$('<span class="label label-default"></span>')*@
-    @*.text($(this).val() || ' ')*@
-    @*.insertAfter(this);*@
-    @*});*@
-    @*$('.rating').on('change', function () {*@
-    @*$(this).next('.label').text($(this).val());*@
-    @*});*@
-    @*});*@
-    @*</script>*@
     <div class="uk-text-center">
         <div class="uk-grid uk-grid-margin uk-grid-small">
         @criterias.map { criteria =>
@@ -92,17 +68,7 @@
                                                 </span>
                                                 <span class="ir">1</span>
                                             </label>
-
-                                            @*<div class="form-action">*@
-                                            @*<input class="btn-reset" type="reset" value="Reset" />*@
-                                            @*</div>*@
-
-                                            @*<div class="form-output">*@
-                                            @*? / 5*@
-                                            @*</div>*@
-
                                         </div>
-
                                     </fieldset>
                                 </form>
 
@@ -110,45 +76,40 @@
                             </div>
                         </div>
                 </div>
-
             }
         }
         </div>
-
-
     <div class="uk-grid uk-margin-large-bottom" data-uk-grid-margin>
         <div class="uk-width-9-10 uk-container-center">
-            <a class="uk-button uk-button-large uk-width-1-1 ui-eucalyptus ui-text-white ui-button" href="@routes.Application.rating()" style="line-height: 50px;"><div style="font-size: 150%"onclick="post()">Submit</div></a>
+            <a class="uk-button uk-button-large uk-width-1-1 ui-eucalyptus ui-text-white ui-button" style="line-height: 50px;"><div style="font-size: 150%" onclick="post()" >Submit</div></a>
         </div>
     </div>
-
     </div>
             <script>
             function post() {
-            var arr = "";
+            var arr = "\"uid\": \"" + @uid + "\" ";
                 @criterias.map { criteria =>
                     @if(!criteria.name.equals("No Rate")) {
-                        var str = "#rating-" ;
+                        var str = "#rating-";
                         var num= @criteria.Id*5;
                         for(var a =1;a<6;a++){
                         var temp = str + (num+a) ;
                         if ( $ ( temp ).is(':checked') ) {
                         console.log("@criteria.name" + " : " + a );
-                        arr+= "\""+ @criteria.Id +"\": \"" + a + "\" ,";
-
+                        arr+= ",\""+ @criteria.Id +"\": \"" + a + "\" ";
                         }
                         }
                     }
+
             }
-                arr+="\"end\": \"true\" ";
             var obj = jQuery.parseJSON( '{ '+arr+' }' );
+
+
+            $.post ( "/rating2" , obj , function( data ){});
             console.log(obj);
-            $.post ( "rating", obj , function( data ){});
+            window.location.replace ( "@routes.Application.rating(uid)" );
             }
             </script>
-
-
-
 }
 
 @css = {
