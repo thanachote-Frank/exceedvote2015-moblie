@@ -31,11 +31,10 @@ public class Application extends Controller {
         return ok(team_list.render(Team.getAll()));
     }
 
-    public static Result voteResult() {
+    public static Result ratingResult() {
         List<Stuff> rankAll = new ArrayList();
         List<Criteria> cri = Criteria.getall();
         List<Team> team = Team.getAll();
-
         for(int i=0; i<cri.size(); i++) {
             HashMap<Team, Double> rankInCri = new HashMap<>();
             for(int j=0; j<team.size(); j++) {
@@ -47,7 +46,6 @@ public class Application extends Controller {
                 scoreAvg = scoreAvg / data.size();
                 rankInCri.put(team.get(j), scoreAvg);
             }
-            System.out.println(rankInCri.size());
             Set<Map.Entry<Team, Double>> set = rankInCri.entrySet();
             List<Map.Entry<Team, Double>> list = new ArrayList<Map.Entry<Team, Double>>(set);
             Collections.sort( list, new Comparator<Map.Entry<Team, Double>>()
