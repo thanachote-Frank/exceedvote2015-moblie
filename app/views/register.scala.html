@@ -54,10 +54,13 @@
             </div>
         </div>
         <script>
+             $('#checker').val("@form.data.get("type")");
+             $('#checker2').val("@form.data.get("team")");
+             if ($('#checker').val() == "participant"){
+                $("#checker2").attr("disabled",false);
+             }
              function checkType(self) {
-                 console.log(self.value);
-                 if(self.value == "participant" ){
-                 console.log(self.value+"2");
+                 if(self.value.toLowerCase() == "participant" ){
                   $("#checker2").attr("disabled",false);
                  }
                  else {
@@ -66,13 +69,13 @@
                  }
         }
         </script>
-        <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+        <div class="uk-grid uk-grid-small uk-margin-top" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
                 <button class="uk-button uk-button-primary uk-button-large uk-width-1-1" type="submit">Submit</button>
             </div>
         </div>
 
-        <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+        <div class="uk-grid uk-grid-small uk-margin-large-bottom" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
                 <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.login">Cancel</a>
             </div>

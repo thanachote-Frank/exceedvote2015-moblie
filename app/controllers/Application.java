@@ -138,7 +138,7 @@ public class Application extends Controller {
         } else {
             Account account = new Account(registerForm.get().name, registerForm.get().lastname, registerForm.get().email,
                     registerForm.get().password,
-                    Team.find.byId(registerForm.get().team));
+                    Team.find.byId(registerForm.get().team), UserType.findType(registerForm.get().type));
             account.save();
             return redirect(
                     routes.Application.login()

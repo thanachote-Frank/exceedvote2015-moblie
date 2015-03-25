@@ -26,12 +26,13 @@ public class Account extends Model {
     public static Finder<Long, Account> find =
             new Finder<Long, Account>(Long.class, Account.class);
 
-    public Account(String name, String lastname, String email, String password, Team team) {
+    public Account(String name, String lastname, String email, String password, Team team,UserType userType) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.team = team;
+        this.type = type;
     }
 
 
