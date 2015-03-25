@@ -25,6 +25,13 @@ public class Rating extends Model {
 
     public Integer rating;
 
+    public Rating(Account acc,Criteria crit,Integer rating,Team team){
+        this.account=acc;
+        this.criteria=crit;
+        this.rating=rating;
+        this.team = team;
+    }
+
     public static Finder<Long, Rating> find =
             new Finder<Long, Rating>(Long.class, Rating.class);
 

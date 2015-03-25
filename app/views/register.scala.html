@@ -1,4 +1,4 @@
-@(form: Form[forms.Register])(teams: List[Team])
+@(form: Form[forms.Register])(teams: List[Team])(userType: List[UserType])
 
 @main("Register")(css) {
     @*<h1>Register</h1>*@
@@ -28,20 +28,24 @@
 
                             <input name="lastname" type="text" placeholder="lastname" class="uk-width-1-1" value="@form.data.get("lastname")">
 
-                            <select name="team" class="uk-width-1-1 uk-margin-bottom">
-                            @teams.map { team =>
+                            </select>
 
-                                    <option value="@team.id">@team.name</option>
+                            <select id="checker" name="type" onchange="checkType(this)" class="uk-width-1-1 ">
+                                <option value="" disabled selected>&#60;type&#62;</option>
 
+                                @userType.map { userType =>
 
-
-                            }
-
+                                    <option value="@userType.name">@userType.name</option>
+                                }
 
                             </select>
 
-                            @*<button class="uk-button uk-width-1-1">Submit</button>*@
-                            @*<label><input type="checkbox"> ...</label>*@
+                            <select  id="checker2" disabled name="team" class="uk-width-1-1 uk-margin-bottom">
+                                <option id="checkFalse" value="" disabled selected>&#60;team&#62;</option>
+                            @teams.map { team =>
+                                    <option value="@team.id">@team.name</option>
+                            }
+                            </select>
                         </fieldset>
 
                     </div>
@@ -49,17 +53,34 @@
 
             </div>
         </div>
-        <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+        <script>
+             $('#checker').val("@form.data.get("type")");
+             $('#checker2').val("@form.data.get("team")");
+             if ($('#checker').val() == "participant"){
+                $("#checker2").attr("disabled",false);
+             }
+             function checkType(self) {
+                 if(self.value.toLowerCase() == "participant" ){
+                  $("#checker2").attr("disabled",false);
+                 }
+                 else {
+                 $("#checker2").attr("disabled",true);
+                     $("#checkFalse" ).attr("selected", true);
+                 }
+        }
+        </script>
+        <div class="uk-grid uk-grid-small uk-margin-top" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
                 <button class="uk-button uk-button-primary uk-button-large uk-width-1-1" type="submit">Submit</button>
             </div>
         </div>
 
-        <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+        <div class="uk-grid uk-grid-small uk-margin-large-bottom" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
                 <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.login">Cancel</a>
             </div>
         </div>
+
     }
 
 

@@ -1,12 +1,12 @@
 @(teams: List[Team])
 
 @main("Team List")(css) {
-    <div class="uk-grid uk-grid-collapse uk-text-center" data-uk-grid-margin>
+    <div class="uk-grid uk-grid-collapse uk-text-center" data-uk-grid-margin >
         <div class="uk-panel uk-width-1-6">
-            <a href="@routes.Application.mainMenu()" class="uk-button uk-icon-arrow-left uk-margin-small-bottom ui-text-white ui-button ui-redpink" style="width:100%; padding: 18px; border-width: 0; height: 100%"></a>
+            <a href="@routes.Application.mainMenu()" class="uk-button uk-icon-arrow-left ui-text-white ui-button ui-redpink" style="width : 100% ; padding : 18px ; border-width : 0 ; height : 60px; font-size: large;"></a>
         </div>
         <div class="uk-width-5-6">
-            <div class="uk-panel uk-panel-box ui-yellow" style="color: #ffffff; border-width: 0">
+            <div class="uk-panel uk-panel-box ui-yellow" style="color: #ffffff; border-width: 0; font-size: large;height : 60px;">
                 <b>Team List</b>
             </div>
         </div>
@@ -19,11 +19,10 @@
                 @if(!team.name.equals("No Team")){
                 <div class="uk-panel uk-width-1-2">
                 <a href="@routes.Application.team(team.id)" class="uk-button uk-width-1-1 uk-margin-small-bottom ui-text-white ui-button ui-black" style="font-size: 500%; padding: 20px;">
-                    <img src="@team.logo">
+                    <img src="@team.logo" style="height : 100px">
                     <div class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">@team.name</div>
                 </a>
                 </div>
-                    @*@team.name*@
                 }
             }
         </div>

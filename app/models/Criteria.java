@@ -20,9 +20,15 @@ public class Criteria extends Model{
     public static Finder<Long, Criteria> find =
             new Finder<Long, Criteria>(Long.class, Criteria.class);
 
-    public static List<Criteria> getAllCriteria() {
-        return Criteria.find.all();
+    public Criteria(String name){
+        this.name = name;
     }
 
+    public static List<Criteria> getall(){
+        return Criteria.find.all();
+    }
+    public static String toStringId(Long id,int num){
+        return "rating-"+(id*5+num);
+    }
 
 }

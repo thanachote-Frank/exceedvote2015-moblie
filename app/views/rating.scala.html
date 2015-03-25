@@ -1,0 +1,128 @@
+@(criterias: List[Criteria])(uid: String)
+
+@main("Rating")(css) {
+    <div class="uk-grid uk-text-center uk-grid-collapse">
+        <div class="uk-panel uk-width-1-6">
+            <a href="@routes.Application.teamList()" class="uk-button uk-icon-arrow-left ui-text-white ui-button ui-redpink" style="width:100%; padding: 18px; border-width: 0; height : 55px; font-size: large;"></a>
+        </div>
+        <div class="uk-width-5-6">
+            <div class="uk-panel uk-panel-box ui-yellow ui-text-white" style="border-width: 0; font-size: large; height : 55px;">
+                <b>Rating</b>
+            </div>
+        </div>
+    </div>
+
+    <div class="uk-text-center">
+        <div class="uk-grid uk-grid-margin uk-grid-small">
+        @criterias.map { criteria =>
+            @if(!criteria.name.equals("No Rate")){
+                <div class="uk-panel uk-width-1-1 uk-margin-small">
+                        <div class="uk-grid uk-grid-small">
+                            <div class="uk-width-9-10 uk-container-center">
+                                <div class="uk-panel uk-panel-box ">
+                                    <legend>@criteria.name</legend>
+                                    <form class="rating-form" action="#" method="post" name="rating-star" >
+                                    <fieldset class="form-group">
+
+                                        <legend class="form-legend">Rating:</legend>
+
+                                        <div class="form-item">
+
+                                            <input id="@Criteria.toStringId(criteria.Id , 5 )" name="rating" type="radio" value="5" />
+                                            <label for="@Criteria.toStringId(criteria.Id , 5 )" data-value="5">
+                                                <span class="rating-star">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </span>
+                                                <span class="ir">5</span>
+                                            </label>
+                                            <input id="@Criteria.toStringId(criteria.Id , 4 )" name="rating" type="radio" value="4" />
+                                            <label for="@Criteria.toStringId(criteria.Id , 4 )" data-value="4">
+                                                <span class="rating-star">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </span>
+                                                <span class="ir">4</span>
+                                            </label>
+                                            <input id="@Criteria.toStringId(criteria.Id , 3 )" name="rating" type="radio" value="3" />
+                                            <label for="@Criteria.toStringId(criteria.Id , 3 )" data-value="3">
+                                                <span class="rating-star">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </span>
+                                                <span class="ir">3</span>
+                                            </label>
+                                            <input id="@Criteria.toStringId(criteria.Id , 2 )" name="rating" type="radio" value="2" />
+                                            <label for="@Criteria.toStringId(criteria.Id , 2 )" data-value="2">
+                                                <span class="rating-star">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </span>
+                                                <span class="ir">2</span>
+                                            </label>
+                                            <input id="@Criteria.toStringId(criteria.Id , 1 )" name="rating" type="radio" value="1" />
+                                            <label for="@Criteria.toStringId(criteria.Id , 1 )" data-value="1">
+                                                <span class="rating-star">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </span>
+                                                <span class="ir">1</span>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+                                </form>
+
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            }
+        }
+        </div>
+    <div class="uk-grid uk-margin-large-bottom" data-uk-grid-margin>
+        <div class="uk-width-9-10 uk-container-center">
+            <a class="uk-button uk-button-large uk-width-1-1 ui-eucalyptus ui-text-white ui-button" style="line-height: 50px;"><div style="font-size: 150%" onclick="post()" >Submit</div></a>
+        </div>
+    </div>
+    </div>
+            <script>
+            function post() {
+            var arr = "\"uid\": \"" + @uid + "\" ";
+                @criterias.map { criteria =>
+                    @if(!criteria.name.equals("No Rate")) {
+                        var str = "#rating-";
+                        var num= @criteria.Id*5;
+                        for(var a =1;a<6;a++){
+                        var temp = str + (num+a) ;
+                        if ( $ ( temp ).is(':checked') ) {
+                        console.log("@criteria.name" + " : " + a );
+                        arr+= ",\""+ @criteria.Id +"\": \"" + a + "\" ";
+                        }
+                        }
+                    }
+
+            }
+            var obj = jQuery.parseJSON( '{ '+arr+' }' );
+
+
+            $.post ( "/rating2" , obj , function( data ){});
+            console.log(obj);
+            window.location.replace ( "@routes.Application.rating(uid)" );
+            }
+            </script>
+}
+
+@css = {
+    <script type="text/javascript" src="@routes.Assets.at("bootstrap-rating/bootstrap-rating.min.js")"></script>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("bootstrap-rating/bootstrap-rating.css")">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="@routes.Assets.at("materialize/css/materialize.min.css")">
+    <link rel="stylesheet" href="@routes.Assets.at("materialize/css/rate.css")">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="@routes.Assets.at("materialize/js/materialize.min.js")"></script>
+
+
+}

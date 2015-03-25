@@ -21,8 +21,9 @@ public class Team extends Model implements Comparable<Team>{
     public static Model.Finder<Long, Team> find =
             new Model.Finder<Long, Team>(Long.class, Team.class);
 
-    public Team(String name){
+    public Team(String name, String logo) {
         this.name = name;
+        this.logo = logo;
     }
 
 //    public static Account authenticate(
@@ -31,7 +32,7 @@ public class Team extends Model implements Comparable<Team>{
 //    }
 
     public static List<Team> getAll() {
-        return Team.find.all();
+        return Team.find.orderBy("name").findList();
     }
 
     public static Team getDescription(Long teamID) {

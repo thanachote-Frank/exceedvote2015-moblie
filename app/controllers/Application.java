@@ -10,6 +10,10 @@ import play.mvc.*;
 import views.html.*;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.*;
 
 
@@ -60,12 +64,40 @@ public class Application extends Controller {
     }
 
 
-    public static Result voting() {
-        return ok(Vote.render());
+    public static Result rating(String teamID ) {
+            return ok(rating.render(Criteria.getall(),teamID));
+    }
+    public static Result ratingPost() {
+        Team team=null;
+         if (request().method().equals("POST")){
+             for(Map.Entry<String,String[]> entry : request().body().asFormUrlEncoded().entrySet()) {
+                 String key = entry.getKey();
+                 String[] value = entry.getValue();
+                 if(key.equals("uid")) {
+                     System.out.println(Arrays.toString(value).substring(1, value.length + 1));
+                     Long id = Long.parseLong(Arrays.toString(value).substring(1, value.length + 1));
+                     System.out.println("ID : " + id);
+                     team = Team.find.byId(id);
+                 }
+             }
+            for(Map.Entry<String,String[]> entry : request().body().asFormUrlEncoded().entrySet()) {
+                String key = entry.getKey();
+                String[] value = entry.getValue();
+                if(!key.equals("uid")) {
+                    Rating obj = new Rating(Account.findEmail(session().get("email")), Criteria.find.byId(Long.parseLong(key)), Integer.parseInt(value[0]),team);
+                    obj.save();
+                }
+
+            }
+
+            return ok();
+        }
+        else return ok();
     }
 
+
     public static Result team(Long teamID) {
-        return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID)));
+        return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID), Screenshot.getURL(teamID)));
     }
 
     public static Result login() {
@@ -73,7 +105,7 @@ public class Application extends Controller {
     }
 
     public static Result regis() {
-        return ok(register.render(Form.form(Register.class), Team.getAll()));
+        return ok(register.render(Form.form(Register.class), Team.getAll(), UserType.getAll()));
     }
 
     public static Result editDescription() {
@@ -101,7 +133,7 @@ public class Application extends Controller {
             if (form.hasErrors()) {
                 return badRequest(create_team.render(form));
             } else {
-                Team team = new Team(form.get().name);
+                Team team = new Team(form.get().name, "" + routes.Assets.at("images/logo.png"));
                 team.save();
                 return redirect(
                         routes.Application.login()
@@ -147,11 +179,11 @@ public class Application extends Controller {
     public static Result enroll() {
         Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
         if (registerForm.hasErrors()) {
-            return badRequest(register.render(registerForm, Team.getAll()));
+            return badRequest(register.render(registerForm, Team.getAll(), UserType.getAll()));
         } else {
             Account account = new Account(registerForm.get().name, registerForm.get().lastname, registerForm.get().email,
                     registerForm.get().password,
-                    Team.find.byId(registerForm.get().team));
+                    Team.find.byId(registerForm.get().team), UserType.findType(registerForm.get().type));
             account.save();
             return redirect(
                     routes.Application.login()

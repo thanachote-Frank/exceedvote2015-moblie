@@ -4,32 +4,30 @@
 
 # Home page
 #GET         /                      controllers.Application.index()
-GET         /main_menu                controllers.Application.mainMenu()
-GET         /                         controllers.Application.login()
-GET         /team_list                controllers.Application.teamList()
+GET         /main_menu               controllers.Application.mainMenu()
+GET         /                        controllers.Application.login()
+GET         /team_list               controllers.Application.teamList()
 #POST       /check_login        controllers.Application.checkLogin()
-POST        /login                    controllers.Application.authenticate()
-GET         /team/:teamID             controllers.Application.team(teamID: Long)
-GET         /register                 controllers.Application.regis()
-POST        /register                 controllers.Application.enroll()
+POST        /login                   controllers.Application.authenticate()
+GET         /team/:teamID            controllers.Application.team(teamID: Long)
+GET         /register                controllers.Application.regis()
+POST        /register                controllers.Application.enroll()
 
-POST        /create_team              controllers.Application.createTeam()
-GET         /create_team              controllers.Application.createTeam()
+POST        /create_team             controllers.Application.createTeam()
+GET         /create_team             controllers.Application.createTeam()
 
-POST        /edit_description         controllers.Application.editDescription()
-GET         /edit_description         controllers.Application.editDescription()
+POST        /edit_description        controllers.Application.editDescription()
+GET         /edit_description        controllers.Application.editDescription()
 
-POST        /vote                     controllers.Application.voting()
-GET         /vote                     controllers.Application.voting()
+POST        /rating2                  controllers.Application.ratingPost()
+GET         /rating/:teamID          controllers.Application.rating(teamID: String)
 
-GET         /logout                   controllers.Application.logout()
+GET         /logout                  controllers.Application.logout()
 
-POST        /upload_logo              controllers.Application.uploadLogo()
-GET         /upload_logo              controllers.Application.uploadLogo()
+POST        /upload_logo             controllers.Application.uploadLogo()
+GET         /upload_logo             controllers.Application.uploadLogo()
 
-POST        /upload_screenshot        controllers.Application.uploadScreenshot()
-GET         /upload_screenshot        controllers.Application.uploadScreenshot()
-
-GET         /vote_result              controllers.Application.voteResult()
+POST        /upload_screenshot       controllers.Application.uploadScreenshot()
+GET         /upload_screenshot       controllers.Application.uploadScreenshot()
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file             controllers.Assets.at(path="/public", file)
+GET         /assets/*file            controllers.Assets.at(path="/public", file)
