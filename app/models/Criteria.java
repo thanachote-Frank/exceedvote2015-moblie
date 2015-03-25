@@ -4,6 +4,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.List;
 
 /**
  * Created by Frank on 3/22/15 AD.
@@ -18,6 +19,10 @@ public class Criteria extends Model{
 
     public static Finder<Long, Criteria> find =
             new Finder<Long, Criteria>(Long.class, Criteria.class);
+
+    public static List<Criteria> getAllCriteria() {
+        return Criteria.find.all();
+    }
 
 
 }

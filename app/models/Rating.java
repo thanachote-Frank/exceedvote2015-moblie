@@ -20,10 +20,15 @@ public class Rating extends Model {
     @ManyToOne
     public Criteria criteria;
 
+    @ManyToOne
+    public Team team;
+
     public Integer rating;
 
     public static Finder<Long, Rating> find =
             new Finder<Long, Rating>(Long.class, Rating.class);
 
-
+    public static List<Rating> GetRatingSpecific(Criteria criteria, Team team){
+        return Rating.find.where().eq("criteria_id", criteria.Id).eq("team_id", team.id).findList();
+    }
 }

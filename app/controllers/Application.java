@@ -3,17 +3,14 @@ package controllers;
 //import forms.EditDescription;
 import forms.*;
 //import forms.Register;
-import models.Account;
-import models.Screenshot;
-import models.Team;
+import models.*;
 import play.api.mvc.Session$;
 import play.data.*;
 import play.mvc.*;
 import views.html.*;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 public class Application extends Controller {
@@ -29,6 +26,39 @@ public class Application extends Controller {
     public static Result teamList() {
         return ok(team_list.render(Team.getAll()));
     }
+
+    public static Result voteResult() {
+        List<Stuff> rankAll = new ArrayList();
+        List<Criteria> cri = Criteria.getAllCriteria();
+        List<Team> team = Team.getAll();
+
+        for(int i=0; i<cri.size(); i++) {
+            HashMap<Team, Double> rankInCri = new HashMap<>();
+            for(int j=0; j<team.size(); j++) {
+                List<Rating> data = Rating.GetRatingSpecific(cri.get(i), team.get(j));
+                double scoreAvg = 0;
+                for (int k = 0; k<data.size(); k++) {
+                    scoreAvg += data.get(k).rating;
+                }
+                scoreAvg = scoreAvg / data.size();
+                rankInCri.put(team.get(j), scoreAvg);
+            }
+            System.out.println(rankInCri.size());
+            Set<Map.Entry<Team, Double>> set = rankInCri.entrySet();
+            List<Map.Entry<Team, Double>> list = new ArrayList<Map.Entry<Team, Double>>(set);
+            Collections.sort( list, new Comparator<Map.Entry<Team, Double>>()
+            {
+                public int compare( Map.Entry<Team, Double> o1, Map.Entry<Team, Double> o2 )
+                {
+                    return (o2.getValue()).compareTo( o1.getValue() );
+                }
+            } );
+            Stuff stuff = new Stuff(list, cri.get(i));
+            rankAll.add(stuff);
+        }
+        return ok(vote_result.render(rankAll));
+    }
+
 
     public static Result voting() {
         return ok(Vote.render());

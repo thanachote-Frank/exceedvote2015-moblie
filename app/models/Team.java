@@ -10,7 +10,7 @@ import java.util.List;
  * Created by thanachote on 27/2/2558.
  */
 @Entity
-public class Team extends Model {
+public class Team extends Model implements Comparable<Team>{
     @Id
     public Long id;
     public String name;
@@ -69,4 +69,8 @@ public class Team extends Model {
     }
 
 
+    @Override
+    public int compareTo(Team o) {
+        return o.name.compareTo(this.name);
+    }
 }
