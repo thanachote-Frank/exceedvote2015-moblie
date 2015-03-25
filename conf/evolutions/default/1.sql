@@ -24,6 +24,7 @@ create table rating (
   id                        bigint not null,
   account_id                bigint,
   criteria_id               bigint,
+  team_id                   bigint,
   rating                    integer,
   constraint pk_rating primary key (id))
 ;
@@ -69,8 +70,10 @@ alter table rating add constraint fk_rating_account_3 foreign key (account_id) r
 create index ix_rating_account_3 on rating (account_id);
 alter table rating add constraint fk_rating_criteria_4 foreign key (criteria_id) references criteria (id);
 create index ix_rating_criteria_4 on rating (criteria_id);
-alter table screenshot add constraint fk_screenshot_team_5 foreign key (team_id) references team (id);
-create index ix_screenshot_team_5 on screenshot (team_id);
+alter table rating add constraint fk_rating_team_5 foreign key (team_id) references team (id);
+create index ix_rating_team_5 on rating (team_id);
+alter table screenshot add constraint fk_screenshot_team_6 foreign key (team_id) references team (id);
+create index ix_screenshot_team_6 on screenshot (team_id);
 
 
 

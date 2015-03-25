@@ -33,7 +33,7 @@ public class Application extends Controller {
 
     public static Result voteResult() {
         List<Stuff> rankAll = new ArrayList();
-        List<Criteria> cri = Criteria.getAllCriteria();
+        List<Criteria> cri = Criteria.getall();
         List<Team> team = Team.getAll();
 
         for(int i=0; i<cri.size(); i++) {
