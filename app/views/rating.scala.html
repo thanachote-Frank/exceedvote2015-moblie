@@ -41,7 +41,6 @@
         @criterias.map { criteria =>
             @if(!criteria.name.equals("No Rate")){
                 <div class="uk-panel uk-width-1-1 uk-margin-small">
-                    <a href="@routes.Application.rating()" class="uk-width-9-10 uk-container-center">
                         <div class="uk-grid uk-grid-small">
                             <div class="uk-width-9-10 uk-container-center">
                                 <div class="uk-panel uk-panel-box ">
@@ -110,7 +109,6 @@
                                 </div>
                             </div>
                         </div>
-                    </a>
                 </div>
 
             }
@@ -120,7 +118,7 @@
 
     <div class="uk-grid uk-margin-large-bottom" data-uk-grid-margin>
         <div class="uk-width-9-10 uk-container-center">
-            <a class="uk-button uk-button-large uk-width-1-1 ui-eucalyptus ui-text-white ui-button" href="@routes.Application.rating()" style="line-height: 50px;"><div style="font-size: 150%">Submit</div></a>
+            <a class="uk-button uk-button-large uk-width-1-1 ui-eucalyptus ui-text-white ui-button" href="@routes.Application.rating()" style="line-height: 50px;"><div style="font-size: 150%"onclick="post()">Submit</div></a>
         </div>
     </div>
 
