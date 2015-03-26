@@ -36,11 +36,21 @@
         </div>
         <div class="uk-grid uk-grid-small uk-margin-top" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
+                <a class="uk-button uk-button-large uk-width-1-1" onclick="deleteAll();">Delete All</a>
+            </div>
+        </div>
+
+        <div class="uk-grid uk-grid-small uk-margin-top" data-uk-grid-margin>
+            <div class="uk-width-9-10 uk-container-center">
                 <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.editDescription()">Back</a>
             </div>
-        </div></form>
+        </div>
+    </form>
 
     <script>
+        function deleteAll(){
+            $.post("@routes.Application.deleteAllScreenshot()")
+        }
     </script>
 
     <script>

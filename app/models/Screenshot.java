@@ -28,8 +28,12 @@ public class Screenshot extends Model{
     }
 
     public static List<Screenshot> getURL(Long teamID){
-        Team team = Team.getByID(teamID);
-        return Screenshot.find.where().eq("team", team).orderBy().desc("id").setMaxRows(4).findList();
+        return Screenshot.find.where().eq("team_id", teamID).orderBy().asc("id").setMaxRows(4).findList();
     }
+
+    public static List<Screenshot> getAll(Long teamID){
+        return Screenshot.find.where().eq("team_id", teamID).findList();
+    }
+
 
 }

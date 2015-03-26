@@ -212,22 +212,15 @@ public class Application extends Controller {
         return ok();
     }
 
-    private static void copyFileUsingFileStreams(File source, File dest)
-            throws IOException {
-        InputStream input = null;
-        OutputStream output = null;
-        try {
-            input = new FileInputStream(source);
-            output = new FileOutputStream(dest);
-            byte[] buf = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = input.read(buf)) > 0) {
-                output.write(buf, 0, bytesRead);
+    public static Result deleteAllScreenshot(){
+        if (request().method().equals("POST")){
+            Team team = Team.findTeam(session("email"));
+            List<Screenshot> temp = Screenshot.getAll(team.id);
+            for (Screenshot screenshot : temp) {
+                screenshot.delete();
             }
-        } finally {
-            input.close();
-            output.close();
         }
+        return ok();
     }
 
 }
