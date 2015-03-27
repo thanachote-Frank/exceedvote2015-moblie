@@ -56,7 +56,7 @@
         <script>
              $('#checker').val("@form.data.get("type")");
              $('#checker2').val("@form.data.get("team")");
-             if ($('#checker').val() == "participant"){
+             if ($('#checker').val().toLocaleLowerCase() == "participant"){
                 $("#checker2").attr("disabled",false);
              }
              function checkType(self) {
