@@ -90,14 +90,19 @@
             var arr = "\"uid\": \"" + @uid + "\" ";
                 @criterias.map { criteria =>
                     @if(!criteria.name.equals("No Rate")) {
+                        var count = 0;
                         var str = "#rating-";
                         var num= @criteria.Id*5;
                         for(var a =1;a<6;a++){
-                        var temp = str + (num+a) ;
-                        if ( $ ( temp ).is(':checked') ) {
-                        console.log("@criteria.name" + " : " + a );
-                        arr+= ",\""+ @criteria.Id +"\": \"" + a + "\" ";
+                            var temp = str + (num+a) ;
+                            if ( $ ( temp ).is(':checked') ) {
+                                count++;
+                                console.log("@criteria.name" + " : " + a );
+                                arr+= ",\""+ @criteria.Id +"\": \"" + a + "\" ";
+                            }
                         }
+                        if (count==0){
+                            arr+= ",\""+ @criteria.Id +"\": \"" + 0 + "\" ";
                         }
                     }
 

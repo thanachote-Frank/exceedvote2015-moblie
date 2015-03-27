@@ -38,4 +38,9 @@ public class Rating extends Model {
     public static List<Rating> GetRatingSpecific(Criteria criteria, Team team){
         return Rating.find.where().eq("criteria_id", criteria.Id).eq("team_id", team.id).findList();
     }
+
+    public static List<Rating> findByTeamAndAccount(Long teamID, Long AccountID){
+        return Rating.find.where().eq("account_id",AccountID).eq("team_id", teamID).findList();
+    }
+
 }

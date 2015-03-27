@@ -66,28 +66,23 @@ public class Application extends Controller {
             return ok(rating.render(Criteria.getall(),teamID));
     }
     public static Result ratingPost() {
-        Team team=null;
-         if (request().method().equals("POST")){
-             for(Map.Entry<String,String[]> entry : request().body().asFormUrlEncoded().entrySet()) {
-                 String key = entry.getKey();
-                 String[] value = entry.getValue();
-                 if(key.equals("uid")) {
-                     System.out.println(Arrays.toString(value).substring(1, value.length + 1));
-                     Long id = Long.parseLong(Arrays.toString(value).substring(1, value.length + 1));
-                     System.out.println("ID : " + id);
-                     team = Team.find.byId(id);
-                 }
-             }
-            for(Map.Entry<String,String[]> entry : request().body().asFormUrlEncoded().entrySet()) {
+        if (request().method().equals("POST")) {
+            Team team = null;
+            Account account = Account.findEmail(session().get("email"));
+            Map<String, String[]> map = request().body().asFormUrlEncoded();
+            Long id = Long.parseLong(map.get("uid")[0]);
+            team = Team.find.byId(id);
+            for(Rating rating: Rating.findByTeamAndAccount(id, account.id)){
+                rating.delete();
+            }
+            for (Map.Entry<String, String[]> entry : map.entrySet()) {
                 String key = entry.getKey();
                 String[] value = entry.getValue();
-                if(!key.equals("uid")) {
-                    Rating obj = new Rating(Account.findEmail(session().get("email")), Criteria.find.byId(Long.parseLong(key)), Integer.parseInt(value[0]),team);
-                    obj.save();
-                }
+                if (key.equals("uid")) break;
+                Rating obj = new Rating(account, Criteria.find.byId(Long.parseLong(key)), Integer.parseInt(value[0]), team);
+                obj.save();
 
             }
-
             return ok();
         }
         else return ok();
