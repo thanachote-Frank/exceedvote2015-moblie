@@ -58,7 +58,7 @@ public class Application extends Controller {
             Stuff stuff = new Stuff(list, cri.get(i));
             rankAll.add(stuff);
         }
-        return ok(vote_result.render(rankAll));
+        return ok(rating_result.render(rankAll));
     }
 
 
