@@ -1,4 +1,4 @@
-@(teams: List[Team])
+@(teams: List[Team])(rated: List[Long])
 
 @main("Team List")(css) {
     <div class="uk-grid uk-grid-collapse uk-text-center" data-uk-grid-margin >
@@ -18,10 +18,19 @@
             @teams.map { team =>
                 @if(!team.name.equals("No Team")){
                 <div class="uk-panel uk-width-1-2">
+                    @if(!rated.contains(team.id)){
                 <a href="@routes.Application.team(team.id)" class="uk-button uk-width-1-1 uk-margin-small-bottom ui-text-white ui-button ui-black" style="font-size: 500%; padding: 20px;">
                     <img src="@team.logo" style="height : 100px">
                     <div class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">@team.name</div>
+
                 </a>
+                }else {
+                    <a href="@routes.Application.team(team.id)" class="uk-button uk-width-1-1 uk-margin-small-bottom ui-text-white ui-button ui-green" style="font-size: 500%; padding: 20px;">
+                        <img src="@team.logo" style="height : 100px">
+            <div class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">@team.name</div>
+
+            </a>
+                }
                 </div>
                 }
             }

@@ -28,7 +28,7 @@ public class Application extends Controller {
     }
 
     public static Result teamList() {
-        return ok(team_list.render(Team.getAll()));
+        return ok(team_list.render(Team.getAll(),Rating.findRatedTeam(Account.findEmail(session().get("email")).id)));
     }
 
     public static Result ratingResult() {
