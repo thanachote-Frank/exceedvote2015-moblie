@@ -36,6 +36,13 @@ create table screenshot (
   constraint pk_screenshot primary key (id))
 ;
 
+create table setting (
+  id                        bigint not null,
+  name                      varchar(255),
+  is_activated              boolean,
+  constraint pk_setting primary key (id))
+;
+
 create table team (
   id                        bigint not null,
   name                      varchar(255),
@@ -57,6 +64,8 @@ create sequence criteria_seq;
 create sequence rating_seq;
 
 create sequence screenshot_seq;
+
+create sequence setting_seq;
 
 create sequence team_seq;
 
@@ -87,6 +96,8 @@ drop table if exists rating cascade;
 
 drop table if exists screenshot cascade;
 
+drop table if exists setting cascade;
+
 drop table if exists team cascade;
 
 drop table if exists user_type cascade;
@@ -98,6 +109,8 @@ drop sequence if exists criteria_seq;
 drop sequence if exists rating_seq;
 
 drop sequence if exists screenshot_seq;
+
+drop sequence if exists setting_seq;
 
 drop sequence if exists team_seq;
 

@@ -1,4 +1,4 @@
-@(message: String)(team: String)
+@(message: String)(team: String)(teamList: Boolean)(uploadLogo: Boolean)
 
 @main("Main menu")(css) {
     <div class="uk-grid uk-grid-collapse">
@@ -36,8 +36,8 @@
 
     <div class="uk-text-center">
         <div class="uk-grid uk-margin-small-top">
-            <a href="@routes.Application.teamList" class="uk-button uk-width-1-1 uk-icon-group uk-margin-small-bottom ui-text-white ui-button ui-darkorange" style="font-size: 500%; padding: 20px;">
-                <div class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">Team list</div>
+            <a id='link_team_list' href="@routes.Application.teamList" class="uk-button uk-width-1-1 uk-icon-group uk-margin-small-bottom ui-text-white ui-button ui-darkorange" style="font-size: 500%; padding: 20px;">
+                <div id='text_team_list' class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">Team list</div>
             </a>
         </div>
     </div>
@@ -45,8 +45,8 @@
     @if(!team.equals("No Team")){
         <div class="uk-text-center">
             <div class="uk-grid uk-margin-small-top">
-                <a href="@routes.Application.editDescription()" class="uk-button uk-width-1-1 uk-icon-edit uk-margin-small-bottom ui-text-white ui-button ui-mountain-meadow" style="width : 100% ; font-size : 500% ; padding : 20px ;">
-                    <div class="uk-text-bottom" style="color : #ffffff ; font-size : 30% ; font-family : 'Signika', sans-serif ;">
+                <a id="link_edit_description" href="@routes.Application.editDescription()" class="uk-button uk-width-1-1 uk-icon-edit uk-margin-small-bottom ui-text-white ui-button ui-mountain-meadow" style="width : 100% ; font-size : 500% ; padding : 20px ;">
+                    <div id="text_edit_description" class="uk-text-bottom" style="color : #ffffff ; font-size : 30% ; font-family : 'Signika', sans-serif ;">
                         Edit Team Description</div>
                 </a>
             </div>
@@ -67,6 +67,23 @@
 
         </div>
     </div>
+
+    <script>
+        if (!@teamList){
+         $('#link_team_list').click(function(){
+            return false;
+         });
+         $('#text_team_list').text("Team List (Disable)");
+        }
+
+        if (!@uploadLogo){
+         $('#link_edit_description').click(function(){
+            return false;
+         });
+         $('#text_edit_description').text("Edit Team Description (Disable)");
+        }
+
+    </script>
 }
 
 @css = {

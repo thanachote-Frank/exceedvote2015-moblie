@@ -1,4 +1,4 @@
-@(teams: List[Team])
+@(teams: List[Team])(teamDescription:  Boolean)
 
 @main("Team List")(css) {
     <div class="uk-grid uk-grid-collapse uk-text-center" data-uk-grid-margin >
@@ -18,15 +18,25 @@
             @teams.map { team =>
                 @if(!team.name.equals("No Team")){
                 <div class="uk-panel uk-width-1-2">
-                <a href="@routes.Application.team(team.id)" class="uk-button uk-width-1-1 uk-margin-small-bottom ui-text-white ui-button ui-black" style="font-size: 500%; padding: 20px;">
+                <a href="@routes.Application.team(team.id)" class="link_team uk-button uk-width-1-1 uk-margin-small-bottom ui-text-white ui-button ui-black" style="font-size: 500%; padding: 20px;">
                     <img src="@team.logo" style="height : 100px">
-                    <div class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">@team.name</div>
+                    <div class="text_team uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">@team.name</div>
                 </a>
                 </div>
                 }
             }
         </div>
     </div>
+
+    <script>
+        if (!@teamDescription){
+         $('.link_team').click(function(){
+            return false;
+         });
+         $('.text_team').text($('.text_team').text()+' (Disable)');
+        }
+
+    </script>
 }
 @css = {
 

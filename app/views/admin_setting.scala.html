@@ -1,0 +1,47 @@
+@(list: List[Setting])
+
+@main("Setting")(css) {
+
+  <div class="uk-grid uk-margin-large-top">
+    <div class="uk-width-9-10 uk-container-center">
+  <div class="uk-panel uk-panel-box uk-panel-box-secondary">
+  <div class="uk-form">
+    <fieldset data-uk-margin>
+      <legend>Setting</legend>
+      @list.map { setting =>
+              @if(setting.isActivated==true){
+                <label><input name="@setting.id" type="checkbox" checked> @setting.name</label>
+                <br>
+              }else{
+                <label><input name="@setting.id" type="checkbox"> @setting.name</label>
+                <br>
+      }
+      }
+      
+      <button class="uk-button" onclick="sent()">Save</button>
+    </fieldset>
+
+  </div>
+  </div>
+  </div>
+  </div>
+  <script>
+    function sent(){
+    var data = {};
+    @list.map{ setting =>
+        data[@setting.id] = $('input[name=@setting.id]').prop('checked');
+    }
+    $.post( "@routes.Admin.setting()", data)
+     .done(function( data ) {
+
+      });
+
+    }
+
+  </script>
+
+}
+
+@css = {
+
+}
