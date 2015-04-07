@@ -43,7 +43,9 @@ public class Application extends Controller {
 
     public static Result teamList() {
         if (Setting.find.byId(TEAM_LIST).isActivated)
-            return ok(team_list.render(Team.getAll(), Setting.find.byId(TEAM_DESCRIPTION).isActivated));
+            return ok(team_list.render(Team.getAll(),
+                    Rating.findRatedTeam(Account.findEmail(session().get("email")).id,
+                    Setting.find.byId(TEAM_DESCRIPTION).isActivated));
         return badRequest("Disable this function by admin");
     }
 
@@ -180,23 +182,21 @@ public class Application extends Controller {
     }
 
     public static Result createTeam() {
-        if (Setting.find.byId(CREATE_TEAM).isActivated) {
-            if (request().method().equals("GET")) {
-                return ok(create_team.render(Form.form(CreateTeam.class)));
-            } else if (request().method().equals("POST")) {
-                Form<CreateTeam> form = Form.form(CreateTeam.class).bindFromRequest();
-                if (form.hasErrors()) {
-                    return badRequest(create_team.render(form));
-                } else {
-                    Team team = new Team(form.get().name, "" + routes.Assets.at("images/logo.png"));
-                    team.save();
-                    return redirect(
-                            routes.Application.login()
-                    );
-                }
+        if (request().method().equals("GET")) {
+            return ok(create_team.render(Form.form(CreateTeam.class)));
+        } else if (request().method().equals("POST")){
+            Form<CreateTeam> form = Form.form(CreateTeam.class).bindFromRequest();
+            if (form.hasErrors()) {
+                return badRequest(create_team.render(form));
+            } else {
+                Team team = new Team(form.get().name, "" + routes.Assets.at("images/logo.png"));
+                team.save();
+                return redirect(
+                        routes.Application.login()
+                );
             }
         }
-        return badRequest("Disable this function by admin");
+        return null;
     }
 
 //    public static Result checkLogin() {
@@ -210,6 +210,20 @@ public class Application extends Controller {
 //        return redirect("/login");
 //    }
 
+    public static Result authenticate() {
+        Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
+        if (loginForm.hasErrors()) {
+            return badRequest(login.render(loginForm));
+        } else {
+            session().clear();
+            Account account = Account.findEmail(loginForm.get().email);
+            session("email", account.email);
+            session("team", account.team.name);
+            return redirect(
+                    routes.Application.mainMenu()
+            );
+        }
+    }
 
     public static Result logout() {
         session().clear();
@@ -218,34 +232,42 @@ public class Application extends Controller {
 
     }
 
+    public static Result enroll() {
+        Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
+        if (registerForm.hasErrors()) {
+            return badRequest(register.render(registerForm, Team.getAll(), UserType.getAll()));
+        } else {
+            Account account = new Account(registerForm.get().name, registerForm.get().lastname, registerForm.get().email,
+                    registerForm.get().password,
+                    Team.find.byId(registerForm.get().team), UserType.findType(registerForm.get().type));
+            account.save();
+            return redirect(
+                    routes.Application.login()
+            );
+        }
+    }
 
     public static Result uploadLogo() {
-        if (Setting.find.byId(UPLOAD_LOGO).isActivated) {
-            if (request().method().equals("GET")) {
-                return ok(upload_logo.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
-            } else if (request().method().equals("POST")) {
-                Team team = Team.findTeam(session("email"));
-                Form<UploadLogo> registerForm = Form.form(UploadLogo.class).bindFromRequest();
-                team.setLogo(registerForm.get().url);
-            }
-            return ok();
+        if (request().method().equals("GET")) {
+            return ok(upload_logo.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
+        } else if (request().method().equals("POST")) {
+            Team team = Team.findTeam(session("email"));
+            Form<UploadLogo> registerForm = Form.form(UploadLogo.class).bindFromRequest();
+            team.setLogo(registerForm.get().url);
         }
-        return badRequest("Disable this function by admin");
+        return ok();
     }
 
     public static Result uploadScreenshot() {
-        if (Setting.find.byId(UPLOAD_SCREENSHOT).isActivated) {
-            if (request().method().equals("GET")) {
-                return ok(upload_screenshot.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
-            } else if (request().method().equals("POST")) {
-                Team team = Team.findTeam(session("email"));
-                Form<UploadScreenshot> form = Form.form(UploadScreenshot.class).bindFromRequest();
-                Screenshot screenshot = new Screenshot(team, form.get().url);
-                screenshot.save();
-            }
-            return badRequest();
+        if (request().method().equals("GET")) {
+            return ok(upload_screenshot.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
+        } else if (request().method().equals("POST")) {
+            Team team = Team.findTeam(session("email"));
+            Form<UploadScreenshot> form = Form.form(UploadScreenshot.class).bindFromRequest();
+            Screenshot screenshot = new Screenshot(team, form.get().url);
+            screenshot.save();
         }
-        return badRequest("Disable this function by admin");
+        return ok();
     }
 
     public static Result deleteAllScreenshot(){
@@ -256,7 +278,7 @@ public class Application extends Controller {
                 screenshot.delete();
             }
         }
-        return badRequest();
+        return ok();
     }
 
 }

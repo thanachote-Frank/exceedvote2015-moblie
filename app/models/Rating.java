@@ -2,6 +2,7 @@ package models;
 
 import play.db.ebean.Model;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,6 +42,16 @@ public class Rating extends Model {
 
     public static List<Rating> findByTeamAndAccount(Long teamID, Long AccountID){
         return Rating.find.where().eq("account_id",AccountID).eq("team_id", teamID).findList();
+    }
+    public static List<Long> findRatedTeam(Long UID){
+        List<Long> result = new ArrayList<Long>();
+
+        for(int a=0;a<Rating.find.where().eq("account_id",UID).findList().size();a++){
+            if(!result.contains(Rating.find.where().eq("account_id",UID).findList().get(a).team.id)){
+                result.add(Rating.find.where().eq("account_id",UID).findList().get(a).team.id);
+            }
+        }
+        return result;
     }
 
 }
