@@ -21,6 +21,12 @@ public class Setting extends Model{
     public static Finder<Long, Setting> find =
             new Finder<Long, Setting>(Long.class, Setting.class);
 
+    public Setting(Long id, String name, Boolean isActivated) {
+        this.id = id;
+        this.name = name;
+        this.isActivated = isActivated;
+    }
+
     public void setIsActivated(Boolean isActivated) {
         this.isActivated = isActivated;
         this.update();

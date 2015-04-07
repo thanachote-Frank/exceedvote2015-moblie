@@ -36,9 +36,12 @@ GET         /rating_result                      controllers.Application.ratingRe
 
 POST        /upload_screenshot/deleteAll        controllers.Application.deleteAllScreenshot()
 
-
+GET         /admin/home                         controllers.Admin.home()
 
 POST        /admin/setting                      controllers.Admin.setting()
 GET         /admin/setting                      controllers.Admin.setting()
+
+POST        /admin/setup_features               controllers.Admin.setupFeatures()
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                       controllers.Assets.at(path="/public", file)
