@@ -18,16 +18,16 @@ import java.util.*;
 
 
 public class Application extends Controller {
-    public final static long UPLOAD_LOGO = 0;
-    public final static long UPLOAD_SCREENSHOT = 1;
-    public final static long EDIT_DESCRIPTION = 2;
-    public final static long TEAM_LIST = 3;
-    public final static long TEAM_DESCRIPTION = 4;
-    public final static long RATING = 5;
+    public final static long UPLOAD_LOGO = 1;
+    public final static long UPLOAD_SCREENSHOT = 2;
+    public final static long EDIT_DESCRIPTION = 3;
+    public final static long TEAM_LIST = 4;
+    public final static long TEAM_DESCRIPTION = 5;
+    public final static long RATING = 6;
 
 
-    public final static long CREATE_TEAM = 6;
-    public final static long CREATE_ACCOUNT = 7;
+    public final static long CREATE_TEAM = 7;
+    public final static long CREATE_ACCOUNT = 8;
 //    public static int U = 2;
 
 

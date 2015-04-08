@@ -16,16 +16,6 @@ import java.util.List;
  * Created by Frank on 3/28/15 AD.
  */
 public class Admin extends Controller {
-    public final static long UPLOAD_LOGO = 0;
-    public final static long UPLOAD_SCREENSHOT = 1;
-    public final static long EDIT_DESCRIPTION = 2;
-    public final static long TEAM_LIST = 3;
-    public final static long TEAM_DESCRIPTION = 4;
-    public final static long RATING = 5;
-
-
-    public final static long CREATE_TEAM = 6;
-    public final static long CREATE_ACCOUNT = 7;
 
     public static Result setting(){
         if (request().method().equals("GET"))
@@ -56,14 +46,14 @@ public class Admin extends Controller {
             for(Setting setting:Setting.find.all()){
                 setting.delete();
             }
-            new Setting(new Long(0), "upload logo", true).save();
-            new Setting(new Long(1), "upload screenshot", true).save();
-            new Setting(new Long(2), "edit description", true).save();
-            new Setting(new Long(3), "team list", true).save();
-            new Setting(new Long(4), "team description", true).save();
-            new Setting(new Long(5), "rating", true).save();
-            new Setting(new Long(6), "create team", true).save();
-            new Setting(new Long(7), "create account", true).save();
+            (new Setting(new Long(1), "upload logo", true)).save();
+            (new Setting(new Long(2), "upload screenshot", true)).save();
+            (new Setting(new Long(3), "edit description", true)).save();
+            (new Setting(new Long(4), "team list", true)).save();
+            (new Setting(new Long(5), "team description", true)).save();
+            (new Setting(new Long(6), "rating", true)).save();
+            (new Setting(new Long(7), "create team", true)).save();
+            (new Setting(new Long(8), "create account", true)).save();
             return ok();
 
 
