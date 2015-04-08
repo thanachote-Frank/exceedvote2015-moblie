@@ -55,12 +55,7 @@ public class Admin extends Controller {
             (new Setting(new Long(7), "create team", true)).save();
             (new Setting(new Long(8), "create account", true)).save();
             return ok();
-
-
         }
         return badRequest();
     }
-
-
-
 }

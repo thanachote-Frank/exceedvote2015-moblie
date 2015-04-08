@@ -7,8 +7,8 @@
 GET         /main_menu                          controllers.Application.mainMenu()
 
 GET         /team_list                          controllers.Application.teamList()
-#POST       /check_login        controllers.Application.checkLogin()
-POST        /login                              controllers.Application.login()
+
+POST        /                                   controllers.Application.login()
 GET         /                                   controllers.Application.login()
 
 GET         /team/:teamID                       controllers.Application.team(teamID: Long)
