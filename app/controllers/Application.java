@@ -4,14 +4,10 @@ package controllers;
 import forms.*;
 //import forms.Register;
 import models.*;
-import play.api.mvc.Session$;
 import play.data.*;
 import play.mvc.*;
 import views.html.*;
 
-import java.io.*;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.*;
@@ -53,15 +49,20 @@ public class Application extends Controller {
         List<Stuff> rankAll = new ArrayList();
         List<Criteria> cri = Criteria.getall();
         List<Team> team = Team.getAll();
+        double[] overAll = new double[team.size()];
+
         for(int i=0; i<cri.size(); i++) {
             HashMap<Team, Double> rankInCri = new HashMap<>();
             for(int j=0; j<team.size(); j++) {
-                List<Rating> data = Rating.GetRatingSpecific(cri.get(i), team.get(j));
+                List<Rating> data = Rating.getRatingSpecific(cri.get(i), team.get(j));
                 double scoreAvg = 0;
                 for (int k = 0; k<data.size(); k++) {
                     scoreAvg += data.get(k).rating;
                 }
                 scoreAvg = scoreAvg / data.size();
+                //-----------------------------------------------//
+                overAll[j] += scoreAvg;
+                //-----------------------------------------------//
                 rankInCri.put(team.get(j), scoreAvg);
             }
             Set<Map.Entry<Team, Double>> set = rankInCri.entrySet();
@@ -76,7 +77,22 @@ public class Application extends Controller {
             Stuff stuff = new Stuff(list, cri.get(i));
             rankAll.add(stuff);
         }
-        return ok(rating_result.render(rankAll));
+        //-------------------------------------------------//
+        HashMap<Team, Double> rankOverAll = new HashMap<>();
+        for(int i=0; i<team.size(); i++) {
+            rankOverAll.put(team.get(i), overAll[i]);
+        }
+        Set<Map.Entry<Team, Double>> set = rankOverAll.entrySet();
+        List<Map.Entry<Team, Double>> list = new ArrayList<Map.Entry<Team, Double>>(set);
+        Collections.sort( list, new Comparator<Map.Entry<Team, Double>>()
+        {
+            public int compare( Map.Entry<Team, Double> o1, Map.Entry<Team, Double> o2 )
+            {
+                return (o2.getValue()).compareTo( o1.getValue() );
+            }
+        } );
+        //-------------------------------------------------//
+        return ok(rating_result.render(rankAll, list));
     }
 
 

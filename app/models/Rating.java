@@ -36,7 +36,7 @@ public class Rating extends Model {
     public static Finder<Long, Rating> find =
             new Finder<Long, Rating>(Long.class, Rating.class);
 
-    public static List<Rating> GetRatingSpecific(Criteria criteria, Team team){
+    public static List<Rating> getRatingSpecific(Criteria criteria, Team team){
         return Rating.find.where().eq("criteria_id", criteria.Id).eq("team_id", team.id).findList();
     }
 
