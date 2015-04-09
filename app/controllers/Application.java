@@ -23,10 +23,12 @@ public class Application extends Controller {
         return ok(index.render("Index"));
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result mainMenu() {
         return ok(main_menu.render(session().get("email"), session().get("team")));
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result teamList() {
         return ok(team_list.render(Team.getAll(),Rating.findRatedTeam(Account.findEmail(session().get("email")).id)));
     }
@@ -61,10 +63,12 @@ public class Application extends Controller {
         return ok(rating_result.render(rankAll));
     }
 
-
+    @Security.Authenticated(Secured.class)
     public static Result rating(String teamID ) {
             return ok(rating.render(Criteria.getall(),teamID));
     }
+
+    @Security.Authenticated(Secured.class)
     public static Result ratingPost() {
         if (request().method().equals("POST")) {
             Team team = null;
@@ -88,7 +92,7 @@ public class Application extends Controller {
         else return ok();
     }
 
-
+    @Security.Authenticated(Secured.class)
     public static Result team(Long teamID) {
         return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID), Screenshot.getURL(teamID)));
     }
@@ -101,6 +105,7 @@ public class Application extends Controller {
         return ok(register.render(Form.form(Register.class), Team.getAll(), UserType.getAll()));
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result editDescription() {
         if (request().method().equals("GET")) {
             return ok(edit_description.render(Form.form(EditDescription.class), Team.findTeam(session("email")).name));
@@ -183,7 +188,7 @@ public class Application extends Controller {
             );
         }
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result uploadLogo() {
         if (request().method().equals("GET")) {
             return ok(upload_logo.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
@@ -195,6 +200,7 @@ public class Application extends Controller {
         return ok();
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result uploadScreenshot() {
         if (request().method().equals("GET")) {
             return ok(upload_screenshot.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
@@ -207,6 +213,7 @@ public class Application extends Controller {
         return ok();
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result deleteAllScreenshot(){
         if (request().method().equals("POST")){
             Team team = Team.findTeam(session("email"));
