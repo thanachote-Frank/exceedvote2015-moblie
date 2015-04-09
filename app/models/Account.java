@@ -2,6 +2,7 @@ package models;
 
 import play.db.ebean.*;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 
 /**
@@ -20,7 +21,8 @@ public class Account extends Model {
     @ManyToOne
     public UserType type;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
+
     public Team team;
     // Finder will help us easily query data from database.
     public static Finder<Long, Account> find =

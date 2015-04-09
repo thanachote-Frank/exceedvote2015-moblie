@@ -1,5 +1,6 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import forms.AddCriteria;
 import models.Criteria;
 import models.Screenshot;
@@ -7,6 +8,7 @@ import models.Setting;
 import models.Team;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
@@ -106,6 +108,36 @@ public class Admin extends Controller {
             Criteria criteria = new Criteria(form.get().name.toLowerCase());
             criteria.save();
             return ok("Success");
+        }
+        return badRequest();
+    }
+
+    public static Result listTeam() {
+        if (request().method().equals("GET")){
+            return ok(admin_list_team.render(Team.getAll()));
+        }
+        return badRequest();
+    }
+
+    public static Result deleteTeam(){
+
+        if (request().method().equals("GET")){
+            return ok(admin_delete_team.render(Team.getAll()));
+        }
+        else if(request().method().equals("POST")) {
+            String ID = request().body().asFormUrlEncoded().get("id")[0];
+            Team team = Team.find.byId(Long.parseLong(ID));
+            if(team != null){
+                team.delete();
+                ObjectNode result = Json.newObject();
+                result.put("type", "success");
+                result.put("text", "Deleted");
+                return ok(result);
+            }
+            ObjectNode result = Json.newObject();
+            result.put("type", "danger");
+            result.put("text", "Delete Fail");
+            return ok(result);
         }
         return badRequest();
     }
