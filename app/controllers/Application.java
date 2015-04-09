@@ -35,12 +35,14 @@ public class Application extends Controller {
         return ok(index.render("Index"));
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result mainMenu() {
         return ok(main_menu.render(session().get("email"), session().get("team"),
                 Setting.find.byId(TEAM_LIST).isActivated,
                 Setting.find.byId(EDIT_DESCRIPTION).isActivated));
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result teamList() {
         if (Setting.find.byId(TEAM_LIST).isActivated)
             return ok(team_list.render(Team.getAll(),
@@ -49,6 +51,7 @@ public class Application extends Controller {
         return badRequest("Disable this function by admin");
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result ratingResult() {
         List<Stuff> rankAll = new ArrayList();
         List<Criteria> cri = Criteria.getall();
@@ -79,10 +82,12 @@ public class Application extends Controller {
         return ok(rating_result.render(rankAll));
     }
 
-
+    @Security.Authenticated(Secured.class)
     public static Result rating(String teamID ) {
             return ok(rating.render(Criteria.getall(),teamID));
     }
+
+    @Security.Authenticated(Secured.class)
     public static Result ratingPost() {
         if (request().method().equals("POST")) {
             Team team = null;
@@ -106,7 +111,7 @@ public class Application extends Controller {
         else return ok();
     }
 
-
+    @Security.Authenticated(Secured.class)
     public static Result team(Long teamID) {
         if (Setting.find.byId(TEAM_DESCRIPTION).isActivated)
             return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID), Screenshot.getURL(teamID), Setting.find.byId(RATING).isActivated));
@@ -160,6 +165,7 @@ public class Application extends Controller {
         return badRequest("Disable this function by admin");
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result editDescription() {
         if (Setting.find.byId(EDIT_DESCRIPTION).isActivated) {
             if (request().method().equals("GET")) {
@@ -217,7 +223,7 @@ public class Application extends Controller {
                 routes.Application.login());
 
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result uploadLogo() {
         if (Setting.find.byId(UPLOAD_LOGO).isActivated) {
             if (request().method().equals("GET")) {
@@ -231,6 +237,7 @@ public class Application extends Controller {
         return badRequest("Disable this function by admin");
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result uploadScreenshot() {
         if (Setting.find.byId(UPLOAD_SCREENSHOT).isActivated) {
             if (request().method().equals("GET")) {
@@ -245,6 +252,7 @@ public class Application extends Controller {
         return badRequest("Disable this function by admin");
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result deleteAllScreenshot(){
         if (Setting.find.byId(UPLOAD_SCREENSHOT).isActivated) {
             if (request().method().equals("POST")) {
