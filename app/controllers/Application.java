@@ -18,6 +18,18 @@ import java.util.*;
 
 
 public class Application extends Controller {
+    public final static long UPLOAD_LOGO = 1;
+    public final static long UPLOAD_SCREENSHOT = 2;
+    public final static long EDIT_DESCRIPTION = 3;
+    public final static long TEAM_LIST = 4;
+    public final static long TEAM_DESCRIPTION = 5;
+    public final static long RATING = 6;
+
+
+    public final static long CREATE_TEAM = 7;
+    public final static long CREATE_ACCOUNT = 8;
+//    public static int U = 2;
+
 
     public static Result index() {
         return ok(index.render("Index"));
@@ -25,12 +37,18 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result mainMenu() {
-        return ok(main_menu.render(session().get("email"), session().get("team")));
+        return ok(main_menu.render(session().get("email"), session().get("team"),
+                Setting.find.byId(TEAM_LIST).isActivated,
+                Setting.find.byId(EDIT_DESCRIPTION).isActivated));
     }
 
     @Security.Authenticated(Secured.class)
     public static Result teamList() {
-        return ok(team_list.render(Team.getAll(),Rating.findRatedTeam(Account.findEmail(session().get("email")).id)));
+        if (Setting.find.byId(TEAM_LIST).isActivated)
+            return ok(team_list.render(Team.getAll(),
+                    Rating.findRatedTeam(Account.findEmail(session().get("email")).id),
+                    Setting.find.byId(TEAM_DESCRIPTION).isActivated));
+        return badRequest("Disable this function by admin");
     }
 
     public static Result ratingResult() {
@@ -94,33 +112,78 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result team(Long teamID) {
-        return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID), Screenshot.getURL(teamID)));
+        if (Setting.find.byId(TEAM_DESCRIPTION).isActivated)
+            return ok(team.render(Team.getDescription(teamID), Team.getAllMember(teamID), Screenshot.getURL(teamID), Setting.find.byId(RATING).isActivated));
+        return badRequest("Disable this function by admin");
     }
 
     public static Result login() {
-        return ok(login.render(Form.form(Login.class)));
-    }
-
-    public static Result regis() {
-        return ok(register.render(Form.form(Register.class), Team.getAll(), UserType.getAll()));
-    }
-
-    @Security.Authenticated(Secured.class)
-    public static Result editDescription() {
         if (request().method().equals("GET")) {
-            return ok(edit_description.render(Form.form(EditDescription.class), Team.findTeam(session("email")).name));
-        } else if (request().method().equals("POST")) {
-            Form<EditDescription> form = Form.form(EditDescription.class).bindFromRequest();
-            if (form.hasErrors()) {
-                return badRequest(edit_description.render(form, Team.findTeam(session("email")).name));
+            return ok(login.render(Form.form(Login.class),
+                    Setting.find.byId(CREATE_ACCOUNT).isActivated,
+                    Setting.find.byId(CREATE_TEAM).isActivated));
+        }
+        else if (request().method().equals("POST")) {
+            Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
+            if (loginForm.hasErrors()) {
+                return badRequest(login.render(loginForm,
+                        Setting.find.byId(CREATE_ACCOUNT).isActivated,
+                        Setting.find.byId(CREATE_TEAM).isActivated));
             } else {
-                Team.findTeam(session("email")).setDescription(form.get().content);
+                session().clear();
+                Account account = Account.findEmail(loginForm.get().email);
+                session("email", account.email);
+                session("team", account.team.name);
                 return redirect(
                         routes.Application.mainMenu()
                 );
             }
         }
-        return null;
+        return badRequest();
+    }
+
+    public static Result regis() {
+        if (Setting.find.byId(CREATE_ACCOUNT).isActivated) {
+            if (request().method().equals("GET")) {
+                return ok(register.render(Form.form(Register.class), Team.getAll(), UserType.getAll()));
+            } else if (request().method().equals("POST")) {
+                Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
+                if (registerForm.hasErrors()) {
+                    return badRequest(register.render(registerForm, Team.getAll(), UserType.getAll()));
+                } else {
+                    Account account = new Account(registerForm.get().name, registerForm.get().lastname, registerForm.get().email,
+                            registerForm.get().password,
+                            Team.find.byId(registerForm.get().team), UserType.findType(registerForm.get().type));
+                    account.save();
+                    return redirect(
+                            routes.Application.login()
+                    );
+                }
+            }
+        }
+        return badRequest("Disable this function by admin");
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result editDescription() {
+        if (Setting.find.byId(EDIT_DESCRIPTION).isActivated) {
+            if (request().method().equals("GET")) {
+                return ok(edit_description.render(Form.form(EditDescription.class), Team.findTeam(session("email")).name,
+                        Setting.find.byId(UPLOAD_LOGO).isActivated, Setting.find.byId(UPLOAD_SCREENSHOT).isActivated));
+            } else if (request().method().equals("POST")) {
+                Form<EditDescription> form = Form.form(EditDescription.class).bindFromRequest();
+                if (form.hasErrors()) {
+                    return badRequest(edit_description.render(form, Team.findTeam(session("email")).name,
+                            Setting.find.byId(UPLOAD_LOGO).isActivated, Setting.find.byId(UPLOAD_SCREENSHOT).isActivated));
+                } else {
+                    Team.findTeam(session("email")).setDescription(form.get().content);
+                    return redirect(
+                            routes.Application.mainMenu()
+                    );
+                }
+            }
+        }
+        return badRequest("Disable this function by admin");
     }
 
     public static Result createTeam() {
@@ -152,20 +215,6 @@ public class Application extends Controller {
 //        return redirect("/login");
 //    }
 
-    public static Result authenticate() {
-        Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
-        if (loginForm.hasErrors()) {
-            return badRequest(login.render(loginForm));
-        } else {
-            session().clear();
-            Account account = Account.findEmail(loginForm.get().email);
-            session("email", account.email);
-            session("team", account.team.name);
-            return redirect(
-                    routes.Application.mainMenu()
-            );
-        }
-    }
 
     public static Result logout() {
         session().clear();
@@ -174,55 +223,46 @@ public class Application extends Controller {
 
     }
 
-    public static Result enroll() {
-        Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
-        if (registerForm.hasErrors()) {
-            return badRequest(register.render(registerForm, Team.getAll(), UserType.getAll()));
-        } else {
-            Account account = new Account(registerForm.get().name, registerForm.get().lastname, registerForm.get().email,
-                    registerForm.get().password,
-                    Team.find.byId(registerForm.get().team), UserType.findType(registerForm.get().type));
-            account.save();
-            return redirect(
-                    routes.Application.login()
-            );
-        }
-    }
-    @Security.Authenticated(Secured.class)
     public static Result uploadLogo() {
-        if (request().method().equals("GET")) {
-            return ok(upload_logo.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
-        } else if (request().method().equals("POST")) {
-            Team team = Team.findTeam(session("email"));
-            Form<UploadLogo> registerForm = Form.form(UploadLogo.class).bindFromRequest();
-            team.setLogo(registerForm.get().url);
+        if (Setting.find.byId(UPLOAD_LOGO).isActivated) {
+            if (request().method().equals("GET")) {
+                return ok(upload_logo.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
+            } else if (request().method().equals("POST")) {
+                Team team = Team.findTeam(session("email"));
+                Form<UploadLogo> registerForm = Form.form(UploadLogo.class).bindFromRequest();
+                team.setLogo(registerForm.get().url);
+            }
         }
-        return ok();
+        return badRequest("Disable this function by admin");
     }
 
     @Security.Authenticated(Secured.class)
     public static Result uploadScreenshot() {
-        if (request().method().equals("GET")) {
-            return ok(upload_screenshot.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
-        } else if (request().method().equals("POST")) {
-            Team team = Team.findTeam(session("email"));
-            Form<UploadScreenshot> form = Form.form(UploadScreenshot.class).bindFromRequest();
-            Screenshot screenshot = new Screenshot(team, form.get().url);
-            screenshot.save();
+        if (Setting.find.byId(UPLOAD_SCREENSHOT).isActivated) {
+            if (request().method().equals("GET")) {
+                return ok(upload_screenshot.render(Form.form(UploadLogo.class), Team.findTeam(session("email")).name));
+            } else if (request().method().equals("POST")) {
+                Team team = Team.findTeam(session("email"));
+                Form<UploadScreenshot> form = Form.form(UploadScreenshot.class).bindFromRequest();
+                Screenshot screenshot = new Screenshot(team, form.get().url);
+                screenshot.save();
+            }
         }
-        return ok();
+        return badRequest("Disable this function by admin");
     }
 
     @Security.Authenticated(Secured.class)
     public static Result deleteAllScreenshot(){
-        if (request().method().equals("POST")){
-            Team team = Team.findTeam(session("email"));
-            List<Screenshot> temp = Screenshot.getAll(team.id);
-            for (Screenshot screenshot : temp) {
-                screenshot.delete();
+        if (Setting.find.byId(UPLOAD_SCREENSHOT).isActivated) {
+            if (request().method().equals("POST")) {
+                Team team = Team.findTeam(session("email"));
+                List<Screenshot> temp = Screenshot.getAll(team.id);
+                for (Screenshot screenshot : temp) {
+                    screenshot.delete();
+                }
             }
         }
-        return ok();
+        return badRequest("Disable this function by admin");
     }
 
 }

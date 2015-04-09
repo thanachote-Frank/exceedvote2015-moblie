@@ -4,34 +4,48 @@
 
 # Home page
 #GET         /                      controllers.Application.index()
-GET         /main_menu                controllers.Application.mainMenu()
-GET         /                         controllers.Application.login()
-GET         /team_list                controllers.Application.teamList()
-#POST       /check_login        controllers.Application.checkLogin()
-POST        /login                    controllers.Application.authenticate()
-GET         /team/:teamID             controllers.Application.team(teamID: Long)
-GET         /register                 controllers.Application.regis()
-POST        /register                 controllers.Application.enroll()
+GET         /main_menu                          controllers.Application.mainMenu()
 
-POST        /create_team              controllers.Application.createTeam()
-GET         /create_team              controllers.Application.createTeam()
+GET         /team_list                          controllers.Application.teamList()
 
-POST        /edit_description         controllers.Application.editDescription()
-GET         /edit_description         controllers.Application.editDescription()
+POST        /                                   controllers.Application.login()
+GET         /                                   controllers.Application.login()
 
-POST        /rating2                  controllers.Application.ratingPost()
-GET         /rating/:teamID           controllers.Application.rating(teamID: String)
+GET         /team/:teamID                       controllers.Application.team(teamID: Long)
+POST        /register                           controllers.Application.regis()
+GET         /register                           controllers.Application.regis()
 
-GET         /logout                   controllers.Application.logout()
+POST        /create_team                        controllers.Application.createTeam()
+GET         /create_team                        controllers.Application.createTeam()
 
-POST        /upload_logo              controllers.Application.uploadLogo()
-GET         /upload_logo              controllers.Application.uploadLogo()
+POST        /edit_description                   controllers.Application.editDescription()
+GET         /edit_description                   controllers.Application.editDescription()
 
-POST        /upload_screenshot        controllers.Application.uploadScreenshot()
-GET         /upload_screenshot        controllers.Application.uploadScreenshot()
+POST        /rating2                            controllers.Application.ratingPost()
+GET         /rating/:teamID                     controllers.Application.rating(teamID: String)
 
-GET         /rating_result            controllers.Application.ratingResult()
+GET         /logout                             controllers.Application.logout()
 
-POST        /upload_screenshot/deleteAll    controllers.Application.deleteAllScreenshot()
+POST        /upload_logo                        controllers.Application.uploadLogo()
+GET         /upload_logo                        controllers.Application.uploadLogo()
+
+POST        /upload_screenshot                  controllers.Application.uploadScreenshot()
+GET         /upload_screenshot                  controllers.Application.uploadScreenshot()
+
+GET         /rating_result                      controllers.Application.ratingResult()
+
+POST        /upload_screenshot/deleteAll        controllers.Application.deleteAllScreenshot()
+
+GET         /admin/home                         controllers.Admin.home()
+
+POST        /admin/setting                      controllers.Admin.setting()
+GET         /admin/setting                      controllers.Admin.setting()
+
+POST        /admin/setup_features               controllers.Admin.setupFeatures()
+
+#GET         /admin/criteria                     controllers.Admin.criteria()
+POST        /admin/criteria/add                controllers.Admin.addCriteria()
+GET         /admin/criteria/add                 controllers.Admin.addCriteria()
+
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file             controllers.Assets.at(path="/public", file)
+GET         /assets/*file                       controllers.Assets.at(path="/public", file)

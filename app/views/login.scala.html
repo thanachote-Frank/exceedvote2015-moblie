@@ -1,4 +1,4 @@
-@(form: Form[forms.Login])
+@(form: Form[forms.Login])(createAccount: Boolean)(createTeam: Boolean)
 
 @main("Welcome to Exceed rating")(css) {
     <div class="uk-grid uk-margin-large-top" data-uk-grid-margin>
@@ -13,7 +13,7 @@
                 @form.globalError.message
                 </div>
             }
-            @helper.form(routes.Application.authenticate) {
+            @helper.form(routes.Application.login()) {
                 <div class="uk-panel uk-panel-box">
 
                     <div class="form-group">
@@ -33,16 +33,37 @@
     </div>
     <div class="uk-grid uk-grid-small" data-uk-grid-margin>
         <div class="uk-width-9-10 uk-container-center">
-            <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.regis">Register</a>
+            <a id='link_register' class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.regis">
+                <div id='text_register'>Register</div>
+            </a>
         </div>
     </div>
 
     <div class="uk-grid uk-grid-small" data-uk-grid-margin>
         <div class="uk-width-9-10 uk-container-center">
-            <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.createTeam">Create a team</a>
+            <a id='link_create_team' class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.createTeam">
+                <div id='text_create_team'>Create a team</div>
+            </a>
         </div>
     </div>
 }
+    <script>
+        if (!@createAccount){
+         $('#link_register').click(function(){
+            return false;
+         });
+         $('#text_register').text($('#text_register').text()+ ' (Disable)');
+        }
+
+        if (!@createTeam){
+         $('#link_create_team').click(function(){
+            return false;
+         });
+         $('#text_create_team').text($('#text_create_team').text()+ ' (Disable)');
+        }
+
+    </script>
+
 
 
 }
