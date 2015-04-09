@@ -51,6 +51,7 @@ public class Application extends Controller {
         return badRequest("Disable this function by admin");
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result ratingResult() {
         List<Stuff> rankAll = new ArrayList();
         List<Criteria> cri = Criteria.getall();
@@ -222,7 +223,7 @@ public class Application extends Controller {
                 routes.Application.login());
 
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result uploadLogo() {
         if (Setting.find.byId(UPLOAD_LOGO).isActivated) {
             if (request().method().equals("GET")) {
