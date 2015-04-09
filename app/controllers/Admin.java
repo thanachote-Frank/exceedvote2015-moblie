@@ -9,10 +9,7 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.admin_add_criteria;
-import views.html.admin_criteria;
-import views.html.admin_home;
-import views.html.admin_setting;
+import views.html.*;
 
 import java.util.List;
 
@@ -81,13 +78,35 @@ public class Admin extends Controller {
         else if (request().method().equals("POST")){
             Form<AddCriteria> form = Form.form(AddCriteria.class).bindFromRequest();
             if (form.hasErrors()){
-                return ok(admin_add_criteria.render(form));
+                return ok(form.globalError().message());
             }
             Criteria criteria = new Criteria(form.get().name.toLowerCase());
             criteria.save();
-            return ok(admin_add_criteria.render(form));
+            return ok("Success");
         }
         return badRequest();
     }
 
+    public static Result listCriteria(){
+        if (request().method().equals("GET")){
+            return ok(admin_list_criteria.render(Criteria.getall()));
+        }
+        return badRequest();
+    }
+
+    public static Result deleteCriteria(){
+        if (request().method().equals("GET")){
+            return ok(admin_add_criteria.render(Form.form(AddCriteria.class)));
+        }
+        else if (request().method().equals("POST")){
+            Form<AddCriteria> form = Form.form(AddCriteria.class).bindFromRequest();
+            if (form.hasErrors()){
+                return ok(form.globalError().message());
+            }
+            Criteria criteria = new Criteria(form.get().name.toLowerCase());
+            criteria.save();
+            return ok("Success");
+        }
+        return badRequest();
+    }
 }
