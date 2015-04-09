@@ -30,9 +30,9 @@
     <script>
         $('#form').submit(function( event ) {
             event.preventDefault();
-            $.post('@routes.Admin.addCriteria()', $( this ).serialize() ).
+            $.post('@routes.Admin.addCriteria()', $( this ).serialize()).
             done(function(data){
-                UIkit.notify(data, {status:'danger', timeout : 5000});
+                UIkit.notify(data.text, {status : data.type , timeout : 5000});
             });
             });
     </script>

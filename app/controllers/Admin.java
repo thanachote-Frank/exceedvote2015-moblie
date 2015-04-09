@@ -1,5 +1,8 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeCreator;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import forms.AddCriteria;
 import models.Criteria;
 import models.Screenshot;
@@ -7,8 +10,10 @@ import models.Setting;
 import models.Team;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.util.parsing.json.JSONObject$;
 import views.html.*;
 
 import java.util.List;
@@ -78,11 +83,17 @@ public class Admin extends Controller {
         else if (request().method().equals("POST")){
             Form<AddCriteria> form = Form.form(AddCriteria.class).bindFromRequest();
             if (form.hasErrors()){
-                return ok(form.globalError().message());
+                ObjectNode result = Json.newObject();
+                result.put("type", "danger");
+                result.put("text", form.globalError().message());
+                return ok(result);
             }
             Criteria criteria = new Criteria(form.get().name.toLowerCase());
             criteria.save();
-            return ok("Success");
+            ObjectNode result = Json.newObject();
+            result.put("type", "success");
+            result.put("text", "Success");
+            return ok(result);
         }
         return badRequest();
     }
@@ -101,11 +112,17 @@ public class Admin extends Controller {
         else if (request().method().equals("POST")){
             Form<AddCriteria> form = Form.form(AddCriteria.class).bindFromRequest();
             if (form.hasErrors()){
-                return ok(form.globalError().message());
+                ObjectNode result = Json.newObject();
+                result.put("type", "danger");
+                result.put("text", form.globalError().message());
+                return ok(result);
             }
             Criteria criteria = new Criteria(form.get().name.toLowerCase());
             criteria.save();
-            return ok("Success");
+            ObjectNode result = Json.newObject();
+            result.put("type", "success");
+            result.put("text", "Success");
+            return ok(result);
         }
         return badRequest();
     }
