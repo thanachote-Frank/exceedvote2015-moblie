@@ -81,11 +81,11 @@ public class Admin extends Controller {
         else if (request().method().equals("POST")){
             Form<AddCriteria> form = Form.form(AddCriteria.class).bindFromRequest();
             if (form.hasErrors()){
-                return ok(admin_add_criteria.render(form));
+                return ok(form.globalError().message());
             }
             Criteria criteria = new Criteria(form.get().name.toLowerCase());
             criteria.save();
-            return ok(admin_add_criteria.render(form));
+            return ok("Success");
         }
         return badRequest();
     }
