@@ -32,7 +32,7 @@
     @list.map{ setting =>
         data[@setting.id] = $('input[name=@setting.id]').prop('checked');
     }
-    $.post( "@controllers.admin.routes.Setup.setupFeatures()", data)
+    $.post( "@controllers.admin.routes.Setting.setting()", data)
      .done(function( data ) {
         UIkit.notify("Saved", {status:'success', timeout : 5000})
       });
