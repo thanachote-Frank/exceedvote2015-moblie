@@ -9,28 +9,38 @@
                     <fieldset data-uk-margin>
                         <legend class="uk-margin-bottom-remove">Criteria</legend>
                         <ul class="uk-tab">
-                            <li><a href="@routes.Admin.addCriteria()">Add</a></li>
-                            <li><a href="">Delete</a></li>
-                            <li class="uk-active"><a href="@routes.Admin.addCriteria()">List</a></li>
+                            <li><a href="@controllers.admin.routes.Criteria.addCriteria()">Add</a></li>
+                            <li><a href="@controllers.admin.routes.Criteria.deleteCriteria()">Delete</a></li>
+                            <li class="uk-active"><a href="@controllers.admin.routes.Criteria.listCriteria()">List</a></li>
                         </ul>
                     </fieldset>
 
-
                     <table class="uk-table uk-table-striped uk-table-hover">
+                        <col width="50px">
                         <thead>
                             <tr>
+                                <th>No.</th>
                                 <th>Criteria</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="table">
                         @lists.map { list=>
                             <tr>
+                                <td id="@list.Id"></td>
                                 <td>@list.name</td>
                             </tr>
                         }
                         </tbody>
                     </table>
 
+                    <script>
+                        var count = 0;
+                        var size = @lists.size;
+                        @lists.map { list=>
+                           $('#'+@list.Id).text(++count + '.');
+                        }
+
+                    </script>
                 </div>
             </div>
         </div>

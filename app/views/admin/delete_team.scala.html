@@ -1,6 +1,4 @@
 @(lists: List[Team])
-@import play.api.Play
-
 @main("Team")(css) {
 
     <div class="uk-grid uk-margin-large-top">
@@ -10,9 +8,9 @@
                     <fieldset data-uk-margin>
                         <legend class="uk-margin-bottom-remove">Team</legend>
                         <ul class="uk-tab">
-                            <li><a href="@routes.Admin.listTeam()">List</a></li>
+                            <li><a href="@controllers.admin.routes.Team.listTeam()">List</a></li>
                             <li><a href="">Edit</a></li>
-                            <li class="uk-active"><a href="@routes.Admin.deleteTeam()">Delete</a></li>
+                            <li class="uk-active"><a href="@controllers.admin.routes.Team.deleteTeam()">Delete</a></li>
 
                         </ul>
                     </fieldset>
@@ -34,7 +32,7 @@
                                 function deleteTeam(id){
                                     var data = {};
                                     data["id"] = id ;
-                                $.post("@routes.Admin.deleteTeam()",data).done(function(data){
+                                $.post("@controllers.admin.routes.Team.deleteTeam()",data).done(function(data){
                                     UIkit.notify(data.text, {status : data.type , timeout : 5000});
                                     $("#"+id ).remove();
                             });

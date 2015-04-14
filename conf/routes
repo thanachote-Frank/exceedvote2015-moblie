@@ -4,54 +4,60 @@
 
 # Home page
 #GET         /                      controllers.Application.index()
-GET         /main_menu                          controllers.Application.mainMenu()
+GET         /main_menu                          controllers.user.Menu.mainMenu()
 
-GET         /team_list                          controllers.Application.teamList()
+GET         /team_list                          controllers.user.Team.teamList()
 
-POST        /                                   controllers.Application.login()
-GET         /                                   controllers.Application.login()
+POST        /                                   controllers.user.Account.login()
+GET         /                                   controllers.user.Account.login()
 
-GET         /team/:teamID                       controllers.Application.team(teamID: Long)
-POST        /register                           controllers.Application.regis()
-GET         /register                           controllers.Application.regis()
+GET         /team/:teamID                       controllers.user.Team.team(teamID: Long)
 
-POST        /create_team                        controllers.Application.createTeam()
-GET         /create_team                        controllers.Application.createTeam()
+POST        /register                           controllers.user.Account.regis()
+GET         /register                           controllers.user.Account.regis()
 
-POST        /edit_description                   controllers.Application.editDescription()
-GET         /edit_description                   controllers.Application.editDescription()
+POST        /create_team                        controllers.user.Team.createTeam()
+GET         /create_team                        controllers.user.Team.createTeam()
 
-POST        /rating2                            controllers.Application.ratingPost()
-GET         /rating/:teamID                     controllers.Application.rating(teamID: String)
+POST        /edit_description                   controllers.user.Team.editDescription()
+GET         /edit_description                   controllers.user.Team.editDescription()
 
-GET         /logout                             controllers.Application.logout()
+POST        /rating2                            controllers.user.Rating.ratingPost()
+GET         /rating/:teamID                     controllers.user.Rating.rating(teamID: String)
 
-POST        /upload_logo                        controllers.Application.uploadLogo()
-GET         /upload_logo                        controllers.Application.uploadLogo()
+GET         /logout                             controllers.user.Account.logout()
 
-POST        /upload_screenshot                  controllers.Application.uploadScreenshot()
-GET         /upload_screenshot                  controllers.Application.uploadScreenshot()
+POST        /upload_logo                        controllers.user.Upload.uploadLogo()
+GET         /upload_logo                        controllers.user.Upload.uploadLogo()
 
-GET         /rating_result                      controllers.Application.ratingResult()
+POST        /upload_screenshot                  controllers.user.Upload.uploadScreenshot()
+GET         /upload_screenshot                  controllers.user.Upload.uploadScreenshot()
 
-POST        /upload_screenshot/deleteAll        controllers.Application.deleteAllScreenshot()
+GET         /rating_result                      controllers.user.Rating.ratingResult()
 
-GET         /admin/home                         controllers.Admin.home()
+POST        /upload_screenshot/deleteAll        controllers.user.Upload.deleteAllScreenshot()
 
-POST        /admin/setting                      controllers.Admin.setting()
-GET         /admin/setting                      controllers.Admin.setting()
+GET         /admin/home                         controllers.admin.Menu.menu()
 
-POST        /admin/setup_features               controllers.Admin.setupFeatures()
+POST        /admin/setting                      controllers.admin.Setting.setting()
+GET         /admin/setting                      controllers.admin.Setting.setting()
 
-#GET         /admin/criteria                     controllers.Admin.criteria()
-POST        /admin/criteria/add                 controllers.Admin.addCriteria()
-GET         /admin/criteria/add                 controllers.Admin.addCriteria()
+POST        /admin/setup_features               controllers.admin.Setup.setupFeatures()
 
-GET         /admin/criteria/list                controllers.Admin.listCriteria()
+#GET         /admin/criteria                     controllers.admin.Admin.criteria()
+POST        /admin/criteria/add                 controllers.admin.Criteria.addCriteria()
+GET         /admin/criteria/add                 controllers.admin.Criteria.addCriteria()
 
-GET         /admin/team/list                    controllers.Admin.listTeam()
+POST        /admin/criteria/delete              controllers.admin.Criteria.deleteCriteria()
+GET         /admin/criteria/delete              controllers.admin.Criteria.deleteCriteria()
 
-POST        /admin/team/delete                  controllers.Admin.deleteTeam()
-GET         /admin/team/delete                  controllers.Admin.deleteTeam()
+GET         /admin/criteria/list                controllers.admin.Criteria.listCriteria()
+
+POST        /admin/criteria/search              controllers.admin.Criteria.searchCriteria()
+
+GET         /admin/team/list                    controllers.admin.Team.listTeam()
+
+POST        /admin/team/delete                  controllers.admin.Team.deleteTeam()
+GET         /admin/team/delete                  controllers.admin.Team.deleteTeam()
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                       controllers.Assets.at(path="/public", file)

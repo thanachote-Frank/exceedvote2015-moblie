@@ -9,15 +9,15 @@
                     <fieldset data-uk-margin>
                         <legend class="uk-margin-bottom-remove">Criteria</legend>
                         <ul class="uk-tab">
-                            <li class="uk-active"><a href="@routes.Admin.addCriteria()">Add</a></li>
-                            <li><a href="">Delete</a></li>
-                            <li><a href="@routes.Admin.listCriteria()">List</a></li>
+                            <li class="uk-active"><a href="@controllers.admin.routes.Criteria.addCriteria()">Add</a></li>
+                            <li><a href="@controllers.admin.routes.Criteria.deleteCriteria()">Delete</a></li>
+                            <li><a href="@controllers.admin.routes.Criteria.listCriteria()">List</a></li>
                         </ul>
                     </fieldset>
 
-                    <form id="form" action="@routes.Admin.addCriteria()" method="post" class="uk-form uk-margin-top">
+                    <form id="form" action="@controllers.admin.routes.Criteria.addCriteria()" method="post" class="uk-form uk-margin-top">
                         <fieldset data-uk-margin>
-                            <input name="name" type="text" placeholder="Criteria">
+                            <input id='input_criteria' name="name" type="text" placeholder="Criteria">
                             <button class="uk-button">Add</button>
                         </fieldset>
                     </form>
@@ -30,9 +30,12 @@
     <script>
         $('#form').submit(function( event ) {
             event.preventDefault();
-            $.post('@routes.Admin.addCriteria()', $( this ).serialize()).
+            $.post('@controllers.admin.routes.Criteria.addCriteria()', $( this ).serialize()).
             done(function(data){
                 UIkit.notify(data.text, {status : data.type , timeout : 5000});
+                if (data.type == 'success'){
+                    $('#input_criteria').val("");
+                }
             });
             });
     </script>

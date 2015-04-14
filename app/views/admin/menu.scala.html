@@ -1,13 +1,13 @@
-
+@import controllers.admin
 
 @main("Main menu")(css) {
     <div class="uk-container uk-container-center uk-margin-large-top">
     <div class="uk-panel uk-panel-box">
         <h3 class="uk-panel-title">Admin setting</h3>
         <ul class="uk-nav uk-nav-side">
-            <li><a href="@routes.Admin.addCriteria()">Criteria</a></li>
-            <li><a href="@routes.Admin.setting()">On/Off Feature</a></li>
-            <li><a href="@routes.Admin.listTeam()">Team</a></li>
+            <li><a href="@admin.routes.Team.listTeam()">Team</a></li>
+            <li><a href="@admin.routes.Criteria.listCriteria()">Criteria</a></li>
+            <li><a href="@admin.routes.Setting.setting()">On/Off Feature</a></li>
             <li><a onclick="setupFeatures()">Setup Features And Reset</a></li>
         </ul>
     </div>
@@ -15,7 +15,7 @@
     <script>
         function setupFeatures(){
 
-        $.post( "@routes.Admin.setupFeatures()")
+        $.post( "@admin.routes.Setup.setupFeatures()")
             .done(function( data ) {
                 UIkit.notify("Success", {status:'success'})
         });
@@ -29,5 +29,4 @@
 @css = {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/notify.almost-flat.min.css")">
     <script src="@routes.Assets.at("uikit-2.17.0/js/components/notify.min.js")" type="text/javascript"></script>
-
 }

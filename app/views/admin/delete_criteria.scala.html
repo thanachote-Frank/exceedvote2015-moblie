@@ -1,0 +1,88 @@
+@(lists: List[Criteria])
+
+@main("Criteria")(css) {
+
+    <div class="uk-grid uk-margin-large-top">
+        <div class="uk-width-9-10 uk-container-center">
+            <div class="uk-panel uk-panel-box uk-panel-box-secondary">
+                <div class="uk-form">
+                    <fieldset data-uk-margin>
+                        <legend class="uk-margin-bottom-remove">Criteria</legend>
+                        <ul class="uk-tab">
+                            <li><a href="@controllers.admin.routes.Criteria.addCriteria()">Add</a></li>
+                            <li class="uk-active"><a href="@controllers.admin.routes.Criteria.deleteCriteria()">Delete</a></li>
+                            <li><a href="@controllers.admin.routes.Criteria.listCriteria()">List</a></li>
+                        </ul>
+                    </fieldset>
+
+                    <div class="uk-margin-top">
+                    <input type="text" placeholder="search" onkeyup="search(this)">
+                    </div>
+
+                    <table class="uk-table uk-table-striped uk-table-hover">
+                        <col width="50px">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Criteria</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table">
+                        @lists.map { list=>
+                            <tr id="@list.Id">
+                                <td id="no_@list.Id"></td>
+                                <td>@list.name</td>
+                                <td style="text-align: right"><a class = "uk-button ui-red ui-text-white u" onclick="deleteTeam(@list.Id)">Delete</a></td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+    var count = 0;
+    var size = @lists.size;
+    @lists.map { list=>
+        $('#no_'+@list.Id).text(++count + '.');
+    }
+
+    function deleteTeam(id){
+        var data = {};
+        data["id"] = id ;
+        $.post("@controllers.admin.routes.Criteria.deleteCriteria()",data).done(function(data){
+            UIkit.notify(data.text, {status : data.type , timeout : 5000});
+            if (data.type == 'success')
+            $("#"+id ).remove();
+        });
+    }
+
+    function search(obj){
+        var data = {};
+        data["input"] = $(obj).val()
+        $.post("@controllers.admin.routes.Criteria.searchCriteria()", data).done(function(output){
+              var temp = "";
+              for (var i=0;i<output.data.length;i++){
+                temp += '<tr id=' + output.data[i].id + '>';
+                temp += '<td id=no_'+ output.data[i].id + '>'+ (i+1) +'</td>';
+                temp += '<td>'+ output.data[i].name +'</td>';
+                temp += '<td style="text-align: right"><a class = "uk-button" onclick="deleteTeam('+ output.data[i].id +')">Delete</a></td>';
+                temp += '</tr>';
+              }
+              $('#table').html(temp);
+
+        });
+    }
+    </script>
+
+}
+
+@css = {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/notify.almost-flat.min.css")">
+    <script src="@routes.Assets.at("uikit-2.17.0/js/components/notify.min.js")" type="text/javascript"></script>
+
+}

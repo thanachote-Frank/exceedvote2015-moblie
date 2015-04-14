@@ -10,6 +10,14 @@ import javax.persistence.Id;
  */
 @Entity
 public class Setting extends Model{
+    public final static long UPLOAD_LOGO = 1;
+    public final static long UPLOAD_SCREENSHOT = 2;
+    public final static long EDIT_DESCRIPTION = 3;
+    public final static long TEAM_LIST = 4;
+    public final static long TEAM_DESCRIPTION = 5;
+    public final static long RATING = 6;
+    public final static long CREATE_TEAM = 7;
+    public final static long CREATE_ACCOUNT = 8;
 
     @Id
     public Long id;

@@ -1,8 +1,7 @@
 @(form: Form[forms.Register])(teams: List[Team])(userType: List[UserType])
 
 @main("Register")(css) {
-    @*<h1>Register</h1>*@
-    @helper.form(routes.Application.regis()) {
+    <form action="@controllers.user.routes.Account.regis()" method="post">
 
         <div class="uk-grid uk-grid-small uk-margin-large-top" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
@@ -28,7 +27,6 @@
 
                             <input name="lastname" type="text" placeholder="lastname" class="uk-width-1-1" value="@form.data.get("lastname")">
 
-                            </select>
 
                             <select id="checker" name="type" onchange="checkType(this)" class="uk-width-1-1 ">
                                 <option value="" disabled selected>&#60;type&#62;</option>
@@ -56,7 +54,7 @@
         <script>
              $('#checker').val("@form.data.get("type")");
              $('#checker2').val("@form.data.get("team")");
-             if ($('#checker').val().toLocaleLowerCase() == "participant"){
+             if ($('#checker').val().toLowerCase() == "participant"){
                 $("#checker2").attr("disabled",false);
              }
              function checkType(self) {
@@ -77,11 +75,12 @@
 
         <div class="uk-grid uk-grid-small uk-margin-large-bottom" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
-                <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.login">Cancel</a>
+                <a class="uk-button uk-button-large uk-width-1-1" href="@controllers.user.routes.Account.login">Cancel</a>
             </div>
         </div>
+    </form>
 
-    }
+
 }
 
 @css = {

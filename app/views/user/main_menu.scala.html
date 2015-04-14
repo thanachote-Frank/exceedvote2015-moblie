@@ -36,7 +36,7 @@
 
     <div class="uk-text-center">
         <div class="uk-grid uk-margin-small-top">
-            <a id='link_team_list' href="@routes.Application.teamList" class="uk-button uk-width-1-1 uk-icon-group uk-margin-small-bottom ui-text-white ui-button ui-darkorange" style="font-size: 500%; padding: 20px;">
+            <a id='link_team_list' href="@controllers.user.routes.Team.teamList" class="uk-button uk-width-1-1 uk-icon-group uk-margin-small-bottom ui-text-white ui-button ui-darkorange" style="font-size: 500%; padding: 20px;">
                 <div id='text_team_list' class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">Team list</div>
             </a>
         </div>
@@ -45,7 +45,7 @@
     @if(!team.equals("No Team")){
         <div class="uk-text-center">
             <div class="uk-grid uk-margin-small-top">
-                <a id="link_edit_description" href="@routes.Application.editDescription()" class="uk-button uk-width-1-1 uk-icon-edit uk-margin-small-bottom ui-text-white ui-button ui-mountain-meadow" style="width : 100% ; font-size : 500% ; padding : 20px ;">
+                <a id="link_edit_description" href="@controllers.user.routes.Team.editDescription()" class="uk-button uk-width-1-1 uk-icon-edit uk-margin-small-bottom ui-text-white ui-button ui-mountain-meadow" style="width : 100% ; font-size : 500% ; padding : 20px ;">
                     <div id="text_edit_description" class="uk-text-bottom" style="color : #ffffff ; font-size : 30% ; font-family : 'Signika', sans-serif ;">
                         Edit Team Description</div>
                 </a>
@@ -60,7 +60,7 @@
                 </a>
             </div>
             <div class="uk-panel uk-width-4-10">
-                <a href="@routes.Application.logout" class="uk-button uk-width-4-10 uk-icon-power-off uk-margin-small-bottom ui-text-white ui-button ui-redpink" style="width : 100% ; font-size : 500% ; padding : 20px ;">
+                <a href="@controllers.user.routes.Account.logout" class="uk-button uk-width-4-10 uk-icon-power-off uk-margin-small-bottom ui-text-white ui-button ui-redpink" style="width : 100% ; font-size : 500% ; padding : 20px ;">
                     <div class="uk-text-bottom" style="color : #ffffff ; font-size : 30% ; font-family : 'Signika', sans-serif ;">Logout</div>
                 </a>
             </div>

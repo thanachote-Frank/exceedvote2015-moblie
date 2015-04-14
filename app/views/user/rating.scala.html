@@ -3,7 +3,7 @@
 @main("Rating")(css) {
     <div class="uk-grid uk-text-center uk-grid-collapse">
         <div class="uk-panel uk-width-1-6">
-            <a href="@routes.Application.teamList()" class="uk-button uk-icon-arrow-left ui-text-white ui-button ui-redpink" style="width:100%; padding: 18px; border-width: 0; height : 55px; font-size: large;"></a>
+            <a href="@controllers.user.Team.teamList()" class="uk-button uk-icon-arrow-left ui-text-white ui-button ui-redpink" style="width:100%; padding: 18px; border-width: 0; height : 55px; font-size: large;"></a>
         </div>
         <div class="uk-width-5-6">
             <div class="uk-panel uk-panel-box ui-yellow ui-text-white" style="border-width: 0; font-size: large; height : 55px;">
@@ -114,9 +114,11 @@
             var obj = jQuery.parseJSON( '{ '+arr+' }' );
 
 
-            $.post ( "/rating2" , obj , function( data ){});
+            $.post ( "@controllers.user.routes.Rating.ratingPost()" , obj , function( data ){
             console.log(obj);
-            window.location.replace ( "@routes.Application.teamList()" );
+            window.location.replace ( "@controllers.user.routes.Team.teamList()");
+            });
+
             }
             </script>
 }

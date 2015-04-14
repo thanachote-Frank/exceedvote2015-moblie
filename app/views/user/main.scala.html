@@ -1,0 +1,24 @@
+@(title: String)(css: Html)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/icon.png")">
+        <script src="@routes.Assets.at("javascripts/jquery-1.11.2.min.js")" type="text/javascript"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("bootstrap-3.3.2/css/bootstrap.min.css")">
+        <script src="@routes.Assets.at("bootstrap-3.3.2/js/bootstrap.min.js")" type="text/javascript"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/uikit.almost-flat.min.css")">
+        <script src="@routes.Assets.at("uikit-2.17.0/js/uikit.min.js")" type="text/javascript"></script>
+        @css
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link href='http://fonts.googleapis.com/css?family=Signika' rel='stylesheet' type='text/css'>
+
+    </head>
+    <body>
+        @content
+    </body>
+</html>

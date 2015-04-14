@@ -1,8 +1,7 @@
 @(form: Form[forms.CreateTeam])
 
 @main("Create a team")(css) {
-    @*<h1>Register</h1>*@
-    @helper.form(routes.Application.createTeam) {
+    <form action="@controllers.user.routes.Team.createTeam()" method="post">
 
         <div class="uk-grid uk-grid-small uk-margin-large-top" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
@@ -19,11 +18,7 @@
                             }
 
                             <input name="name" type="text" placeholder="Name" class="uk-width-1-1 uk-margin-bottom" value="@form.data.get("name")">
-
-                            @*<button class="uk-button uk-width-1-1">Submit</button>*@
-                            @*<label><input type="checkbox"> ...</label>*@
                         </fieldset>
-
                     </div>
                 </div>
 
@@ -37,10 +32,10 @@
 
         <div class="uk-grid uk-grid-small uk-margin-small-top" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
-                <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.login">Cancel</a>
+                <a class="uk-button uk-button-large uk-width-1-1" href="@controllers.user.routes.Account.login">Cancel</a>
             </div>
         </div>
-    }
+    </form>
 
 
 }

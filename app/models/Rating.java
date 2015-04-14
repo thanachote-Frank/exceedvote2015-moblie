@@ -54,4 +54,18 @@ public class Rating extends Model {
         return result;
     }
 
+    public static void setCriteriaToNullByCriteriaID(String ID){
+        for (Rating rating: Rating.find.where().eq("criteria_id", ID).findList()){
+            rating.criteria = null;
+            rating.update();
+        }
+    }
+
+    public static void setTeamToNullByTeamID(String ID){
+        for (Rating rating: Rating.find.where().eq("team_id", ID).findList()){
+            rating.team = null;
+            rating.update();
+        }
+    }
+
 }

@@ -27,8 +27,19 @@ public class Criteria extends Model{
     public static List<Criteria> getall(){
         return Criteria.find.all();
     }
+
+    public static List<Criteria> getAllAndOrder(){
+        return Criteria.find.order("name").findList();
+    }
+
     public static String toStringId(Long id,int num){
         return "rating-"+(id*5+num);
     }
+
+    public static List<Criteria> findByName(String name){
+        return Criteria.find.where().like("name","%"+name+"%").order("name").findList();
+    }
+
+
 
 }

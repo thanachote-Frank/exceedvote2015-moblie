@@ -42,14 +42,14 @@
 
         <div class="uk-grid uk-grid-small uk-margin-top" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
-                <a class="uk-button uk-button-large uk-width-1-1" href="@routes.Application.editDescription()">Back</a>
+                <a class="uk-button uk-button-large uk-width-1-1" href="@controllers.user.routes.Team.editDescription()">Back</a>
             </div>
         </div>
     </form>
 
     <script>
         function deleteAll(){
-            $.post("@routes.Application.deleteAllScreenshot()")
+            $.post("@controllers.user.routes.Upload.deleteAllScreenshot()")
         }
     </script>
 
@@ -75,7 +75,7 @@
     console.log(response.url);
     bar.css ( "width", "100%" ).text ( "100%" ) ;
     $.post (
-    " @routes.Application.uploadScreenshot() ", { url : response.url } )
+    " @controllers.user.routes.Upload.uploadScreenshot() ", { url : response.url } )
     .done ( function ( data ) {
     bar.css ( "width", "0%" ).text ( "0%" ) ;
     $('#msg' ).text('- [uploaded '+ ++count +' file(s)]');
@@ -86,7 +86,7 @@
     setTimeout ( function ( ) {
     progressbar.addClass ( "uk-hidden" ) ;
     }, 250 ) ;
-    window.location.replace ( " @routes.Application.editDescription() ");
+    window.location.replace ( " @controllers.user.routes.Team.editDescription() ");
     }
     } ;
     var select = UIkit.uploadSelect ( $ ( "#upload-select" ), settings ),

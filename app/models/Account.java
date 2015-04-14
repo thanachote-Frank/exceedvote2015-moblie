@@ -1,6 +1,7 @@
 package models;
 
 import play.db.ebean.*;
+import scala.collection.immutable.List;
 
 import javax.annotation.Nullable;
 import javax.persistence.*;
@@ -47,6 +48,13 @@ public class Account extends Model {
 
     public static Account findEmail(String email) {
         return Account.find.where().eq("email", email).findUnique();
+    }
+
+    public static void setTeamToNullByTeamID(String ID){
+        for (Account account: Account.find.where().eq("team_id", ID).findList()){
+            account.team = null;
+            account.update();
+        }
     }
 
 }
