@@ -35,5 +35,12 @@ public class Screenshot extends Model{
         return Screenshot.find.where().eq("team_id", teamID).findList();
     }
 
+    public static void deleteAllByTeamID(Long ID){
+        List<Screenshot> temp = Screenshot.getAll(ID);
+        for (Screenshot screenshot : temp) {
+            screenshot.delete();
+        }
+    }
+
 
 }

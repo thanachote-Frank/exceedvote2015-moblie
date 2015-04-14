@@ -52,11 +52,10 @@ public class Upload extends Controller{
         if (Setting.find.byId(Setting.UPLOAD_SCREENSHOT).isActivated) {
             if (request().method().equals("POST")) {
                 models.Team team = models.Team.findTeam(session("email"));
-                List<Screenshot> temp = Screenshot.getAll(team.id);
-                for (Screenshot screenshot : temp) {
-                    screenshot.delete();
-                }
+                models.Screenshot.deleteAllByTeamID(team.id);
+                return ok();
             }
+
         }
         return badRequest("Disable this function by admin");
     }
