@@ -1,0 +1,87 @@
+@(lists: List[UserType])
+
+@main("User Type")(css) {
+
+  <div class="uk-grid uk-margin-large-top">
+    <div class="uk-width-9-10 uk-container-center">
+      <div class="uk-panel uk-panel-box uk-panel-box-secondary">
+        <div class="uk-form">
+          <fieldset data-uk-margin>
+            <legend class="uk-margin-bottom-remove">User Type</legend>
+            <ul class="uk-tab">
+              <li class="uk-active"><a href="">Edit</a></li>
+            </ul>
+          </fieldset>
+          <table class="uk-table uk-table-striped uk-table-hover">
+            <col width="50px">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>User Type</th>
+                <th>Weight</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="table">
+            @lists.map { list=>
+              <tr id="@list.id">
+                <td id="no_@list.id"></td>
+                <td>@list.name</td>
+                <td id="input_@list.id">@list.weight</td>
+                <td style="text-align: right">
+                  <a id="edit_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.id)">Edit</a>
+                  <a id="save_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="save(@list.id)" style="display: none">Save</a>
+                  <a id="cancel_@list.id" class = "uk-button ui-darkorange ui-text-white" onclick="cancel(@list.id)" style="display: none">Cancel</a>
+                </td>
+              </tr>
+            }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    var count = 0;
+    var size = @lists.size;
+    @lists.map { list=>
+        $('#no_'+@list.id).text(++count + '.');
+    }
+    function edit(id){
+      $('#input_'+id).html('<input type="number" value="'+ $('#input_'+id).text() +'" style="width: 50px;">');
+      $('#save_'+id).show();
+      $('#cancel_'+id).show();
+      $('#edit_'+id).hide();
+    }
+
+    function cancel(id){
+      $('#input_'+id).html($('#input_'+id+' input').val());
+      $('#save_'+id).hide();
+      $('#cancel_'+id).hide();
+      $('#edit_'+id).show();
+    }
+
+    function save(id){
+        var data = {};
+        data["id"] = id ;
+        data["weight"] =  $('#input_'+id+' input').val();
+        console.log(data);
+        $.post("@controllers.admin.routes.UserType.edit()",data).done(function(data){
+            UIkit.notify(data.text, {status : data.type , timeout : 5000});
+            if (data.type == 'success'){
+              cancel(id);
+            }
+        });
+    }
+
+    </script>
+
+}
+
+@css = {
+  <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/notify.almost-flat.min.css")">
+  <script src="@routes.Assets.at("uikit-2.17.0/js/components/notify.min.js")" type="text/javascript"></script>
+
+}

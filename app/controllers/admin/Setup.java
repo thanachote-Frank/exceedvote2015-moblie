@@ -4,7 +4,8 @@ import models.*;
 import models.Setting;
 import play.mvc.Controller;
 import play.mvc.Result;
-
+import models.UserType;
+import models.Setting;
 /**
  * Created by thanachote on 14/4/2558.
  */

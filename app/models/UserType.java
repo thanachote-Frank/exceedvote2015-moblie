@@ -33,4 +33,12 @@ public class UserType extends Model {
     public static UserType findType(String name){
         return UserType.find.where().eq("name", name).findUnique();
     }
+
+    public static List<UserType> getAllAndOrder(){
+        return UserType.find.order("name").findList();
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
 }
