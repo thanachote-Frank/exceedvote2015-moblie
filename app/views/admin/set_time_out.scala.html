@@ -1,0 +1,66 @@
+@import org.joda.time.LocalDateTime
+
+@(dateTime: LocalDateTime)(endDateTime: LocalDateTime)(timeLeft: String)
+
+@main("Time Out")(css) {
+
+    <div class="uk-grid uk-margin-large-top">
+        <div class="uk-width-9-10 uk-container-center">
+            <div class="uk-panel uk-panel-box uk-panel-box-secondary">
+                <div class="uk-form">
+                    <fieldset data-uk-margin>
+                        <legend class="uk-margin-bottom-remove">Time Out</legend>
+                        <ul class="uk-tab">
+                            <li class="uk-active"><a href="">Set</a></li>
+                        </ul>
+                    </fieldset>
+
+                    <form id="form" action="@controllers.admin.routes.TimeOut.set()" method="post" class="uk-form uk-margin-top">
+                        <fieldset data-uk-margin>
+                            <div>Time Left</div>
+                            <div id="clock"></div>
+                            <br>
+                            <div>End Date/Time</div>
+                            <input readonly type="datetime-local" value="@endDateTime">
+                            <br><br>
+                            <div>New End Date/Time</div>
+                            <input name="date_time" type="datetime-local" value="@dateTime">
+                            <button class="uk-button">Set</button>
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#form').submit(function( event ) {
+            event.preventDefault();
+            $.post('@controllers.admin.routes.TimeOut.set()', $( this ).serialize()).
+            done(function(data){
+                UIkit.notify(data.text, {status : data.type , timeout : 5000});
+                if (data.type == 'success'){
+                    $('#input_criteria').val("");
+                }
+            });
+            });
+    </script>
+    <script>
+        $ ( '#clock' ).countdown ( "@timeLeft", function ( event ) {
+            var totalHours = event.offset.totalDays * 24 + event.offset.hours ;
+        $ ( this ).html ( event.strftime ( totalHours + ' : %M : %S') ) ;
+    } ) ;
+    </script>
+
+}
+
+@css = {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/notify.almost-flat.min.css")">
+    <script src="@routes.Assets.at("uikit-2.17.0/js/components/notify.min.js")" type="text/javascript"></script>
+
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/datepicker.almost-flat.min.css")">
+    <script src="@routes.Assets.at("uikit-2.17.0/js/components/datepicker.min.js")" type="text/javascript"></script>
+
+    <script src="@routes.Assets.at("javascripts/jquery.countdown.min.js")" type="text/javascript"></script>
+}

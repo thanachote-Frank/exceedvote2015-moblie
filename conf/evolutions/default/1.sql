@@ -51,6 +51,12 @@ create table team (
   constraint pk_team primary key (id))
 ;
 
+create table time_out (
+  id                        bigint not null,
+  date_time                 timestamp,
+  constraint pk_time_out primary key (id))
+;
+
 create table user_type (
   id                        bigint not null,
   name                      varchar(255),
@@ -69,6 +75,8 @@ create sequence screenshot_seq;
 create sequence setting_seq;
 
 create sequence team_seq;
+
+create sequence time_out_seq;
 
 create sequence user_type_seq;
 
@@ -101,6 +109,8 @@ drop table if exists setting cascade;
 
 drop table if exists team cascade;
 
+drop table if exists time_out cascade;
+
 drop table if exists user_type cascade;
 
 drop sequence if exists account_seq;
@@ -114,6 +124,8 @@ drop sequence if exists screenshot_seq;
 drop sequence if exists setting_seq;
 
 drop sequence if exists team_seq;
+
+drop sequence if exists time_out_seq;
 
 drop sequence if exists user_type_seq;
 
