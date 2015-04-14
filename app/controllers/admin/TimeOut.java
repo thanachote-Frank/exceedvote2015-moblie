@@ -16,8 +16,8 @@ public class TimeOut extends Controller {
     public static Result set(){
         if (request().method().equals("GET")){
             DateTime dateTime = new DateTime();
-            dateTime.withSecondOfMinute(0);
-            dateTime.withMillisOfSecond(0);
+            dateTime = dateTime.withSecondOfMinute(0);
+            dateTime = dateTime.withMillisOfSecond(0);
             DateTime endTime = models.TimeOut.getAll().get(0).dateTime;
             String timeLeft = endTime.getYearOfEra()+"/"+endTime.getMonthOfYear()+"/"+endTime.getDayOfMonth();
             timeLeft += " " + endTime.getHourOfDay() + ":" + endTime.getMinuteOfHour() + ":" + endTime.getMillisOfSecond();
