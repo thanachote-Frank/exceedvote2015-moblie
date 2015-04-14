@@ -2,6 +2,8 @@ package controllers.admin;
 
 import models.*;
 import models.Setting;
+import models.TimeOut;
+import org.joda.time.DateTime;
 import play.mvc.Controller;
 import play.mvc.Result;
 import models.UserType;
@@ -33,6 +35,9 @@ public class Setup extends Controller{
         if (Setting.find.all().isEmpty()){
             addFeatures();
         }
+        if (TimeOut.getAll().isEmpty()){
+            addTimeOut();
+        }
         checkingSystem = true;
         return true;
     }
@@ -53,5 +58,9 @@ public class Setup extends Controller{
         (new UserType("guest", 1)).save();
         (new UserType("participant", 1)).save();
         (new UserType("organizer", 1)).save();
+    }
+
+    private static void addTimeOut(){
+        (new TimeOut(new DateTime())).save();
     }
 }
