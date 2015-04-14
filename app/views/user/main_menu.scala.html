@@ -1,4 +1,4 @@
-@(message: String)(team: String)(teamList: Boolean)(uploadLogo: Boolean)(dateTime: String)
+@(message: String)(team: Team)(teamList: Boolean)(uploadLogo: Boolean)(dateTime: String)
 
 @main("Main menu")(css) {
     <div class="uk-grid uk-grid-collapse">
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    @if(!team.equals("No Team")){
+    @if(team != null){
         <div class="uk-text-center">
             <div class="uk-grid uk-margin-small-top">
                 <a id="link_edit_description" href="@controllers.user.routes.Team.editDescription()" class="uk-button uk-width-1-1 uk-icon-edit uk-margin-small-bottom ui-text-white ui-button ui-mountain-meadow" style="width : 100% ; font-size : 500% ; padding : 20px ;">

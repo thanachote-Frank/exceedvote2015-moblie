@@ -31,9 +31,7 @@ public class Account extends Controller {
                         Setting.find.byId(Setting.CREATE_TEAM).isActivated));
             } else {
                 session().clear();
-                models.Account account = models.Account.findEmail(loginForm.get().email);
-                session("email", account.email);
-                session("team", account.team.name);
+                session("email", loginForm.get().email);
                 return redirect(routes.Menu.mainMenu());
             }
         }
@@ -49,10 +47,18 @@ public class Account extends Controller {
                 if (registerForm.hasErrors()) {
                     return badRequest(register.render(registerForm, models.Team.getAll(), UserType.getAll()));
                 } else {
-                    models.Account account = new models.Account(registerForm.get().name, registerForm.get().lastname, registerForm.get().email,
-                            registerForm.get().password,
-                            models.Team.find.byId(registerForm.get().team), UserType.findType(registerForm.get().type));
-                    account.save();
+                    if (registerForm.get().team == null){
+                        models.Account account = new models.Account(registerForm.get().name, registerForm.get().lastname, registerForm.get().email,
+                                registerForm.get().password,
+                                null, UserType.findType(registerForm.get().type));
+                        account.save();
+                    }
+                    else {
+                        models.Account account = new models.Account(registerForm.get().name, registerForm.get().lastname, registerForm.get().email,
+                                registerForm.get().password,
+                                models.Team.find.byId(registerForm.get().team), UserType.findType(registerForm.get().type));
+                        account.save();
+                    }
                     return redirect(routes.Account.login());
                 }
             }

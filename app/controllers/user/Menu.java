@@ -17,7 +17,7 @@ public class Menu extends Controller{
         DateTime dateTime = TimeOut.getAll().get(0).dateTime;
         String temp = dateTime.getYearOfEra()+"/"+dateTime.getMonthOfYear()+"/"+dateTime.getDayOfMonth();
         temp += " " + dateTime.getHourOfDay() + ":" + dateTime.getMinuteOfHour() + ":" + dateTime.getMillisOfSecond();
-        return ok(main_menu.render(session().get("email"), session().get("team"),
+        return ok(main_menu.render(session().get("email"), models.Team.findTeam(session().get("email")),
                 Setting.find.byId(Setting.TEAM_LIST).isActivated,
                 Setting.find.byId(Setting.EDIT_DESCRIPTION).isActivated,
                 temp));
