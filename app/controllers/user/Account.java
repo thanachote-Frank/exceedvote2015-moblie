@@ -17,6 +17,8 @@ public class Account extends Controller {
 
     public static Result login() {
         if (request().method().equals("GET")) {
+            if (!controllers.admin.Setup.checkSystem())
+                return badRequest();
             return ok(login.render(Form.form(Login.class),
                     Setting.find.byId(Setting.CREATE_ACCOUNT).isActivated,
                     Setting.find.byId(Setting.CREATE_TEAM).isActivated));

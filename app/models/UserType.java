@@ -16,10 +16,15 @@ public class UserType extends Model {
     public Long id;
 
     public String name;
+    public Integer weight;
 
     public static Finder<Long, UserType> find =
             new Finder<Long, UserType>(Long.class, UserType.class);
 
+    public UserType(String name, Integer weight) {
+        this.name = name;
+        this.weight = weight;
+    }
 
     public static List<UserType> getAll() {
         return UserType.find.orderBy("name").findList();

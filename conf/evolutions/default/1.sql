@@ -54,6 +54,7 @@ create table team (
 create table user_type (
   id                        bigint not null,
   name                      varchar(255),
+  weight                    integer,
   constraint pk_user_type primary key (id))
 ;
 
