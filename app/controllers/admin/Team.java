@@ -1,12 +1,14 @@
 package controllers.admin;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import forms.CreateTeam;
+import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.admin.delete_team;
 import views.html.admin.list_team;
-
+import views.html.admin.add_team;
 
 /**
  * Created by thanachote on 14/4/2558.
@@ -39,6 +41,27 @@ public class Team extends Controller{
             ObjectNode result = Json.newObject();
             result.put("type", "danger");
             result.put("text", "Delete Fail");
+            return ok(result);
+        }
+        return badRequest();
+    }
+
+    public static Result addTeam() {
+        if (request().method().equals("GET")) {
+            return ok(add_team.render(Form.form(CreateTeam.class)));
+        } else if (request().method().equals("POST")) {
+            Form<CreateTeam> form = Form.form(CreateTeam.class).bindFromRequest();
+            if (form.hasErrors()) {
+                ObjectNode result = Json.newObject();
+                result.put("type", "danger");
+                result.put("text", form.globalError().message());
+                return ok(result);
+            }
+            models.Team team = new models.Team(form.get().name, "" + "/assets/images/logo.png");
+            team.save();
+            ObjectNode result = Json.newObject();
+            result.put("type", "success");
+            result.put("text", "Success");
             return ok(result);
         }
         return badRequest();
