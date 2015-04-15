@@ -9,7 +9,7 @@
                         <legend class="uk-margin-bottom-remove">Team</legend>
                         <ul class="uk-tab">
                             <li><a href="@controllers.admin.routes.Team.listTeam()">List</a></li>
-                            <li class="uk-active"><a href="">Edit</a></li>
+                            <li class="uk-active"><a href="@controllers.admin.routes.Team.edit()">Edit</a></li>
                             <li><a href="@controllers.admin.routes.Team.deleteTeam()">Delete</a></li>
 
                         </ul>
@@ -21,44 +21,46 @@
                             <tr>
                                 <th>No</th>
                                 <th>Team</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                         @lists.map { list=>
                             <tr id="@list.id">
-                                <div  class="uk-form uk-form-stacked">
-                                    <div class="uk-form-row">
-                                        <td id="no_@list.id"></td>
-                                        <td id="data_@list.id">
+                                <td id="no_@list.id"></td>
+                                <td id="data_@list.id">
+                                    <div  class="uk-form uk-form-stacked">
+                                        <div class="uk-form-row">
                                             <div id="name_@list.id">@list.name</div>
                                             <div id='info_@list.id' style="display: none;">
-                                            <label class="uk-form-label uk-margin-top">Description</label>
-                                            <div class="uk-form-controls">
-                                                <textarea id='description_@list.id' rows="5" cols="20" placeholder="Text">@list.description</textarea>
-                                            </div>
-                                            <label class="uk-form-label uk-margin-top">Logo</label>
-                                            <div class="uk-form-controls">
-                                                <input id='logo_@list.id' type="text" value="@list.logo" placeholder="URL">
-                                            </div>
+                                                <label class="uk-form-label uk-margin-top">Description</label>
+                                                <div class="uk-form-controls">
+                                                    <textarea id='description_@list.id' rows="5" cols="20" placeholder="Text">@list.description</textarea>
+                                                </div>
+                                                <label class="uk-form-label uk-margin-top">Logo</label>
+                                                <div class="uk-form-controls">
+                                                    <input id='logo_@list.id' type="text" value="@list.logo" placeholder="URL">
+                                                </div>
 
-                                            <label class="uk-form-label uk-margin-top">Screenshot</label>
-                                            <div class="uk-form-controls">
-                                                <input id="img1_@list.id" type="text" placeholder="URL image 1"><br>
-                                                <input id="img2_@list.id" type="text" placeholder="URL Image 2"><br>
-                                                <input id="img3_@list.id" type="text" placeholder="URL Image 3"><br>
-                                                <input id="img4_@list.id" type="text" placeholder="URL Image 4"><br>
-                                            </div>
-                                        @defining(Screenshot.getURL(list.id)){images=>
-                                            <script>
+                                                <label class="uk-form-label uk-margin-top">Screenshot</label>
+                                                <div class="uk-form-controls">
+                                                    <input id="img1_@list.id" type="text" placeholder="URL image 1"><br>
+                                                    <input id="img2_@list.id" type="text" placeholder="URL Image 2"><br>
+                                                    <input id="img3_@list.id" type="text" placeholder="URL Image 3"><br>
+                                                    <input id="img4_@list.id" type="text" placeholder="URL Image 4"><br>
+                                                </div>
+                                                @defining(Screenshot.getURL(list.id)){images=>
+                                                    <script>
                                                 var i = 0;
                                                 @images.map { image =>
                                                      $('#img'+ ++i +'_@list.id').val('@image.url');
                                               }
-                                            </script>
-                                        }
+                                                    </script>
+                                                }
                                             </div>
                                         </div>
                                     </div>
+                                </td>
                                 <td style="text-align: right">
                                     <a id="edit_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.id)">Edit</a>
                                     <a id="save_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="save(@list.id)" style="display: none">Save</a>
