@@ -57,6 +57,9 @@ POST        /admin/criteria/search              controllers.admin.Criteria.searc
 
 GET         /admin/team/list                    controllers.admin.Team.listTeam()
 
+POST        /admin/team/add                     controllers.admin.Team.addTeam()
+GET         /admin/team/add                     controllers.admin.Team.addTeam()
+
 POST        /admin/team/delete                  controllers.admin.Team.deleteTeam()
 GET         /admin/team/delete                  controllers.admin.Team.deleteTeam()
 

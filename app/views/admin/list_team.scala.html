@@ -3,7 +3,7 @@
 
 @main("Team")(css) {
 
-    <div class="uk-grid uk-margin-large-top uk-margin-bottom">
+    <div class="uk-grid uk-margin-large-top">
         <div class="uk-width-9-10 uk-container-center">
             <div class="uk-panel uk-panel-box uk-panel-box-secondary">
                 <div class="uk-form">
@@ -11,15 +11,17 @@
                         <legend class="uk-margin-bottom-remove">Team</legend>
                         <ul class="uk-tab">
                             <li class="uk-active"><a href="@controllers.admin.routes.Team.listTeam()">List</a></li>
-                            <li><a href="@controllers.admin.routes.Team.edit()">Edit</a></li>
+                            <li><a href="@controllers.admin.routes.Team.addTeam()">Add</a></li>
+                            <li><a href="">Edit</a></li>
                             <li><a href="@controllers.admin.routes.Team.deleteTeam()">Delete</a></li>
+
                         </ul>
                     </fieldset>
 
                     <div class="uk-margin-top">
                         <input type="text" placeholder="search" onkeyup="search(this)">
                     </div>
-
+                    
                     <table class="uk-table uk-table-striped uk-table-hover">
                         <col width="50px">
                         <thead>
