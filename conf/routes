@@ -63,6 +63,8 @@ GET         /admin/team/delete                  controllers.admin.Team.deleteTea
 POST        /admin/team/edit                    controllers.admin.Team.edit()
 GET         /admin/team/edit                    controllers.admin.Team.edit()
 
+POST        /admin/team/search                  controllers.admin.Team.search()
+
 POST        /admin/user_type/edit               controllers.admin.UserType.edit()
 GET         /admin/user_type/edit               controllers.admin.UserType.edit()
 

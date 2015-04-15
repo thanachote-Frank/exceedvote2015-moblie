@@ -1,5 +1,6 @@
 package controllers.admin;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -83,5 +84,32 @@ public class Team extends Controller{
             return ok(result);
         }
         return badRequest();
+    }
+
+    public static Result search(){
+        if (request().method().equals("POST")){
+            String name = request().body().asFormUrlEncoded().get("input")[0];
+            ObjectNode result = Json.newObject();
+            ArrayNode node = result.putArray("data");
+            models.Team.findByName(name).forEach(team -> {
+                ObjectNode node1 = node.addObject();
+                node1.put("id", team.id);
+                node1.put("name", team.name);
+                node1.put("description", team.description);
+                node1.put("logo", team.logo);
+
+                ArrayNode node2 = node1.putArray("images");
+                models.Screenshot.getAll(team.id).forEach(image->{
+                    node2.add(image.url);
+                });
+                while (node2.size() != 4){
+                    node2.add("");
+                }
+
+            });
+            return ok(result);
+        }
+        return badRequest();
+
     }
 }

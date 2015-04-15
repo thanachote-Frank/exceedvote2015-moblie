@@ -15,6 +15,10 @@
                         </ul>
                     </fieldset>
 
+                    <div class="uk-margin-top">
+                        <input type="text" placeholder="search" onkeyup="search(this)">
+                    </div>
+
                     <table class="uk-table uk-table-striped uk-table-hover">
                         <col width="50px">
                         <thead>
@@ -24,7 +28,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="table">
                         @lists.map { list=>
                             <tr id="@list.id">
                                 <td id="no_@list.id"></td>
@@ -118,6 +122,49 @@
             }
         });
     }
+
+     function search(obj){
+            var data = {};
+            data["input"] = $(obj).val()
+            $.post("@controllers.admin.routes.Team.search()", data).done(function(output){
+              var temp = "";
+              for (var i=0;i<output.data.length;i++){
+                temp += '<tr id="'+output.data[i].id+'">';
+                temp += '<td id="no_"'+output.data[i].id+'">'+(i+1)+'</td>';
+                temp += '<td id="data_"'+output.data[i].id+'">';
+                temp += '<div class="uk-form uk-form-stacked">';
+                temp += '<div class="uk-form-row">';
+                temp += '<div id="name_'+output.data[i].id+'">'+output.data[i].name+'</div>';
+                temp += '<div id="info_'+output.data[i].id+'" style="display: none;">';
+                temp += '<label class="uk-form-label uk-margin-top">Description</label>';
+                temp += '<div class="uk-form-controls">';
+                temp += '<textarea readonly id="description_'+output.data[i].id+'" rows="5" cols="20" placeholder="Text">'+output.data[i].description+'</textarea>';
+                temp += '</div>';
+                temp += '<label class="uk-form-label uk-margin-top">Logo</label>';
+                temp += '<div class="uk-form-controls">';
+                temp += '<input readonly id="logo_'+output.data[i].id+'" type="text" value="'+output.data[i].logo+'" placeholder="URL">';
+                temp += '</div>';
+                temp += '<label class="uk-form-label uk-margin-top">Screenshot</label>';
+                temp += '<div class="uk-form-controls">';
+                temp += '<input readonly id="img1_'+output.data[i].id+'" type="text" placeholder="URL image 1" value="'+ output.data[i].images[0] +'"><br>';
+                temp += '<input readonly id="img2_'+output.data[i].id+'" type="text" placeholder="URL image 2" value="'+ output.data[i].images[1] +'"><br>';
+                temp += '<input readonly id="img3_'+output.data[i].id+'" type="text" placeholder="URL image 2" value="'+ output.data[i].images[2] +'"><br>';
+                temp += '<input readonly id="img4_'+output.data[i].id+'" type="text" placeholder="URL image 2" value="'+ output.data[i].images[3] +'"><br>';
+                temp += '</div>';
+                temp += '</div>';
+                temp += '</div>';
+                temp += '</div>';
+                temp += '</td>';
+                temp += '<td style="text-align: right">';
+                temp += '<a id="edit_'+output.data[i].id+'" class = "uk-button ui-eucalyptus ui-text-white" onclick="edit('+output.data[i].id+')">Edit</a>';
+                temp += '<a id="save_'+output.data[i].id+'" class = "uk-button ui-eucalyptus ui-text-white" onclick="save('+output.data[i].id+')" style="display: none">Save</a>';
+                temp += '<a id="cancel_'+output.data[i].id+'" class = "uk-button ui-darkorange ui-text-white" onclick="cancel('+output.data[i].id+')" style="display: none">Cancel</a>';
+                temp += '</td>';
+                temp += '</tr>';
+              }
+              $('#table').html(temp);
+            });
+        }
     </script>
 
 }

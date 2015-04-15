@@ -34,7 +34,7 @@ public class Account extends Model {
         this.email = email;
         this.password = password;
         this.team = team;
-        this.type = type;
+        this.type = userType;
     }
 
 

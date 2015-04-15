@@ -37,7 +37,7 @@ public class Criteria extends Model{
     }
 
     public static List<Criteria> findByName(String name){
-        return Criteria.find.where().like("name","%"+name+"%").order("name").findList();
+        return Criteria.find.where().ilike("name","%"+name+"%").order("name").findList();
     }
 
 
