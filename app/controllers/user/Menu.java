@@ -20,6 +20,7 @@ public class Menu extends Controller{
         return ok(main_menu.render(session().get("email"), models.Team.findTeam(session().get("email")),
                 Setting.find.byId(Setting.TEAM_LIST).isActivated,
                 Setting.find.byId(Setting.EDIT_DESCRIPTION).isActivated,
+                Setting.find.byId(Setting.RATING_RESULT).isActivated,
                 temp));
     }
 }
