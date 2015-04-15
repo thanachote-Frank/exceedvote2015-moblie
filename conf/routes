@@ -60,6 +60,9 @@ GET         /admin/team/list                    controllers.admin.Team.listTeam(
 POST        /admin/team/delete                  controllers.admin.Team.deleteTeam()
 GET         /admin/team/delete                  controllers.admin.Team.deleteTeam()
 
+POST        /admin/team/edit                    controllers.admin.Team.edit()
+GET         /admin/team/edit                    controllers.admin.Team.edit()
+
 POST        /admin/user_type/edit               controllers.admin.UserType.edit()
 GET         /admin/user_type/edit               controllers.admin.UserType.edit()
 

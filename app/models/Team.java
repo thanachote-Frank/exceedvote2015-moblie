@@ -64,11 +64,17 @@ public class Team extends Model implements Comparable<Team>{
         this.update();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public static Team getByID(Long id) {
         return Team.find.where().eq("id", id).findUnique();
     }
 
+    public static List<Team> getAllAndOrder(){
+        return Team.find.order("name").findList();
+    }
 
     @Override
     public int compareTo(Team o) {

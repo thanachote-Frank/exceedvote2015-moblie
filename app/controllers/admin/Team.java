@@ -5,6 +5,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.admin.delete_team;
+import views.html.admin.edit_team;
 import views.html.admin.list_team;
 
 
@@ -16,7 +17,7 @@ public class Team extends Controller{
 
     public static Result listTeam() {
         if (request().method().equals("GET")){
-            return ok(list_team.render(models.Team.getAll()));
+            return ok(list_team.render(models.Team.getAllAndOrder()));
         }
         return badRequest();
     }
@@ -39,6 +40,46 @@ public class Team extends Controller{
             ObjectNode result = Json.newObject();
             result.put("type", "danger");
             result.put("text", "Delete Fail");
+            return ok(result);
+        }
+        return badRequest();
+    }
+
+    public static Result edit() {
+        if (request().method().equals("GET")){
+            return ok(edit_team.render(models.Team.getAllAndOrder()));
+        }
+        else if(request().method().equals("POST")) {
+            try {
+                String ID = request().body().asFormUrlEncoded().get("id")[0];
+                String name = request().body().asFormUrlEncoded().get("name")[0];
+                String description = request().body().asFormUrlEncoded().get("description")[0];
+                String logo = request().body().asFormUrlEncoded().get("logo")[0];
+                String img1 = request().body().asFormUrlEncoded().get("image1")[0];
+                String img2 = request().body().asFormUrlEncoded().get("image2")[0];
+                String img3 = request().body().asFormUrlEncoded().get("image3")[0];
+                String img4 = request().body().asFormUrlEncoded().get("image4")[0];
+                models.Team team = models.Team.getByID(Long.parseLong(ID));
+                team.setName(name);
+                team.setDescription(description);
+                team.setLogo(logo);
+                team.update();
+
+                models.Screenshot.deleteAllByTeamID(Long.parseLong(ID));
+                (new models.Screenshot(team, img1)).save();
+                (new models.Screenshot(team, img2)).save();
+                (new models.Screenshot(team, img3)).save();
+                (new models.Screenshot(team, img4)).save();
+            } catch (Exception e){
+                System.out.println(e);
+                ObjectNode result = Json.newObject();
+                result.put("type", "danger");
+                result.put("text", "Save Fail");
+                return badRequest(result);
+            }
+            ObjectNode result = Json.newObject();
+            result.put("type", "success");
+            result.put("text", "Saved");
             return ok(result);
         }
         return badRequest();
