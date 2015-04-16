@@ -30,10 +30,12 @@ public class Rating extends Controller{
                 for (int j = 0; j < team.size(); j++) {
                     List<models.Rating> data = models.Rating.getRatingSpecific(cri.get(i), team.get(j));
                     double scoreAvg = 0;
+                    int weight = 0;
                     for (int k = 0; k < data.size(); k++) {
-                        scoreAvg += data.get(k).rating;
+                        scoreAvg += data.get(k).rating*data.get(k).account.type.weight;
+                        weight += data.get(k).account.type.weight;
                     }
-                    scoreAvg = scoreAvg / data.size();
+                    scoreAvg = scoreAvg / weight;
                     //-----------------------------------------------//
                     overAll[j] += scoreAvg;
                     //-----------------------------------------------//
@@ -90,7 +92,6 @@ public class Rating extends Controller{
         j++;
         }
         return result;
-
     }
 
     @Security.Authenticated(Secured.class)
