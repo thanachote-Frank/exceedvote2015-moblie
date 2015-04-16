@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/exceedvote -Dhttp.port=$PORT -DapplyEvolutions.default=true -DapplyDownEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=jdbc:postgresql://172.17.42.1:49154/db\?user=root\&password=SpZwoCJDAJ87WrZK
+web: target/universal/stage/bin/exceedvote -Dhttp.port=$PORT -DapplyEvolutions.default=true -DapplyDownEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=jdbc:postgresql://172.17.42.1:49154/db\?user=root\&password=IRMwDfkzGfowHehr
