@@ -74,6 +74,9 @@ GET         /admin/user_type/edit               controllers.admin.UserType.edit(
 POST        /admin/time_out/set                 controllers.admin.TimeOut.set()
 GET         /admin/time_out/set                 controllers.admin.TimeOut.set()
 
+POST        /admin/account/add                 controllers.admin.Account.addAccount()
+GET         /admin/account/add                 controllers.admin.Account.addAccount()
+
 POST        /admin/account/list                 controllers.admin.Account.listAccount()
 GET         /admin/account/list                 controllers.admin.Account.listAccount()
 
