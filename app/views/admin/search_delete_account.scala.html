@@ -1,0 +1,23 @@
+@(lists: List[Account])
+
+@lists.map { list=>
+    <tr id="@list.id">
+        <td id="no_@list.id"></td>
+        <td>@list.name</td>
+        <td>@list.lastname</td>
+        @if(list.team == null){
+            <td>NULL</td>
+        }else {
+            <td>@list.team.name</td>
+        }
+        <td style="text-align: right"><a class = "uk-button ui-red ui-text-white u" onclick="deleteAccount(@list.id)">Delete</a></td>
+    </tr>
+}
+
+<script>
+var count = 0;
+var size = @lists.size;
+    @lists.map { list=>
+    $('#no_'+@list.id).text(++count + '.');
+    }
+</script>

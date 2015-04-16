@@ -80,5 +80,10 @@ GET         /admin/account/list                 controllers.admin.Account.listAc
 POST        /admin/account/delete               controllers.admin.Account.deleteAccount()
 GET         /admin/account/delete               controllers.admin.Account.deleteAccount()
 
+POST        /admin/account/edit                 controllers.admin.Account.edit()
+GET         /admin/account/edit                 controllers.admin.Account.edit()
+
+POST        /admin/account/search               controllers.admin.Account.search()
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                       controllers.Assets.at(path="/public", file)

@@ -1,0 +1,135 @@
+@(lists: List[Account])
+@main("Account")(css) {
+
+    <div class="uk-grid uk-margin-large-top uk-margin-bottom">
+        <div class="uk-width-9-10 uk-container-center">
+            <div class="uk-panel uk-panel-box uk-panel-box-secondary">
+                <div class="uk-form">
+                    <fieldset data-uk-margin>
+                        <legend class="uk-margin-bottom-remove">Account</legend>
+                        <ul class="uk-tab">
+                            <li><a href="@controllers.admin.routes.Account.listAccount()">List</a></li>
+                            <li><a href="@controllers.admin.routes.Account.deleteAccount()">Delete</a></li>
+                            <li class="uk-active"><a href="@controllers.admin.routes.Account.edit()">Edit</a></li>
+                        </ul>
+                    </fieldset>
+
+                    <div class="uk-margin-top">
+                        <input type="text" placeholder="search" onkeyup="search(this)">
+                    </div>
+
+                    <table class="uk-table uk-table-striped uk-table-hover">
+                        <col width="50px">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Name</th>
+                                <th>Lastname</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table">
+                        @lists.map { list=>
+                            <tr id="@list.id">
+                                <td id="no_@list.id"></td>
+                                <td id="data_@list.id">
+                                    <div  class="uk-form uk-form-stacked">
+                                        <div class="uk-form-row">
+                                            <div id="name_@list.id">@list.name</div>
+                                            <div id='info_@list.id' style="display: none;">
+                                                <label class="uk-form-label uk-margin-top">Password</label>
+                                                <div class="uk-form-controls">
+                                                    <input id='password_@list.id' type="text" value="@list.password" placeholder="URL">
+                                                </div>
+                                                @defining(Screenshot.getURL(list.id)){images=>
+                                                    <script>
+                                                    var i = 0;
+                                                        @images.map { image =>
+                                                        $('#img'+ ++i +'_@list.id').val('@image.url');
+                                                        }
+                                                    </script>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="lastname_@list.id">@list.lastname</div>
+                                </td>
+                                <td style="text-align: right">
+                                    <a id="edit_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.id)">Edit</a>
+                                    <a id="save_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="save(@list.id)" style="display: none">Save</a>
+                                    <a id="cancel_@list.id" class = "uk-button ui-darkorange ui-text-white" onclick="cancel(@list.id)" style="display: none">Cancel</a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    var count = 0;
+    var size = @lists.size;
+        @lists.map { list=>
+        $('#no_'+@list.id).text(++count + '.');
+        }
+    function edit(id){
+    var temp = '<label class="uk-form-label">Name</label>';
+    temp += '<div class="uk-form-controls">';
+    temp += '<input type="text" value="'+ $('#name_'+id).text() +'">';
+    temp += '</div>';
+    $('#name_'+id).html(temp);
+    var temp = '<label class="uk-form-label">Lastname</label>';
+    temp += '<div class="uk-form-controls">';
+    temp += '<input type="text" value="'+ $('#lastname_'+id).text() +'">';
+    temp += '</div>';
+    $('#lastname_'+id).html(temp);
+
+    $('#info_'+id).show();
+    $('#save_'+id).show();
+    $('#cancel_'+id).show();
+    $('#edit_'+id).hide();
+    }
+
+    function cancel(id){
+    $('#name_'+id).html($('#name_'+id+' input').val());
+    $('#lastname_'+id).html($('#lastname_'+id+' input').val());
+    $('#info_'+id).hide();
+    $('#save_'+id).hide();
+    $('#cancel_'+id).hide();
+    $('#edit_'+id).show();
+    }
+
+    function save(id){
+    var data = {};
+    data["id"] = id ;
+    data["name"] =  $('#name_'+id+' input').val();
+    data["lastname"] = $('#lastname_'+id+' input').val();
+    data["password"] = $('#password_'+id).val();
+    $.post("@controllers.admin.routes.Account.edit()",data).done(function(data){
+    UIkit.notify(data.text, {status : data.type , timeout : 5000});
+    if (data.type == 'success'){
+    cancel(id);
+    }
+    });
+    }
+
+    function search(obj){
+    var data = {};
+    data["input"] = $(obj).val();
+    data["page"] = "edit";
+    $.post("@controllers.admin.routes.Account.search()", data).done(function(output){
+    $('#table').html(output);
+    });
+    }
+    </script>
+
+}
+
+@css = {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/notify.almost-flat.min.css")">
+    <script src="@routes.Assets.at("uikit-2.17.0/js/components/notify.min.js")" type="text/javascript"></script>
+
+}

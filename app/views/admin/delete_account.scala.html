@@ -10,9 +10,14 @@
                         <ul class="uk-tab">
                             <li><a href="@controllers.admin.routes.Account.listAccount()">List</a></li>
                             <li class="uk-active"><a href="@controllers.admin.routes.Account.deleteAccount()">Delete</a></li>
+                            <li><a href="@controllers.admin.routes.Account.edit()">Edit</a></li>
                         </ul>
                     </fieldset>
 
+                    <div class="uk-margin-top">
+                    <input type="text" placeholder="search" onkeyup="search(this)">
+                    </div>
+                    
                     <table class="uk-table uk-table-striped uk-table-hover">
                         <thead>
                             <tr>
@@ -22,18 +27,18 @@
                                 <th>Team</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id = "content">
                         @lists.map { list=>
                             <tr id="@list.id">
                                 <td id="no_@list.id"></td>
-                                <td>@list.name</td>
+                                <td>@list.name<br><a class = "uk-button ui-red ui-text-white u" onclick="deleteAccount(@list.id)">Delete</a></td>
                                 <td>@list.lastname</td>
                                 @if(list.team == null){
                                     <td>NULL</td>
                                 }else {
                                     <td>@list.team.name</td>
                                 }
-                                <td style="text-align: right"><a class = "uk-button ui-red ui-text-white u" onclick="deleteAccount(@list.id)">Delete</a></td>
+
                             </tr>
                         }
                         </tbody>
@@ -59,6 +64,15 @@
             if (data.type == 'success')
             $("#"+id ).remove();
             });
+        }
+
+        function search(obj){
+        var data = {};
+        data["input"] = $(obj).val();
+        data["page"] = "delete";
+        $.post("@controllers.admin.routes.Account.search()", data).done(function(output){
+        $('#content').html(output);
+        });
         }
     </script>
 }

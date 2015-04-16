@@ -10,10 +10,17 @@
                         <ul class="uk-tab">
                             <li class="uk-active"><a href="@controllers.admin.routes.Account.listAccount()">List</a></li>
                             <li><a href="@controllers.admin.routes.Account.deleteAccount()">Delete</a></li>
+                            <li><a href="@controllers.admin.routes.Account.edit()">Edit</a></li>
                         </ul>
                     </fieldset>
-                    <a class = "uk-button ui-red ui-text-white u" onclick="sortedBy('name')">Sorted By Name</a>
-                    <a class = "uk-button ui-red ui-text-white u" onclick="sortedBy('team')">Sorted By Team</a>
+                    <div class="uk-margin-top">
+                    <a class = "uk-button ui-dodgerblue ui-text-white u" onclick="sortedBy('name')">Sorted By Name</a>
+                    <a class = "uk-button ui-eucalyptus ui-text-white u" onclick="sortedBy('team')">Sorted By Team</a>
+                        <div class="uk-margin-top">
+                    <input type="text" placeholder="search" onkeyup="search(this)">
+
+                    </div>
+                    </div>
                     <table class="uk-table uk-table-striped uk-table-hover">
                         <thead>
                             <tr>
@@ -34,8 +41,6 @@
     </div>
 
     <script>
-
-
         function sortedBy(type){
             var data ={};
             data["orderBy"] = type;
@@ -43,8 +48,16 @@
                 $('#content' ).html(data);
             });
         }
-
         sortedBy("name");
+
+    function search(obj){
+        var data = {};
+        data["input"] = $(obj).val();
+        data["page"] = "list";
+        $.post("@controllers.admin.routes.Account.search()", data).done(function(output){
+            $('#content').html(output);
+        });
+    }
     </script>
 }
 

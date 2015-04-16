@@ -41,11 +41,15 @@ public class Account extends Model {
         this.email = email;
         this.password = password;
         this.team = team;
-        this.type = userType;
+        this.type = type;
     }
 
     public static List<Account> getAll() {
         return Account.find.orderBy("name").findList();
+    }
+
+    public static Account getByID(Long id) {
+        return Account.find.where().eq("id", id).findUnique();
     }
 
     public static List<Account> getAllByTeam() {
@@ -71,5 +75,21 @@ public class Account extends Model {
         }
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public static List<Account> search(String name) {
+        return Account.find.where().or(Expr.or(Expr.ilike("name", "%" + name + "%"),Expr.like("team.name", "%" + name + "%")),
+                Expr.ilike("lastname","%"+ name +"%")).findList();
+    }
 }
 
