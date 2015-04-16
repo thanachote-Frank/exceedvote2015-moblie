@@ -23,7 +23,7 @@
                     <table class="uk-table uk-table-striped uk-table-hover">
                         <col width="50px">
                         <col>
-                        <col width="100px">
+                        <col width="80px">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -42,19 +42,19 @@
                                             <div id='info_@list.id' style="display: none;">
                                                 <label class="uk-form-label uk-margin-top">Description</label>
                                                 <div class="uk-form-controls">
-                                                    <textarea class="uk-width-small-1-1" id='description_@list.id' rows="5" cols="20" placeholder="Text">@list.description</textarea>
+                                                    <textarea class="uk-width-small-1-1 uk-width-medium-4-5 uk-width-large-7-10" id='description_@list.id' rows="5" cols="20" placeholder="Text">@list.description</textarea>
                                                 </div>
                                                 <label class="uk-form-label uk-margin-top">Logo</label>
                                                 <div class="uk-form-controls">
-                                                    <input class="uk-width-small-1-1" id='logo_@list.id' type="text" value="@list.logo" placeholder="URL">
+                                                    <input class="uk-width-small-1-1 uk-width-medium-4-5 uk-width-large-7-10" id='logo_@list.id' type="text" value="@list.logo" placeholder="URL">
                                                 </div>
 
                                                 <label class="uk-form-label uk-margin-top">Screenshot</label>
                                                 <div class="uk-form-controls">
-                                                    <input class="uk-width-small-1-1" id="img1_@list.id" type="text" placeholder="URL image 1"><br>
-                                                    <input class="uk-width-small-1-1" id="img2_@list.id" type="text" placeholder="URL Image 2"><br>
-                                                    <input class="uk-width-small-1-1" id="img3_@list.id" type="text" placeholder="URL Image 3"><br>
-                                                    <input class="uk-width-small-1-1" id="img4_@list.id" type="text" placeholder="URL Image 4"><br>
+                                                    <input class="uk-width-small-1-1 uk-width-medium-4-5 uk-width-large-7-10 " id="img1_@list.id" type="text" placeholder="URL image 1"><br>
+                                                    <input class="uk-width-small-1-1 uk-width-medium-4-5 uk-width-large-7-10 " id="img2_@list.id" type="text" placeholder="URL Image 2"><br>
+                                                    <input class="uk-width-small-1-1 uk-width-medium-4-5 uk-width-large-7-10 " id="img3_@list.id" type="text" placeholder="URL Image 3"><br>
+                                                    <input class="uk-width-small-1-1 uk-width-medium-4-5 uk-width-large-7-10 " id="img4_@list.id" type="text" placeholder="URL Image 4"><br>
                                                 </div>
                                                 @defining(Screenshot.getURL(list.id)){images=>
                                                     <script>
@@ -69,9 +69,9 @@
                                     </div>
                                 </td>
                                 <td style="text-align: right">
-                                    <a id="edit_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.id)">Edit</a>
-                                    <a id="save_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="save(@list.id)" style="display: none">Save</a>
-                                    <a id="cancel_@list.id" class = "uk-button ui-darkorange ui-text-white" onclick="cancel(@list.id)" style="display: none">Cancel</a>
+                                    <a id="edit_@list.id" class = "uk-width-1-1 uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.id)">Edit</a>
+                                    <a id="save_@list.id" class = "uk-width-1-1 uk-button ui-eucalyptus ui-text-white" onclick="save(@list.id)" style="display: none">Save</a>
+                                    <a id="cancel_@list.id" class = "uk-margin-small-top uk-width-1-1 uk-button ui-darkorange ui-text-white" onclick="cancel(@list.id)" style="display: none">Cancel</a>
                                 </td>
                             </tr>
                         }
@@ -91,7 +91,7 @@
     function edit(id){
         var temp = '<label class="uk-form-label">Name</label>';
         temp += '<div class="uk-form-controls">';
-        temp += '<input class="uk-width-small-1-1" type="text" value="'+ $('#name_'+id).text() +'">';
+        temp += '<input class="uk-width-small-1-1 uk-width-medium-4-5 uk-width-large-7-10" type="text" value="'+ $('#name_'+id).text() +'">';
         temp += '</div>';
         $('#name_'+id).html(temp);
         $('#info_'+id).show();
