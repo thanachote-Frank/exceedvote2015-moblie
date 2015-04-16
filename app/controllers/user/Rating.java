@@ -72,7 +72,24 @@ public class Rating extends Controller{
 
     @Security.Authenticated(Secured.class)
     public static Result rating(String teamID ) {
-            return ok(rating.render(Criteria.getall(), teamID));
+            return ok(rating.render(Criteria.getall(), teamID,getRatedScore(teamID)));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static List<Integer> getRatedScore(String teamID){
+        List<Integer> result = new ArrayList<Integer>();
+        List<models.Rating>temp = models.Rating.find.where().eq("account_id",Account.findEmail(session().get("email")).id).eq("team_id", teamID).findList();
+        result.add(-1);
+        int i=0,j=1;
+        while(i<temp.size()){
+            if(temp.get(i).criteria.Id==j){
+                result.add(temp.get(i).rating);
+                i++;
+            }
+            else result.add(-1);
+        j++;
+        }
+        return result;
     }
 
     @Security.Authenticated(Secured.class)

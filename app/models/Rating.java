@@ -51,8 +51,10 @@ public class Rating extends Model {
                 result.add(Rating.find.where().eq("account_id",UID).findList().get(a).team.id);
             }
         }
+
         return result;
     }
+
 
     public static void setCriteriaToNullByCriteriaID(String ID){
         for (Rating rating: Rating.find.where().eq("criteria_id", ID).findList()){
