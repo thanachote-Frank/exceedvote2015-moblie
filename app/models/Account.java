@@ -41,7 +41,7 @@ public class Account extends Model {
         this.email = email;
         this.password = password;
         this.team = team;
-        this.type = userType;
+        this.type = type;
     }
 
     public static List<Account> getAll() {
