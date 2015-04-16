@@ -1,10 +1,12 @@
 package controllers.user;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import controllers.Stuff;
 import models.Account;
 import models.Criteria;
 import models.Setting;
 import models.Team;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -97,7 +99,10 @@ public class Rating extends Controller{
                     models.Rating obj = new models.Rating(account, Criteria.find.byId(Long.parseLong(key)), Integer.parseInt(value[0]), team);
                     obj.save();
                 }
-                return ok();
+                ObjectNode result = Json.newObject();
+                result.put("type", "success");
+                result.put("text", "Submitted");
+                return ok(result);
             } else return ok();
         }
         return badRequest("Disable this function by admin");

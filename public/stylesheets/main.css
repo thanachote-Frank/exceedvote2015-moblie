@@ -56,3 +56,9 @@ a:hover{
 .ui-eucalyptus{
     background: #26A65B;
 }
+
+.uk-notify-message-success {
+    background: #27ae60;
+    color: #FFFFFF;
+    border-color: rgba(101, 159, 19, 0.3);
+}

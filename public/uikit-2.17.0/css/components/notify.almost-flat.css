@@ -79,8 +79,8 @@
 /* Modifier: `uk-alert-success`
  ========================================================================== */
 .uk-notify-message-success {
-  background: #f2fae3;
-  color: #659f13;
+  background: #659f13;
+  color: #FFFFFF;
   border-color: rgba(101, 159, 19, 0.3);
 }
 /* Modifier: `uk-notify-message-warning`

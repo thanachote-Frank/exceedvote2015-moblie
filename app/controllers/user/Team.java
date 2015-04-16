@@ -1,11 +1,13 @@
 package controllers.user;
 
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import forms.*;
 import models.*;
 import models.Account;
 import play.core.Router;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -50,15 +52,22 @@ public class Team extends Controller{
         if (Setting.find.byId(Setting.EDIT_DESCRIPTION).isActivated) {
             if (request().method().equals("GET")) {
                 return ok(edit_description.render(Form.form(EditDescription.class), models.Team.findTeam(session("email")).name,
-                        Setting.find.byId(Setting.UPLOAD_LOGO).isActivated, Setting.find.byId(Setting.UPLOAD_SCREENSHOT).isActivated));
+                        Setting.find.byId(Setting.UPLOAD_LOGO).isActivated,
+                        Setting.find.byId(Setting.UPLOAD_SCREENSHOT).isActivated,
+                        models.Team.findTeam(session("email"))));
             } else if (request().method().equals("POST")) {
                 Form<EditDescription> form = Form.form(EditDescription.class).bindFromRequest();
                 if (form.hasErrors()) {
-                    return badRequest(edit_description.render(form, models.Team.findTeam(session("email")).name,
-                            Setting.find.byId(Setting.UPLOAD_LOGO).isActivated, Setting.find.byId(Setting.UPLOAD_SCREENSHOT).isActivated));
+                    ObjectNode result = Json.newObject();
+                    result.put("type", "danger");
+                    result.put("text", "Fail");
+                    return ok(result);
+
                 } else {
-                    models.Team.findTeam(session("email")).setDescription(form.get().content);
-                    return redirect(routes.Menu.mainMenu());
+                    ObjectNode result = Json.newObject();
+                    result.put("type", "success");
+                    result.put("text", "Saved");
+                    return ok(result);
                 }
             }
         }
