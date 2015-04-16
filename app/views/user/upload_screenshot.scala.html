@@ -20,7 +20,7 @@
 
                         <a class="uk-form-file uk-button uk-button-primary uk-button-large uk-icon-cloud-upload uk-width-1-1 ui-button" style="font-size: 500%; padding: 20px;">
                             <div class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">
-                                Select a file
+                                Select file(s)
                                 <input id="upload-select" type="file" multiple>
                             </div>
                         </a>
@@ -49,12 +49,16 @@
 
     <script>
         function deleteAll(){
-            $.post("@controllers.user.routes.Upload.deleteAllScreenshot()")
+            $.post("@controllers.user.routes.Upload.deleteAllScreenshot()").done(function(data) {
+                UIkit.notify(data.text, {status : data.type , timeout : 5000});
+            });
         }
     </script>
 
     <script>
     $ ( function ( ) {
+    var check = "success";
+    var text = "Uploaded";
     var count = 0;
     var progressbar = $ ( "#progressbar" ),
     bar = progressbar.find ( '.uk-progress-bar' ),
@@ -72,21 +76,27 @@
     bar.css ( "width", percent + "%" ).text ( percent + "%" ) ;
     },
     complete : function ( response ) {
-    console.log(response.url);
     bar.css ( "width", "100%" ).text ( "100%" ) ;
     $.post (
     " @controllers.user.routes.Upload.uploadScreenshot() ", { url : response.url } )
     .done ( function ( data ) {
+    if(data.type == 'danger'){
+        check = "danger";
+    }
     bar.css ( "width", "0%" ).text ( "0%" ) ;
     $('#msg' ).text('- [uploaded '+ ++count +' file(s)]');
-        @*window.location.replace ( " @routes.Application.mainMenu ");*@
     } )
     },
     allcomplete : function ( response ) {
+        UIkit.notify(text, {status : check , timeout : 5000});
+        if(check == 'success'){
+            setTimeout(function() {
+                window.location.replace ( "@controllers.user.routes.Team.editDescription()");
+            }, 2000);
+        }
     setTimeout ( function ( ) {
     progressbar.addClass ( "uk-hidden" ) ;
     }, 250 ) ;
-    window.location.replace ( " @controllers.user.routes.Team.editDescription() ");
     }
     } ;
     var select = UIkit.uploadSelect ( $ ( "#upload-select" ), settings ),
@@ -101,5 +111,8 @@
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/form-file.almost-flat.min.css")">
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/placeholder.almost-flat.min.css")">
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/upload.almost-flat.min.css")">
+
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/notify.almost-flat.min.css")">
+    <script src="@routes.Assets.at("uikit-2.17.0/js/components/notify.min.js")" type="text/javascript"></script>
 
 }

@@ -1,10 +1,12 @@
 package controllers.user;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import forms.UploadLogo;
 import forms.UploadScreenshot;
 import models.Screenshot;
 import models.Setting;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -23,10 +25,20 @@ public class Upload extends Controller{
             if (request().method().equals("GET")) {
                 return ok(upload_logo.render(Form.form(UploadLogo.class), models.Team.findTeam(session("email")).name));
             } else if (request().method().equals("POST")) {
+                try {
                 models.Team team = models.Team.findTeam(session("email"));
                 Form<UploadLogo> registerForm = Form.form(UploadLogo.class).bindFromRequest();
                 team.setLogo(registerForm.get().url);
-                return ok();
+                } catch (Exception e) {
+                    ObjectNode result = Json.newObject();
+                    result.put("type", "danger");
+                    result.put("text", "Fail");
+                    return badRequest(result);
+                }
+                ObjectNode result = Json.newObject();
+                result.put("type", "success");
+                result.put("text", "Uploaded");
+                return ok(result);
             }
         }
         return badRequest("Disable this function by admin");
@@ -38,10 +50,21 @@ public class Upload extends Controller{
             if (request().method().equals("GET")) {
                 return ok(upload_screenshot.render(Form.form(UploadLogo.class), models.Team.findTeam(session("email")).name));
             } else if (request().method().equals("POST")) {
-                models.Team team = models.Team.findTeam(session("email"));
-                Form<UploadScreenshot> form = Form.form(UploadScreenshot.class).bindFromRequest();
-                Screenshot screenshot = new Screenshot(team, form.get().url);
-                screenshot.save();
+                try {
+                    models.Team team = models.Team.findTeam(session("email"));
+                    Form<UploadScreenshot> form = Form.form(UploadScreenshot.class).bindFromRequest();
+                    Screenshot screenshot = new Screenshot(team, form.get().url);
+                    screenshot.save();
+                }catch (Exception e) {
+                    ObjectNode result = Json.newObject();
+                    result.put("type", "danger");
+                    result.put("text", "Fail");
+                    return badRequest(result);
+            }
+            ObjectNode result = Json.newObject();
+            result.put("type", "success");
+            result.put("text", "Uploaded");
+            return ok(result);
             }
         }
         return badRequest("Disable this function by admin");
@@ -51,9 +74,19 @@ public class Upload extends Controller{
     public static Result deleteAllScreenshot(){
         if (Setting.find.byId(Setting.UPLOAD_SCREENSHOT).isActivated) {
             if (request().method().equals("POST")) {
-                models.Team team = models.Team.findTeam(session("email"));
-                models.Screenshot.deleteAllByTeamID(team.id);
-                return ok();
+                try {
+                    models.Team team = models.Team.findTeam(session("email"));
+                    models.Screenshot.deleteAllByTeamID(team.id);
+                } catch (Exception e){
+                    ObjectNode result = Json.newObject();
+                    result.put("type", "danger");
+                    result.put("text", "Fail");
+                    return badRequest(result);
+                }
+                ObjectNode result = Json.newObject();
+                result.put("type", "success");
+                result.put("text", "Deleted");
+                return ok(result);
             }
 
         }
