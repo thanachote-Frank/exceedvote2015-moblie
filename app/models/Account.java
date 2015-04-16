@@ -1,7 +1,9 @@
 package models;
 
+import com.avaje.ebean.*;
+import com.avaje.ebean.OrderBy;
 import play.db.ebean.*;
-import scala.collection.immutable.List;
+import java.util.List;
 
 import javax.annotation.Nullable;
 import javax.persistence.*;
@@ -24,26 +26,39 @@ public class Account extends Model {
 
     @ManyToOne
     public Team team;
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    public List<Rating> ratings;
+
+
     // Finder will help us easily query data from database.
     public static Finder<Long, Account> find =
             new Finder<Long, Account>(Long.class, Account.class);
 
-    public Account(String name, String lastname, String email, String password, Team team,UserType userType) {
+    public Account(String name, String lastname, String email, String password, Team team,UserType type) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.team = team;
-        this.type = userType;
+        this.type = type;
     }
 
+    public static List<Account> getAll() {
+        return Account.find.orderBy("name").findList();
+    }
 
+    public static List<Account> getAllByTeam() {
+        OrderBy<Account> orderBy = new OrderBy<>();
+        orderBy.asc("team");
+        orderBy.asc("name");
+        return Account.find.setOrderBy(orderBy).findList();
+    }
 
     public static Account authenticate(
             String email, String password) {
         return Account.find.where().eq("email", email).eq("password", password).findUnique();
     }
-
 
     public static Account findEmail(String email) {
         return Account.find.where().eq("email", email).findUnique();

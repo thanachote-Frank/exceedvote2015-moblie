@@ -1,4 +1,5 @@
-@(criterias: List[Criteria])(uid: String)
+@(criterias: List[Criteria])(uid: String)(score: List[Integer])
+
 @main("Rating")(css) {
     <div class="uk-grid uk-text-center uk-grid-collapse">
         <div class="uk-panel uk-width-1-6">
@@ -21,13 +22,16 @@
                                 <div class="uk-panel uk-panel-box ">
                                     <legend>@criteria.name</legend>
                                     <form class="rating-form" action="#" method="post" name="rating-star" >
-                                    <fieldset class="form-group">
+                                    @*<fieldset class="form-group">*@
 
                                         <legend class="form-legend">Rating:</legend>
 
                                         <div class="form-item">
-
-                                            <input id="@Criteria.toStringId(criteria.Id , 5 )" name="rating" type="radio" value="5" />
+                                            @if(score.size > criteria.Id && score.get(Integer.parseInt(criteria.Id+"")).equals(5)){
+                                                <input id="@Criteria.toStringId(criteria.Id, 5)" name="rating" type="radio" value="5"  onclick="colorOff(@criteria.Id)" checked />
+                                            }else{
+                                                <input id="@Criteria.toStringId(criteria.Id, 5)" name="rating" type="radio" value="5"  onclick="colorOff(@criteria.Id)" />
+                                            }
                                             <label for="@Criteria.toStringId(criteria.Id , 5 )" data-value="5">
                                                 <span class="rating-star">
                                                     <i class="fa fa-star-o"></i>
@@ -35,7 +39,11 @@
                                                 </span>
                                                 <span class="ir">5</span>
                                             </label>
-                                            <input id="@Criteria.toStringId(criteria.Id , 4 )" name="rating" type="radio" value="4" />
+                                            @if(score.size > criteria.Id && score.get(Integer.parseInt(criteria.Id+"")).equals(4)){
+                                                <input id="@Criteria.toStringId(criteria.Id, 4)" name="rating" type="radio" value="4"  onclick="colorOff(@criteria.Id)" checked />
+                                            }else{
+                                                <input id="@Criteria.toStringId(criteria.Id, 4)" name="rating" type="radio" value="4"  onclick="colorOff(@criteria.Id)" />
+                                            }
                                             <label for="@Criteria.toStringId(criteria.Id , 4 )" data-value="4">
                                                 <span class="rating-star">
                                                     <i class="fa fa-star-o"></i>
@@ -43,7 +51,11 @@
                                                 </span>
                                                 <span class="ir">4</span>
                                             </label>
-                                            <input id="@Criteria.toStringId(criteria.Id , 3 )" name="rating" type="radio" value="3" />
+                                            @if(score.size > criteria.Id && score.get(Integer.parseInt(criteria.Id+"")).equals(3)){
+                                                <input id="@Criteria.toStringId(criteria.Id, 3)" name="rating" type="radio" value="3"  onclick="colorOff(@criteria.Id)" checked />
+                                            }else{
+                                                <input id="@Criteria.toStringId(criteria.Id, 3)" name="rating" type="radio" value="3"  onclick="colorOff(@criteria.Id)" />
+                                            }
                                             <label for="@Criteria.toStringId(criteria.Id , 3 )" data-value="3">
                                                 <span class="rating-star">
                                                     <i class="fa fa-star-o"></i>
@@ -51,7 +63,11 @@
                                                 </span>
                                                 <span class="ir">3</span>
                                             </label>
-                                            <input id="@Criteria.toStringId(criteria.Id , 2 )" name="rating" type="radio" value="2" />
+                                            @if(score.size > criteria.Id && score.get(Integer.parseInt(criteria.Id+"")).equals(2)){
+                                                <input id="@Criteria.toStringId(criteria.Id, 2)" name="rating" type="radio" value="2"  onclick="colorOff(@criteria.Id)" checked />
+                                            }else{
+                                                <input id="@Criteria.toStringId(criteria.Id, 2)" name="rating" type="radio" value="2"  onclick="colorOff(@criteria.Id)" />
+                                            }
                                             <label for="@Criteria.toStringId(criteria.Id , 2 )" data-value="2">
                                                 <span class="rating-star">
                                                     <i class="fa fa-star-o"></i>
@@ -59,8 +75,11 @@
                                                 </span>
                                                 <span class="ir">2</span>
                                             </label>
-                                            <input id="@Criteria.toStringId(criteria.Id , 1 )" name="rating" type="radio" value="1" />
-                                            <label for="@Criteria.toStringId(criteria.Id , 1 )" data-value="1">
+                                            @if(score.size > criteria.Id && score.get(Integer.parseInt(criteria.Id+"")).equals(1)){
+                                                <input id="@Criteria.toStringId(criteria.Id, 1)" name="rating" type="radio" value="1"  onclick="colorOff(@criteria.Id)" checked />
+                                            }else{
+                                                <input id="@Criteria.toStringId(criteria.Id, 1)" name="rating" type="radio" value="1"  onclick="colorOff(@criteria.Id)" />
+                                            }<label for="@Criteria.toStringId(criteria.Id , 1 )" data-value="1">
                                                 <span class="rating-star">
                                                     <i class="fa fa-star-o"></i>
                                                     <i class="fa fa-star"></i>
@@ -70,9 +89,9 @@
 
                                         </div>
                                         <div class="form-action">
-                                            <input class="btn-reset" type="reset" value="No Vote" />
+                                            <input id="noVote@criteria.Id" class="btn-reset" type="reset" value="No Vote" onclick="colorOn(@criteria.Id);reset1(@criteria.Id)" />
                                         </div>
-                                    </fieldset>
+                                    @*</fieldset>*@
                                 </form>
 
                                 </div>
@@ -89,6 +108,19 @@
     </div>
     </div>
             <script>
+            function reset1(id){
+            $("#rating-"+(id*5+5) ).attr('checked',false);
+            $("#rating-"+(id*5+4) ).attr('checked',false);
+            $("#rating-"+(id*5+3) ).attr('checked',false);
+            $("#rating-"+(id*5+2) ).attr('checked',false);
+            $("#rating-"+(id*5+1) ).attr('checked',false);
+            }
+            function colorOn(id){
+                $("#noVote"+id ).css("background","gold");
+            }
+            function colorOff(id){
+                $("#noVote"+id ).css("background","#d3d3d3");
+            }
             function post() {
             var arr = "\"uid\": \"" + @uid + "\" ";
                 @criterias.map { criteria =>
@@ -131,7 +163,7 @@
 
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="@routes.Assets.at("materialize/css/materialize.min.css")">
-    <link rel="stylesheet" href="@routes.Assets.at("materialize/css/rate.css")">
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/rate.css")">
 
     <!-- Compiled and minified JavaScript -->
     <script src="@routes.Assets.at("materialize/js/materialize.min.js")"></script>

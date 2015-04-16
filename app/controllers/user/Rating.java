@@ -10,6 +10,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import views.html.admin.delete_account;
 import views.html.user.rating;
 import views.html.user.rating_result;
 
@@ -32,10 +33,12 @@ public class Rating extends Controller{
                 for (int j = 0; j < team.size(); j++) {
                     List<models.Rating> data = models.Rating.getRatingSpecific(cri.get(i), team.get(j));
                     double scoreAvg = 0;
+                    int weight = 0;
                     for (int k = 0; k < data.size(); k++) {
-                        scoreAvg += data.get(k).rating;
+                        scoreAvg += data.get(k).rating*data.get(k).account.type.weight;
+                        weight += data.get(k).account.type.weight;
                     }
-                    scoreAvg = scoreAvg / data.size();
+                    scoreAvg = scoreAvg / weight;
                     //-----------------------------------------------//
                     overAll[j] += scoreAvg;
                     //-----------------------------------------------//
@@ -74,10 +77,24 @@ public class Rating extends Controller{
 
     @Security.Authenticated(Secured.class)
     public static Result rating(String teamID ) {
-        if (Setting.find.byId(Setting.RATING).isActivated) {
-            return ok(rating.render(Criteria.getall(), teamID));
+            return ok(rating.render(Criteria.getall(), teamID,getRatedScore(teamID)));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static List<Integer> getRatedScore(String teamID){
+        List<Integer> result = new ArrayList<Integer>();
+        List<models.Rating>temp = models.Rating.find.where().eq("account_id",Account.findEmail(session().get("email")).id).eq("team_id", teamID).findList();
+        result.add(-1);
+        int i=0,j=1;
+        while(i<temp.size()){
+            if(temp.get(i).criteria.Id==j){
+                result.add(temp.get(i).rating);
+                i++;
+            }
+            else result.add(-1);
+        j++;
         }
-        return badRequest("Disable this function by admin");
+        return result;
     }
 
     @Security.Authenticated(Secured.class)
@@ -107,5 +124,6 @@ public class Rating extends Controller{
         }
         return badRequest("Disable this function by admin");
     }
+
 
 }

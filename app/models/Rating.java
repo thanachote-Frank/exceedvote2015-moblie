@@ -15,7 +15,7 @@ public class Rating extends Model {
     @Id
     public Long id;
 
-    @ManyToOne
+    @OneToOne
     public Account account;
 
     @ManyToOne
@@ -51,8 +51,10 @@ public class Rating extends Model {
                 result.add(Rating.find.where().eq("account_id",UID).findList().get(a).team.id);
             }
         }
+
         return result;
     }
+
 
     public static void setCriteriaToNullByCriteriaID(String ID){
         for (Rating rating: Rating.find.where().eq("criteria_id", ID).findList()){
@@ -68,4 +70,9 @@ public class Rating extends Model {
         }
     }
 
+    public static void deleteByAccountID(String ID){
+        for (Rating rating: Rating.find.where().eq("account_id", ID).findList()){
+            rating.account.delete();
+        }
+    }
 }
