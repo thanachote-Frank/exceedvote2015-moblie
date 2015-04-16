@@ -1,18 +1,16 @@
 @(lists: List[Team])
-@import play.api.Play
-
 @main("Team")(css) {
 
-    <div class="uk-grid uk-margin-large-top">
+    <div class="uk-grid uk-margin-large-top uk-margin-bottom">
         <div class="uk-width-9-10 uk-container-center">
             <div class="uk-panel uk-panel-box uk-panel-box-secondary">
                 <div class="uk-form">
                     <fieldset data-uk-margin>
                         <legend class="uk-margin-bottom-remove">Team</legend>
                         <ul class="uk-tab">
-                            <li class="uk-active"><a href="@controllers.admin.routes.Team.listTeam()">List</a></li>
+                            <li><a href="@controllers.admin.routes.Team.listTeam()">List</a></li>
                             <li><a href="@controllers.admin.routes.Team.addTeam()">Add</a></li>
-                            <li><a href="">Edit</a></li>
+                            <li class="uk-active"><a href="@controllers.admin.routes.Team.edit()">Edit</a></li>
                             <li><a href="@controllers.admin.routes.Team.deleteTeam()">Delete</a></li>
 
                         </ul>
@@ -21,7 +19,7 @@
                     <div class="uk-margin-top">
                         <input type="text" placeholder="search" onkeyup="search(this)">
                     </div>
-                    
+
                     <table class="uk-table uk-table-striped uk-table-hover">
                         <col width="50px">
                         <thead>
@@ -42,19 +40,19 @@
                                             <div id='info_@list.id' style="display: none;">
                                                 <label class="uk-form-label uk-margin-top">Description</label>
                                                 <div class="uk-form-controls">
-                                                    <textarea readonly id='description_@list.id' rows="5" cols="20" placeholder="Text">@list.description</textarea>
+                                                    <textarea id='description_@list.id' rows="5" cols="20" placeholder="Text">@list.description</textarea>
                                                 </div>
                                                 <label class="uk-form-label uk-margin-top">Logo</label>
                                                 <div class="uk-form-controls">
-                                                    <input readonly id='logo_@list.id' type="text" value="@list.logo" placeholder="URL">
+                                                    <input id='logo_@list.id' type="text" value="@list.logo" placeholder="URL">
                                                 </div>
 
                                                 <label class="uk-form-label uk-margin-top">Screenshot</label>
                                                 <div class="uk-form-controls">
-                                                    <input readonly id="img1_@list.id" type="text" placeholder="URL image 1"><br>
-                                                    <input readonly id="img2_@list.id" type="text" placeholder="URL Image 2"><br>
-                                                    <input readonly id="img3_@list.id" type="text" placeholder="URL Image 3"><br>
-                                                    <input readonly id="img4_@list.id" type="text" placeholder="URL Image 4"><br>
+                                                    <input id="img1_@list.id" type="text" placeholder="URL image 1"><br>
+                                                    <input id="img2_@list.id" type="text" placeholder="URL Image 2"><br>
+                                                    <input id="img3_@list.id" type="text" placeholder="URL Image 3"><br>
+                                                    <input id="img4_@list.id" type="text" placeholder="URL Image 4"><br>
                                                 </div>
                                                 @defining(Screenshot.getURL(list.id)){images=>
                                                     <script>
@@ -69,8 +67,9 @@
                                     </div>
                                 </td>
                                 <td style="text-align: right">
-                                    <a id="detail_@list.id" class = "uk-button ui-dodgerblue ui-text-white" onclick="detail(@list.id)">Detail</a>
-                                    <a id="close_@list.id" class = "uk-button ui-text-white ui-darkorange" onclick="close1(@list.id)" style="display: none">Close</a>
+                                    <a id="edit_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.id)">Edit</a>
+                                    <a id="save_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="save(@list.id)" style="display: none">Save</a>
+                                    <a id="cancel_@list.id" class = "uk-button ui-darkorange ui-text-white" onclick="cancel(@list.id)" style="display: none">Cancel</a>
                                 </td>
                             </tr>
                         }
@@ -81,33 +80,51 @@
             </div>
         </div>
     </div>
-
     <script>
-        var count = 0;
-        var size = @lists.size;
-        @lists.map { list=>
-            $('#no_'+@list.id).text(++count + '.');
-        }
+    var count = 0;
+    var size = @lists.size;
+    @lists.map { list=>
+        $('#no_'+@list.id).text(++count + '.');
+    }
+    function edit(id){
+        var temp = '<label class="uk-form-label">Name</label>';
+        temp += '<div class="uk-form-controls">';
+        temp += '<input type="text" value="'+ $('#name_'+id).text() +'">';
+        temp += '</div>';
+        $('#name_'+id).html(temp);
+        $('#info_'+id).show();
+        $('#save_'+id).show();
+        $('#cancel_'+id).show();
+        $('#edit_'+id).hide();
+    }
 
-        function detail(id){
-            var temp = '<label class="uk-form-label">Name</label>';
-            temp += '<div class="uk-form-controls">';
-            temp += '<input readonly type="text" value="'+ $('#name_'+id).text() +'">';
-            temp += '</div>';
-            $('#name_'+id).html(temp);
-            $('#info_'+id).show();
-            $('#close_'+id).show();
-            $('#detail_'+id).hide();
-        }
+    function cancel(id){
+        $('#name_'+id).html($('#name_'+id+' input').val());
+        $('#info_'+id).hide();
+        $('#save_'+id).hide();
+        $('#cancel_'+id).hide();
+        $('#edit_'+id).show();
+    }
 
-        function close1(id){
-            $('#name_'+id).html($('#name_'+id+' input').val());
-            $('#info_'+id).hide();
-            $('#close_'+id).hide();
-            $('#detail_'+id).show();
-        }
+    function save(id){
+        var data = {};
+        data["id"] = id ;
+        data["name"] =  $('#name_'+id+' input').val();
+        data["description"] = $('#description_'+id).val();
+        data["logo"] = $('#logo_'+id).val();
+        data["image1"] = $('#img1_'+id).val();
+        data["image2"] = $('#img2_'+id).val();
+        data["image3"] = $('#img3_'+id).val();
+        data["image4"] = $('#img4_'+id).val();
+        $.post("@controllers.admin.routes.Team.edit()",data).done(function(data){
+            UIkit.notify(data.text, {status : data.type , timeout : 5000});
+            if (data.type == 'success'){
+              cancel(id);
+            }
+        });
+    }
 
-        function search(obj){
+     function search(obj){
             var data = {};
             data["input"] = $(obj).val()
             $.post("@controllers.admin.routes.Team.search()", data).done(function(output){
@@ -140,16 +157,16 @@
                 temp += '</div>';
                 temp += '</td>';
                 temp += '<td style="text-align: right">';
-                temp += '<a id="'+output.data[i].id+'" class = "uk-button ui-dodgerblue ui-text-white" onclick="detail('+output.data[i].id+')">Detail</a>';
-                temp += '<a id="close_'+output.data[i].id+'" class = "uk-button ui-text-white ui-darkorange" onclick="close1('+output.data[i].id+')" style="display: none">Close</a>';
+                temp += '<a id="edit_'+output.data[i].id+'" class = "uk-button ui-eucalyptus ui-text-white" onclick="edit('+output.data[i].id+')">Edit</a>';
+                temp += '<a id="save_'+output.data[i].id+'" class = "uk-button ui-eucalyptus ui-text-white" onclick="save('+output.data[i].id+')" style="display: none">Save</a>';
+                temp += '<a id="cancel_'+output.data[i].id+'" class = "uk-button ui-darkorange ui-text-white" onclick="cancel('+output.data[i].id+')" style="display: none">Cancel</a>';
                 temp += '</td>';
                 temp += '</tr>';
               }
               $('#table').html(temp);
-        });
-    }
+            });
+        }
     </script>
-
 
 }
 

@@ -1,5 +1,6 @@
 package models;
 
+import org.h2.engine.User;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -40,5 +41,11 @@ public class UserType extends Model {
 
     public void setWeight(Integer weight) {
         this.weight = weight;
+    }
+
+    public static void deleteAll(){
+        for(UserType userType:UserType.getAll()){
+            userType.delete();
+        }
     }
 }

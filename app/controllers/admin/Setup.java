@@ -29,10 +29,12 @@ public class Setup extends Controller{
         if (checkingSystem){
             return checkingSystem;
         }
-        if (UserType.getAll().isEmpty()){
+        if (UserType.getAll().size() != 3){
+            models.UserType.deleteAll();
             addUserType();
         }
-        if (Setting.find.all().isEmpty()){
+        if (Setting.find.all().size() != 9){
+            models.Setting.deleteAll();
             addFeatures();
         }
         if (TimeOut.getAll().isEmpty()){
@@ -52,6 +54,7 @@ public class Setup extends Controller{
         (new models.Setting(new Long(6), "rating", true)).save();
         (new models.Setting(new Long(7), "create team", true)).save();
         (new Setting(new Long(8), "create account", true)).save();
+        (new models.Setting(new Long(9), "rating result", false)).save();
     }
 
     private static void addUserType(){
@@ -61,6 +64,6 @@ public class Setup extends Controller{
     }
 
     private static void addTimeOut(){
-        (new TimeOut(new DateTime())).save();
+        (new TimeOut((new DateTime()).withSecondOfMinute(0).withMillisOfSecond(0))).save();
     }
 }

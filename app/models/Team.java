@@ -24,6 +24,7 @@ public class Team extends Model implements Comparable<Team>{
     public Team(String name, String logo) {
         this.name = name;
         this.logo = logo;
+        this.description = "";
     }
 
 //    public static Account authenticate(
@@ -64,11 +65,21 @@ public class Team extends Model implements Comparable<Team>{
         this.update();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public static Team getByID(Long id) {
         return Team.find.where().eq("id", id).findUnique();
     }
 
+    public static List<Team> getAllAndOrder(){
+        return Team.find.order("name").findList();
+    }
+
+    public static List<Team> findByName(String name) {
+        return Team.find.where().ilike("name","%"+name+"%").order("name").findList();
+    }
 
     @Override
     public int compareTo(Team o) {
