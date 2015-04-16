@@ -66,5 +66,11 @@ GET         /admin/user_type/edit               controllers.admin.UserType.edit(
 POST        /admin/time_out/set                 controllers.admin.TimeOut.set()
 GET         /admin/time_out/set                 controllers.admin.TimeOut.set()
 
+POST        /admin/account/list                 controllers.admin.Account.listAccount()
+GET         /admin/account/list                 controllers.admin.Account.listAccount()
+
+POST        /admin/account/delete               controllers.admin.Account.deleteAccount()
+GET         /admin/account/delete               controllers.admin.Account.deleteAccount()
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                       controllers.Assets.at(path="/public", file)
