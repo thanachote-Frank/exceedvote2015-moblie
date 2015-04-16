@@ -39,6 +39,7 @@ public class Rating extends Controller{
                         weight += data.get(k).account.type.weight;
                     }
                     scoreAvg = scoreAvg / weight;
+                    if(weight==0)scoreAvg=0;//for non vote team will be not NaN
                     //-----------------------------------------------//
                     overAll[j] += scoreAvg;
                     //-----------------------------------------------//

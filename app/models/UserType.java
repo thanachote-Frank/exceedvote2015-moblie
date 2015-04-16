@@ -28,8 +28,10 @@ public class UserType extends Model {
     }
 
     public static List<UserType> getAll() {
-        return UserType.find.orderBy("name").findList();
+        return UserType.find.where().ne("name","Admin").orderBy("name").findList();
     }
+
+    public static List<UserType> getAllAdmin(){return UserType.find.orderBy("name").findList();}
 
     public static UserType findType(String name){
         return UserType.find.where().eq("name", name).findUnique();
