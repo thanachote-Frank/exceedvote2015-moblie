@@ -64,6 +64,6 @@ public class Setup extends Controller{
     }
 
     private static void addTimeOut(){
-        (new TimeOut(new DateTime())).save();
+        (new TimeOut((new DateTime()).withSecondOfMinute(0).withMillisOfSecond(0))).save();
     }
 }
