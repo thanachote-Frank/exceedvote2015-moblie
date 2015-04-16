@@ -1,0 +1,18 @@
+@(lists: List[Account])
+
+@lists.map { list=>
+    <tr>
+        <td id="no_@list.id"></td>
+        <td>@list.name</td>
+        <td>@list.lastname</td>
+        <td>@list.team.name</td>
+    </tr>
+}
+
+<script>
+    var count = 0;
+    var size = @lists.size;
+        @lists.map { list=>
+        $('#no_'+@list.id).text(++count + '.');
+        }
+</script>

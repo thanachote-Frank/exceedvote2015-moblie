@@ -1,13 +1,16 @@
 package controllers.user;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import controllers.Stuff;
 import models.Account;
 import models.Criteria;
 import models.Setting;
 import models.Team;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import views.html.admin.delete_account;
 import views.html.user.rating;
 import views.html.user.rating_result;
 
@@ -118,5 +121,6 @@ public class Rating extends Controller{
         }
         return badRequest("Disable this function by admin");
     }
+
 
 }
