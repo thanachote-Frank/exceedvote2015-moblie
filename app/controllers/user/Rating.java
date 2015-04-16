@@ -90,10 +90,7 @@ public class Rating extends Controller{
         j++;
         }
         return result;
-        if (Setting.find.byId(Setting.RATING).isActivated) {
-            return ok(rating.render(Criteria.getall(), teamID));
-        }
-        return badRequest("Disable this function by admin");
+
     }
 
     @Security.Authenticated(Secured.class)
