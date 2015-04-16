@@ -4,6 +4,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.List;
 
 /**
  * Created by Frank on 3/28/15 AD.
@@ -18,6 +19,7 @@ public class Setting extends Model{
     public final static long RATING = 6;
     public final static long CREATE_TEAM = 7;
     public final static long CREATE_ACCOUNT = 8;
+    public final static long RATING_RESULT = 9;
 
     @Id
     public Long id;
@@ -38,5 +40,15 @@ public class Setting extends Model{
     public void setIsActivated(Boolean isActivated) {
         this.isActivated = isActivated;
         this.update();
+    }
+
+    public static List<Setting> getAll() {
+        return Setting.find.findList();
+    }
+
+    public static void deleteAll(){
+        for(Setting setting:Setting.getAll()){
+            setting.delete();
+        }
     }
 }

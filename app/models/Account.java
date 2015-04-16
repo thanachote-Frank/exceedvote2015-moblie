@@ -22,8 +22,7 @@ public class Account extends Model {
     @ManyToOne
     public UserType type;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-
+    @ManyToOne
     public Team team;
     // Finder will help us easily query data from database.
     public static Finder<Long, Account> find =
@@ -35,7 +34,7 @@ public class Account extends Model {
         this.email = email;
         this.password = password;
         this.team = team;
-        this.type = type;
+        this.type = userType;
     }
 
 
