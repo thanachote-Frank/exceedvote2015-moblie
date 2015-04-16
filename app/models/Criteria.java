@@ -2,8 +2,10 @@ package models;
 
 import play.db.ebean.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 /**
@@ -16,6 +18,9 @@ public class Criteria extends Model{
     public Long Id;
 
     public String name;
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    public List<Rating> ratings;
 
     public static Finder<Long, Criteria> find =
             new Finder<Long, Criteria>(Long.class, Criteria.class);
