@@ -26,9 +26,9 @@
 
                                         <legend class="form-legend">Rating:</legend>
 
-                                        <div class="form-item">
+                                        <div class="form-item" style="margin-bottom: 4%;">
                                             @if(score.size > criteria.Id && score.get(Integer.parseInt(criteria.Id+"")).equals(5)){
-                                                <input id="@Criteria.toStringId(criteria.Id, 5)" name="rating" type="radio" value="5"  onclick="colorOff(@criteria.Id)" checked />
+                                                <input id="@Criteria.toStringId(criteria.Id, 5)" name="rating" type="radio" value="5"  onclick="colorOff(@criteria.Id)"  checked />
                                             }else{
                                                 <input id="@Criteria.toStringId(criteria.Id, 5)" name="rating" type="radio" value="5"  onclick="colorOff(@criteria.Id)" />
                                             }

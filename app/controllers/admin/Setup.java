@@ -1,6 +1,7 @@
 package controllers.admin;
 
 import models.*;
+import models.Account;
 import models.Setting;
 import models.TimeOut;
 import org.joda.time.DateTime;
@@ -40,6 +41,10 @@ public class Setup extends Controller{
         if (TimeOut.getAll().isEmpty()){
             addTimeOut();
         }
+        if (Account.find.where().eq("type",UserType.findType("Admin")).findList().isEmpty()){
+            defaultAdmin();
+        }
+
         checkingSystem = true;
         return true;
     }
@@ -56,8 +61,12 @@ public class Setup extends Controller{
         (new Setting(new Long(8), "create account", true)).save();
         (new models.Setting(new Long(9), "rating result", false)).save();
     }
+    private static void defaultAdmin(){
+        (new Account("Admin","Midwars","admin@exceed.cf","1234",null,UserType.findType("Admin"))).save();
+    }
 
     private static void addUserType(){
+        (new UserType("Admin", 0)).save();
         (new UserType("guest", 1)).save();
         (new UserType("participant", 1)).save();
         (new UserType("organizer", 1)).save();
