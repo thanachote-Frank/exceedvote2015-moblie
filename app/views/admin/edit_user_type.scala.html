@@ -2,7 +2,7 @@
 
 @main("User Type")(css) {
 
-  <div class="uk-grid uk-margin-large-top">
+  <div class="uk-grid uk-margin-large-top uk-margin-bottom">
     <div class="uk-width-9-10 uk-container-center">
       <div class="uk-panel uk-panel-box uk-panel-box-secondary">
         <div class="uk-form">
@@ -14,6 +14,9 @@
           </fieldset>
           <table class="uk-table uk-table-striped uk-table-hover">
             <col width="50px">
+            <col>
+            <col>
+            <col width="180px">
             <thead>
               <tr>
                 <th>No.</th>
@@ -29,9 +32,9 @@
                 <td>@list.name</td>
                 <td id="input_@list.id">@list.weight</td>
                 <td style="text-align: right">
-                  <a id="edit_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.id)">Edit</a>
-                  <a id="save_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="save(@list.id)" style="display: none">Save</a>
-                  <a id="cancel_@list.id" class = "uk-button ui-darkorange ui-text-white" onclick="cancel(@list.id)" style="display: none">Cancel</a>
+                  <a id="edit_@list.id" class = "uk-width-4-10 uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.id)">Edit</a>
+                  <a id="save_@list.id" class = "uk-width-4-10 uk-button ui-eucalyptus ui-text-white" onclick="save(@list.id)" style="display: none">Save</a>
+                  <a id="cancel_@list.id" class = "uk-width-4-10 uk-button ui-darkorange ui-text-white" onclick="cancel(@list.id)" style="display: none">Cancel</a>
                 </td>
               </tr>
             }
