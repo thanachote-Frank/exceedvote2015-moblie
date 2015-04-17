@@ -64,6 +64,9 @@ public class Account extends Controller{
     }
     @Security.Authenticated(Secured.class)
     public static Result edit() {
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("GET")){
             return ok(edit_account.render(models.Account.getAll()));
         }
@@ -95,6 +98,9 @@ public class Account extends Controller{
 
     @Security.Authenticated(Secured.class)
     public static Result search(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("POST")){
             String page = request().body().asFormUrlEncoded().get("page")[0];
             String name = request().body().asFormUrlEncoded().get("input")[0];

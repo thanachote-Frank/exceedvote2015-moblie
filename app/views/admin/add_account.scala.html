@@ -57,6 +57,15 @@
     <script>
     $('#checker').val("@form.data.get("type")");
     $('#checker2').val("@form.data.get("team")");
+    function checkType(self) {
+    if(self.value.toLowerCase() == "participant" ){
+    $("#checker2").attr("disabled",false);
+    }
+    else {
+    $("#checker2").attr("disabled",true);
+    $("#checkFalse" ).attr("selected", true);
+    }
+    }
     $('#form').submit(function( event ) {
     event.preventDefault();
     $.post('@controllers.admin.routes.Account.addAccount()', $( this ).serialize()).
