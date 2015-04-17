@@ -59,7 +59,7 @@ body {
 
 /* RATING - Form */
 .rating-form {
-    margin-top: -5%;
+    /*margin-top: -5%;*/
 }
 
 /* RATING - Form - Group */
@@ -79,16 +79,16 @@ body {
 
 /* RATING - Form - Item */
 .rating-form .form-item {
-    position: relative;
+    /*position: relative;*/
     margin: auto;
-    width: 100%;
+    /*width: 100%;*/
     text-align: center;
     direction: rtl;
     /*background: green;*/
 }
 
 .rating-form .form-legend + .form-item {
-    padding-top: 3%;
+    /*padding-top: 3%;*/
 }
 
 .rating-form input[type='radio'] {
@@ -194,13 +194,13 @@ body {
 
 .rating-form .btn-reset {
     display: inline-block;
-    margin-bottom: 30%;
-    margin-left: 10%;
-    padding: 10% 15%;
+    /*margin-bottom: 30%;*/
+    /*margin-left: 10%;*/
+    /*padding: 10% 15%;*/
     border: 0;
     font-size: 100%;
     background: #d3d3d3;
-    color: #000000;
+    /*color: #000000;*/
     cursor: auto;
     border-radius: 5px;
     outline: 0;
@@ -210,6 +210,7 @@ body {
 .rating-form .btn-reset:hover,
 .rating-form .btn-reset:focus {
     background: gold;
+    color: white;
 }
 
 .rating-form input[type='radio']:checked ~ .form-action .btn-reset {
@@ -235,4 +236,16 @@ body {
 .rating-form input[type='radio']:checked ~ .form-output {
     right: 5px;
     opacity: 1;
+}
+
+@media screen and (min-width: 767px) {
+    .form-item{
+        width: 295px;
+    }
+    .form-action{
+        width: 100px;
+    }
+    .btn-reset {
+        width: 100px;
+    }
 }
