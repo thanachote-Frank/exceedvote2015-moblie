@@ -1,12 +1,14 @@
 package controllers.admin;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import controllers.user.Secured;
 import forms.Register;
 import models.*;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.admin.add_account;
 import views.html.admin.delete_account;
 import views.html.admin.list_account;
@@ -17,7 +19,7 @@ import views.html.admin.sorted_list_account;
  * Created by Win 8 Pro on 15/4/2558.
  */
 public class Account extends Controller{
-
+    @Security.Authenticated(Secured.class)
     public static Result listAccount() {
         if (request().method().equals("GET")){
             return ok(list_account.render());
@@ -33,7 +35,7 @@ public class Account extends Controller{
         }
         return badRequest();
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result deleteAccount(){
 
         if (request().method().equals("GET")){
@@ -56,6 +58,7 @@ public class Account extends Controller{
         }
         return badRequest();
     }
+    @Security.Authenticated(Secured.class)
     public static Result addAccount(){
         if (request().method().equals("GET")){
             return ok(add_account.render(Form.form(Register.class),models.Team.getAll(),models.UserType.getAllAdmin()));

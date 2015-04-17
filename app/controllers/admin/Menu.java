@@ -2,6 +2,7 @@ package controllers.admin;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.admin.menu;
 
 
@@ -10,7 +11,7 @@ import views.html.admin.menu;
  */
 public class Menu extends Controller {
 
-
+    @Security.Authenticated(Secured.class)
     public static Result menu(){
         if (request().method().equals("GET"))
             return ok(menu.render());

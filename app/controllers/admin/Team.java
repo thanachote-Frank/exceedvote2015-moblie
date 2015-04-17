@@ -7,6 +7,7 @@ import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.admin.delete_team;
 import views.html.admin.edit_team;
 import views.html.admin.list_team;
@@ -18,14 +19,14 @@ import views.html.admin.add_team;
  */
 public class Team extends Controller{
 
-
+    @Security.Authenticated(Secured.class)
     public static Result listTeam() {
         if (request().method().equals("GET")){
             return ok(list_team.render(models.Team.getAllAndOrder()));
         }
         return badRequest();
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result deleteTeam(){
 
         if (request().method().equals("GET")){
@@ -48,7 +49,7 @@ public class Team extends Controller{
         }
         return badRequest();
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result addTeam() {
         if (request().method().equals("GET")) {
             return ok(add_team.render(Form.form(CreateTeam.class)));
@@ -69,7 +70,7 @@ public class Team extends Controller{
         }
         return badRequest();
     }
-    
+    @Security.Authenticated(Secured.class)
     public static Result edit() {
         if (request().method().equals("GET")){
             return ok(edit_team.render(models.Team.getAllAndOrder()));
@@ -109,7 +110,7 @@ public class Team extends Controller{
         }
         return badRequest();
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result search(){
         if (request().method().equals("POST")){
             String name = request().body().asFormUrlEncoded().get("input")[0];

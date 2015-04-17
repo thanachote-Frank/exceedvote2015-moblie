@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.admin.edit_user_type;
 import views.html.admin.list_criteria;
 
@@ -11,7 +12,7 @@ import views.html.admin.list_criteria;
  * Created by thanachote on 14/4/2558.
  */
 public class UserType extends Controller{
-
+    @Security.Authenticated(Secured.class)
     public static Result edit(){
         if (request().method().equals("GET")){
             return ok(edit_user_type.render(models.UserType.getAllAndOrder()));

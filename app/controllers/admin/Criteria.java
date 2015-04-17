@@ -2,11 +2,13 @@ package controllers.admin;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import controllers.user.Secured;
 import forms.AddCriteria;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.admin.add_criteria;
 import views.html.admin.delete_criteria;
 import views.html.admin.list_criteria;
@@ -16,7 +18,7 @@ import views.html.admin.list_criteria;
  * Created by thanachote on 14/4/2558.
  */
 public class Criteria extends Controller{
-
+    @Security.Authenticated(Secured.class)
     public static Result addCriteria(){
         if (request().method().equals("GET")){
             return ok(add_criteria.render(Form.form(AddCriteria.class)));
@@ -38,14 +40,14 @@ public class Criteria extends Controller{
         }
         return badRequest();
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result listCriteria(){
         if (request().method().equals("GET")){
             return ok(list_criteria.render(models.Criteria.getAllAndOrder()));
         }
         return badRequest();
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result deleteCriteria(){
         if (request().method().equals("GET")){
             return ok(delete_criteria.render(models.Criteria.getAllAndOrder()));
@@ -67,7 +69,7 @@ public class Criteria extends Controller{
         }
         return badRequest();
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result searchCriteria(){
         if (request().method().equals("POST")){
             String name = request().body().asFormUrlEncoded().get("input")[0];
