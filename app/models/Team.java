@@ -87,6 +87,10 @@ public class Team extends Model implements Comparable<Team>{
         return Team.find.where().ilike("name","%"+name+"%").order("name").findList();
     }
 
+    public static Team getByName(String name) {
+        return Team.find.where().eq("name",name).findUnique();
+    }
+
     @Override
     public int compareTo(Team o) {
         return o.name.compareTo(this.name);

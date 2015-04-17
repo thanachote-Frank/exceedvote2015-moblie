@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import controllers.user.Secured;
 import forms.Register;
 import models.*;
+import models.UserType;
+import play.Play;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -68,18 +70,24 @@ public class Account extends Controller{
             return redirect(controllers.user.routes.Menu.mainMenu());
         }
         if (request().method().equals("GET")){
-            return ok(edit_account.render(models.Account.getAll()));
+            return ok(edit_account.render(models.Account.getAll(), models.Team.getAllAndOrder(), models.UserType.getAllAndOrder()));
         }
         else if(request().method().equals("POST")) {
             try {
                 String ID = request().body().asFormUrlEncoded().get("id")[0];
                 String name = request().body().asFormUrlEncoded().get("name")[0];
                 String lastname = request().body().asFormUrlEncoded().get("lastname")[0];
+                String email = request().body().asFormUrlEncoded().get("email")[0];
                 String password = request().body().asFormUrlEncoded().get("password")[0];
+                String teamName = request().body().asFormUrlEncoded().get("team")[0];
+                String type = request().body().asFormUrlEncoded().get("userType")[0];
                 models.Account account = models.Account.getByID(Long.parseLong(ID));
                 account.setName(name);
                 account.setLastname(lastname);
                 account.setPassword(password);
+                account.setEmail(email);
+                account.setTeam(models.Team.getByName(teamName));
+                account.setType(UserType.findType(type));
                 account.update();
             } catch (Exception e){
                 System.out.println(e);
