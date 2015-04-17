@@ -1,7 +1,7 @@
 @(lists: List[Team])
 @main("Team")(css) {
 
-    <div class="uk-grid uk-margin-large-top">
+    <div class="uk-grid uk-margin-large-top uk-margin-bottom">
         <div class="uk-width-9-10 uk-container-center">
             <div class="uk-panel uk-panel-box uk-panel-box-secondary">
                 <div class="uk-form">
@@ -22,6 +22,8 @@
                     
                     <table class="uk-table uk-table-striped uk-table-hover">
                         <col width="50px">
+                        <col>
+                        <col width="80px">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -34,7 +36,7 @@
                             <tr id="@list.id">
                                 <td id="no_@list.id"></td>
                                 <td>@list.name</td>
-                                <td style="text-align: right"><a class = "uk-button ui-red ui-text-white" onclick="deleteTeam(@list.id)">Delete</a></td>
+                                <td style="text-align: right"><a class = "uk-width-1-1 uk-button ui-red ui-text-white" onclick="deleteTeam(@list.id)">Delete</a></td>
                             </tr>
                         }
                             <script>
