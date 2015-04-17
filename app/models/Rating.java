@@ -75,4 +75,8 @@ public class Rating extends Model {
             rating.account.delete();
         }
     }
+
+    public static List<Rating> findByAccountAndTeam(Account account, Team team){
+        return Rating.find.where().eq("account", account).eq("team", team).findList();
+    }
 }

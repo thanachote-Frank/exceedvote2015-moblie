@@ -33,7 +33,7 @@ public class Account extends Controller {
                 session().clear();
                 session("email", loginForm.get().email);
                 if(models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
-                return redirect(controllers.admin.routes.Menu.menu());
+                    return redirect(controllers.admin.routes.Menu.menu());
                 }else return redirect(routes.Menu.mainMenu());
             }
         }
