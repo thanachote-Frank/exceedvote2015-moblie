@@ -88,5 +88,6 @@ GET         /admin/account/edit                 controllers.admin.Account.edit()
 
 POST        /admin/account/search               controllers.admin.Account.search()
 
+GET         /admin/logout                       controllers.admin.Account.logout()
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                       controllers.Assets.at(path="/public", file)
