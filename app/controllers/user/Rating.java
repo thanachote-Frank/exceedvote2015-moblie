@@ -84,7 +84,8 @@ public class Rating extends Controller{
     @Security.Authenticated(Secured.class)
     public static List<Integer> getRatedScore(String teamID){
         List<Integer> result = new ArrayList<Integer>();
-        List<models.Rating>temp = models.Rating.find.where().eq("account_id",Account.findEmail(session().get("email")).id).eq("team_id", teamID).findList();
+        List<models.Rating>temp = models.Rating.findByAccountAndTeam(Account.findEmail(session().get("email")),
+                models.Team.getByID(Long.parseLong(teamID)));
         result.add(-1);
         int i=0,j=1;
         while(i<temp.size()){

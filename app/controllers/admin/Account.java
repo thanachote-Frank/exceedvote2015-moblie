@@ -146,6 +146,18 @@ public class Account extends Controller{
             result.put("text", "Success");
             return ok(result);
         }
-        return null;
+        return badRequest();
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result logout(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
+        if (request().method().equals("GET")) {
+            session().clear();
+            return redirect(controllers.user.routes.Account.login());
+        }
+        return badRequest();
     }
 }
