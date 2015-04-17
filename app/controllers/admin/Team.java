@@ -21,6 +21,9 @@ public class Team extends Controller{
 
     @Security.Authenticated(Secured.class)
     public static Result listTeam() {
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("GET")){
             return ok(list_team.render(models.Team.getAllAndOrder()));
         }
@@ -28,6 +31,9 @@ public class Team extends Controller{
     }
     @Security.Authenticated(Secured.class)
     public static Result deleteTeam(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
 
         if (request().method().equals("GET")){
             return ok(delete_team.render(models.Team.getAll()));
@@ -51,6 +57,9 @@ public class Team extends Controller{
     }
     @Security.Authenticated(Secured.class)
     public static Result addTeam() {
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("GET")) {
             return ok(add_team.render(Form.form(CreateTeam.class)));
         } else if (request().method().equals("POST")) {
@@ -72,6 +81,9 @@ public class Team extends Controller{
     }
     @Security.Authenticated(Secured.class)
     public static Result edit() {
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("GET")){
             return ok(edit_team.render(models.Team.getAllAndOrder()));
         }
@@ -112,6 +124,9 @@ public class Team extends Controller{
     }
     @Security.Authenticated(Secured.class)
     public static Result search(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("POST")){
             String name = request().body().asFormUrlEncoded().get("input")[0];
             ObjectNode result = Json.newObject();

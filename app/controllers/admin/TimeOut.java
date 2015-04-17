@@ -15,6 +15,9 @@ import views.html.admin.set_time_out;
 public class TimeOut extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result set(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("GET")){
             DateTime dateTime = new DateTime();
             dateTime = dateTime.withSecondOfMinute(0);

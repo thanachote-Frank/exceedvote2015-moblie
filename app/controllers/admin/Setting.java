@@ -15,6 +15,9 @@ import views.html.admin.setting;
 public class Setting extends Controller{
     @Security.Authenticated(Secured.class)
     public static Result setting(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("GET"))
             return ok(setting.render(models.Setting.find.order("name").findList()));
         else if (request().method().equals("POST")){

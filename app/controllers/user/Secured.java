@@ -18,4 +18,5 @@ public class Secured extends Security.Authenticator {
         return redirect(routes.Account.login());
     }
 
+
 }

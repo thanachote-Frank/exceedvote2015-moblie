@@ -12,6 +12,54 @@
         </div>
     </div>
 
+    <script>
+    function reset1(id){
+    $("#rating-"+(id*5+5) ).attr('checked',false);
+    $("#rating-"+(id*5+4) ).attr('checked',false);
+    $("#rating-"+(id*5+3) ).attr('checked',false);
+    $("#rating-"+(id*5+2) ).attr('checked',false);
+    $("#rating-"+(id*5+1) ).attr('checked',false);
+    }
+    function colorOn(id){
+    $("#noVote"+id ).css("background","gold");
+    }
+    function colorOff(id){
+    $("#noVote"+id ).css("background","#d3d3d3");
+    }
+    function post() {
+    var arr = "\"uid\": \"" + @uid + "\" ";
+        @criterias.map { criteria =>
+            @if(!criteria.name.equals("No Rate")) {
+                var count = 0;
+                var str = "#rating-";
+                var num= @criteria.Id*5;
+                for(var a =1;a<6;a++){
+                var temp = str + (num+a) ;
+                if ( $ ( temp ).is(':checked') ) {
+                count++;
+                arr+= ",\""+ @criteria.Id +"\": \"" + a + "\" ";
+                }
+                }
+                if (count==0){
+                arr+= ",\""+ @criteria.Id +"\": \"" + 0 + "\" ";
+                }
+            }
+
+        }
+    var obj = jQuery.parseJSON( '{ '+arr+' }' );
+
+
+    $.post ( "@controllers.user.routes.Rating.ratingPost()" , obj , function( data ){
+    UIkit.notify(data.text, {status : data.type , timeout : 5000});
+    if(data.type == 'success'){
+    setTimeout(function() {
+    window.location.replace ( "@controllers.user.routes.Team.teamList()");
+    }, 2000);
+    }
+    });
+
+    }
+    </script>
     <div class="uk-text-center">
         <div class="uk-grid uk-grid-margin uk-grid-small">
         @criterias.map { criteria =>
@@ -90,6 +138,11 @@
                                         </div>
                                         <div class="form-action">
                                             <input id="noVote@criteria.Id" class="btn-reset" type="reset" value="No Vote" onclick="colorOn(@criteria.Id);reset1(@criteria.Id)" />
+                                            @if(score.size > criteria.Id){
+                                                <script>
+                                                    colorOn(@criteria.Id);
+                                                </script>
+                                                }
                                         </div>
                                     @*</fieldset>*@
                                 </form>
@@ -107,54 +160,7 @@
         </div>
     </div>
     </div>
-            <script>
-            function reset1(id){
-            $("#rating-"+(id*5+5) ).attr('checked',false);
-            $("#rating-"+(id*5+4) ).attr('checked',false);
-            $("#rating-"+(id*5+3) ).attr('checked',false);
-            $("#rating-"+(id*5+2) ).attr('checked',false);
-            $("#rating-"+(id*5+1) ).attr('checked',false);
-            }
-            function colorOn(id){
-                $("#noVote"+id ).css("background","gold");
-            }
-            function colorOff(id){
-                $("#noVote"+id ).css("background","#d3d3d3");
-            }
-            function post() {
-            var arr = "\"uid\": \"" + @uid + "\" ";
-                @criterias.map { criteria =>
-                    @if(!criteria.name.equals("No Rate")) {
-                        var count = 0;
-                        var str = "#rating-";
-                        var num= @criteria.Id*5;
-                        for(var a =1;a<6;a++){
-                            var temp = str + (num+a) ;
-                            if ( $ ( temp ).is(':checked') ) {
-                                count++;
-                                arr+= ",\""+ @criteria.Id +"\": \"" + a + "\" ";
-                            }
-                        }
-                        if (count==0){
-                            arr+= ",\""+ @criteria.Id +"\": \"" + 0 + "\" ";
-                        }
-                    }
 
-            }
-            var obj = jQuery.parseJSON( '{ '+arr+' }' );
-
-
-            $.post ( "@controllers.user.routes.Rating.ratingPost()" , obj , function( data ){
-                UIkit.notify(data.text, {status : data.type , timeout : 5000});
-                if(data.type == 'success'){
-                    setTimeout(function() {
-                        window.location.replace ( "@controllers.user.routes.Team.teamList()");
-                    }, 2000);
-                }
-            });
-
-            }
-            </script>
 }
 
 @css = {
