@@ -4,7 +4,7 @@
 # --- !Ups
 
 create table account (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   name                      varchar(255),
   lastname                  varchar(255),
   email                     varchar(255),
@@ -15,13 +15,13 @@ create table account (
 ;
 
 create table criteria (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   name                      varchar(255),
   constraint pk_criteria primary key (id))
 ;
 
 create table rating (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   account_id                bigint,
   criteria_id               bigint,
   team_id                   bigint,
@@ -30,21 +30,21 @@ create table rating (
 ;
 
 create table screenshot (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   team_id                   bigint,
   url                       varchar(255),
   constraint pk_screenshot primary key (id))
 ;
 
 create table setting (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   name                      varchar(255),
-  is_activated              boolean,
+  is_activated              tinyint(1) default 0,
   constraint pk_setting primary key (id))
 ;
 
 create table team (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   name                      varchar(255),
   description               varchar(255),
   logo                      varchar(255),
@@ -52,80 +52,52 @@ create table team (
 ;
 
 create table time_out (
-  id                        bigint not null,
-  date_time                 timestamp,
+  id                        bigint auto_increment not null,
+  date_time                 datetime,
   constraint pk_time_out primary key (id))
 ;
 
 create table user_type (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   name                      varchar(255),
   weight                    integer,
   constraint pk_user_type primary key (id))
 ;
 
-create sequence account_seq;
-
-create sequence criteria_seq;
-
-create sequence rating_seq;
-
-create sequence screenshot_seq;
-
-create sequence setting_seq;
-
-create sequence team_seq;
-
-create sequence time_out_seq;
-
-create sequence user_type_seq;
-
-alter table account add constraint fk_account_type_1 foreign key (type_id) references user_type (id);
+alter table account add constraint fk_account_type_1 foreign key (type_id) references user_type (id) on delete restrict on update restrict;
 create index ix_account_type_1 on account (type_id);
-alter table account add constraint fk_account_team_2 foreign key (team_id) references team (id);
+alter table account add constraint fk_account_team_2 foreign key (team_id) references team (id) on delete restrict on update restrict;
 create index ix_account_team_2 on account (team_id);
-alter table rating add constraint fk_rating_account_3 foreign key (account_id) references account (id);
+alter table rating add constraint fk_rating_account_3 foreign key (account_id) references account (id) on delete restrict on update restrict;
 create index ix_rating_account_3 on rating (account_id);
-alter table rating add constraint fk_rating_criteria_4 foreign key (criteria_id) references criteria (id);
+alter table rating add constraint fk_rating_criteria_4 foreign key (criteria_id) references criteria (id) on delete restrict on update restrict;
 create index ix_rating_criteria_4 on rating (criteria_id);
-alter table rating add constraint fk_rating_team_5 foreign key (team_id) references team (id);
+alter table rating add constraint fk_rating_team_5 foreign key (team_id) references team (id) on delete restrict on update restrict;
 create index ix_rating_team_5 on rating (team_id);
-alter table screenshot add constraint fk_screenshot_team_6 foreign key (team_id) references team (id);
+alter table screenshot add constraint fk_screenshot_team_6 foreign key (team_id) references team (id) on delete restrict on update restrict;
 create index ix_screenshot_team_6 on screenshot (team_id);
 
 
 
 # --- !Downs
 
-drop table if exists account cascade;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists criteria cascade;
+drop table account;
 
-drop table if exists rating cascade;
+drop table criteria;
 
-drop table if exists screenshot cascade;
+drop table rating;
 
-drop table if exists setting cascade;
+drop table screenshot;
 
-drop table if exists team cascade;
+drop table setting;
 
-drop table if exists time_out cascade;
+drop table team;
 
-drop table if exists user_type cascade;
+drop table time_out;
 
-drop sequence if exists account_seq;
+drop table user_type;
 
-drop sequence if exists criteria_seq;
-
-drop sequence if exists rating_seq;
-
-drop sequence if exists screenshot_seq;
-
-drop sequence if exists setting_seq;
-
-drop sequence if exists team_seq;
-
-drop sequence if exists time_out_seq;
-
-drop sequence if exists user_type_seq;
+SET FOREIGN_KEY_CHECKS=1;
 
