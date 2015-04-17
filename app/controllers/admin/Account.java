@@ -133,7 +133,6 @@ public class Account extends Controller{
                 result.put("text", form.globalError().message());
                 return ok(result);
             }
-
             if (form.get().team == null) {
                 models.Account account = new models.Account(form.get().name, form.get().lastname, form.get().email, form.get().password, null, models.UserType.findType(form.get().type));
                 account.save();
@@ -146,6 +145,18 @@ public class Account extends Controller{
             result.put("text", "Success");
             return ok(result);
         }
-        return null;
+        return badRequest();
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result logout(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
+        if (request().method().equals("GET")) {
+            session().clear();
+            return redirect(controllers.user.routes.Account.login());
+        }
+        return badRequest();
     }
 }

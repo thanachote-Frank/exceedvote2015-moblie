@@ -137,10 +137,10 @@
 
                                         </div>
                                         <div class="form-action">
-                                            <input id="noVote@criteria.Id" class="btn-reset" type="reset" value="No Vote" onclick="colorOn(@criteria.Id);reset1(@criteria.Id)" />
-                                            @if(score.size > criteria.Id){
+                                            <input id="noVote@criteria.Id" class="btn-reset" type="reset" value="No Rating" onclick="colorOn(@criteria.Id);reset1(@criteria.Id)" />
+                                            @if(score.size < criteria.Id+1 || score.get(Integer.parseInt(criteria.Id+"")).equals(0)){
                                                 <script>
-                                                    colorOn(@criteria.Id);
+                                                   colorOn(@criteria.Id);
                                                 </script>
                                                 }
                                         </div>
