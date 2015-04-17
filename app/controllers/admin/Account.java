@@ -19,6 +19,9 @@ import play.mvc.Security;
 public class Account extends Controller{
     @Security.Authenticated(Secured.class)
     public static Result listAccount() {
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("GET")){
             return ok(list_account.render(models.Account.getAll()));
         }
@@ -35,6 +38,9 @@ public class Account extends Controller{
     }
     @Security.Authenticated(Secured.class)
     public static Result deleteAccount(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
 
         if (request().method().equals("GET")){
             return ok(delete_account.render(models.Account.getAll()));
@@ -108,6 +114,9 @@ public class Account extends Controller{
     }
     @Security.Authenticated(Secured.class)
     public static Result addAccount(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("GET")){
             return ok(add_account.render(Form.form(Register.class),models.Team.getAll(),models.UserType.getAllAdmin()));
         }else if (request().method().equals("POST")){

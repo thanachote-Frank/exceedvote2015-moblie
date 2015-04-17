@@ -20,6 +20,9 @@ import views.html.admin.list_criteria;
 public class Criteria extends Controller{
     @Security.Authenticated(Secured.class)
     public static Result addCriteria(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("GET")){
             return ok(add_criteria.render(Form.form(AddCriteria.class)));
         }
@@ -42,6 +45,9 @@ public class Criteria extends Controller{
     }
     @Security.Authenticated(Secured.class)
     public static Result listCriteria(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("GET")){
             return ok(list_criteria.render(models.Criteria.getAllAndOrder()));
         }
@@ -49,6 +55,9 @@ public class Criteria extends Controller{
     }
     @Security.Authenticated(Secured.class)
     public static Result deleteCriteria(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("GET")){
             return ok(delete_criteria.render(models.Criteria.getAllAndOrder()));
         }
@@ -71,6 +80,9 @@ public class Criteria extends Controller{
     }
     @Security.Authenticated(Secured.class)
     public static Result searchCriteria(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("POST")){
             String name = request().body().asFormUrlEncoded().get("input")[0];
             ObjectNode result = Json.newObject();

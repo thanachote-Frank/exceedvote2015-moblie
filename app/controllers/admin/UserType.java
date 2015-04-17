@@ -14,6 +14,9 @@ import views.html.admin.list_criteria;
 public class UserType extends Controller{
     @Security.Authenticated(Secured.class)
     public static Result edit(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
         if (request().method().equals("GET")){
             return ok(edit_user_type.render(models.UserType.getAllAndOrder()));
         }
