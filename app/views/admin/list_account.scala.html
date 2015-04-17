@@ -6,8 +6,11 @@
         <div class="uk-width-9-10 uk-container-center">
             <div class="uk-panel uk-panel-box uk-panel-box-secondary">
                 <div class="uk-form">
+                    <div class="uk-panel" style="display: block; text-align: right;">
+                        <a href="@controllers.admin.routes.Menu.menu()" class="uk-button ui-text-white ui-button ui-redpink" style=" border-width : 0; ">Back</a>
+                    </div>
                     <fieldset data-uk-margin>
-                        <legend class="uk-margin-bottom-remove">Account</legend>
+                            <legend class="uk-margin-bottom-remove">Account</legend>
                         <ul class="uk-tab">
                             <li><a href="@controllers.admin.routes.Account.addAccount()">Add</a></li>
                             <li><a href="@controllers.admin.routes.Account.deleteAccount()">Delete</a></li>
