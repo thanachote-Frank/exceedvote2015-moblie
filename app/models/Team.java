@@ -17,6 +17,12 @@ public class Team extends Model implements Comparable<Team>{
     public String description;
     public String logo;
 
+    @OneToMany(cascade = CascadeType.REMOVE)
+    public List<Account> accounts;
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    public List<Screenshot> screenshots;
+
     // Finder will help us easily query data from database.
     public static Model.Finder<Long, Team> find =
             new Model.Finder<Long, Team>(Long.class, Team.class);

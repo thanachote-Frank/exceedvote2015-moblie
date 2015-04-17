@@ -2,6 +2,7 @@ package controllers.admin;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import controllers.user.Secured;
 import forms.Register;
 import models.*;
 import play.data.Form;
@@ -9,13 +10,14 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.admin.*;
+import play.mvc.Security;
 
 
 /**
  * Created by Win 8 Pro on 15/4/2558.
  */
 public class Account extends Controller{
-
+    @Security.Authenticated(Secured.class)
     public static Result listAccount() {
         if (request().method().equals("GET")){
             return ok(list_account.render());
@@ -31,7 +33,7 @@ public class Account extends Controller{
         }
         return badRequest();
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result deleteAccount(){
 
         if (request().method().equals("GET")){
@@ -54,7 +56,7 @@ public class Account extends Controller{
         }
         return badRequest();
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result edit() {
         if (request().method().equals("GET")){
             return ok(edit_account.render(models.Account.getAll()));
@@ -85,6 +87,7 @@ public class Account extends Controller{
         return badRequest();
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result search(){
         if (request().method().equals("POST")){
             String page = request().body().asFormUrlEncoded().get("page")[0];
@@ -103,6 +106,7 @@ public class Account extends Controller{
         return badRequest();
 
     }
+    @Security.Authenticated(Secured.class)
     public static Result addAccount(){
         if (request().method().equals("GET")){
             return ok(add_account.render(Form.form(Register.class),models.Team.getAll(),models.UserType.getAllAdmin()));

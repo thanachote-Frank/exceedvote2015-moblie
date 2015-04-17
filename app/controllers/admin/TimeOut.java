@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.admin.edit_user_type;
 import views.html.admin.set_time_out;
 
@@ -12,7 +13,7 @@ import views.html.admin.set_time_out;
  * Created by thanachote on 14/4/2558.
  */
 public class TimeOut extends Controller {
-
+    @Security.Authenticated(Secured.class)
     public static Result set(){
         if (request().method().equals("GET")){
             DateTime dateTime = new DateTime();
