@@ -133,7 +133,6 @@ public class Account extends Controller{
                 result.put("text", form.globalError().message());
                 return ok(result);
             }
-
             if (form.get().team == null) {
                 models.Account account = new models.Account(form.get().name, form.get().lastname, form.get().email, form.get().password, null, models.UserType.findType(form.get().type));
                 account.save();
