@@ -11,6 +11,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.html.admin.add_criteria;
 import views.html.admin.delete_criteria;
+import views.html.admin.edit_criteria;
 import views.html.admin.list_criteria;
 
 
@@ -95,6 +96,34 @@ public class Criteria extends Controller{
             return ok(result);
         }
         return badRequest();
-
     }
+
+    @Security.Authenticated(Secured.class)
+    public static Result edit(){
+        if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            return redirect(controllers.user.routes.Menu.mainMenu());
+        }
+        if (request().method().equals("GET")){
+            return ok(edit_criteria.render(models.Criteria.getAllAndOrder()));
+        }
+        if (request().method().equals("POST")){
+            String ID = request().body().asFormUrlEncoded().get("id")[0];
+            String name = request().body().asFormUrlEncoded().get("name")[0];
+            models.Criteria criteria = models.Criteria.find.byId(Long.parseLong(ID));
+            if (criteria == null){
+                ObjectNode result = Json.newObject();
+                result.put("type", "danger");
+                result.put("text", "Fail");
+                return ok(result);
+            }
+            criteria.name = name;
+            criteria.update();
+            ObjectNode result = Json.newObject();
+            result.put("type", "success");
+            result.put("text", "Edited");
+            return ok(result);
+        }
+        return badRequest();
+    }
+
 }

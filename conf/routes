@@ -51,6 +51,9 @@ GET         /admin/criteria/add                 controllers.admin.Criteria.addCr
 POST        /admin/criteria/delete              controllers.admin.Criteria.deleteCriteria()
 GET         /admin/criteria/delete              controllers.admin.Criteria.deleteCriteria()
 
+POST        /admin/criteria/edit                controllers.admin.Criteria.edit()
+GET         /admin/criteria/edit                controllers.admin.Criteria.edit()
+
 GET         /admin/criteria/list                controllers.admin.Criteria.listCriteria()
 
 POST        /admin/criteria/search              controllers.admin.Criteria.searchCriteria()

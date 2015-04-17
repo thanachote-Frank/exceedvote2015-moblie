@@ -1,0 +1,112 @@
+@(lists: List[Criteria])
+
+@main("Criteria")(css) {
+
+    <div class="uk-grid uk-margin-large-top uk-margin-bottom">
+        <div class="uk-width-9-10 uk-container-center">
+            <div class="uk-panel uk-panel-box uk-panel-box-secondary">
+                <div class="uk-form">
+                    <fieldset data-uk-margin>
+                        <legend class="uk-margin-bottom-remove">Criteria</legend>
+                        <ul class="uk-tab">
+                            <li><a href="@controllers.admin.routes.Criteria.addCriteria()">Add</a></li>
+                            <li class="uk-active"><a href="@controllers.admin.routes.Criteria.edit()">Edit</a></li>
+                            <li><a href="@controllers.admin.routes.Criteria.deleteCriteria()">Delete</a></li>
+                            <li><a href="@controllers.admin.routes.Criteria.listCriteria()">List</a></li>
+                        </ul>
+                    </fieldset>
+                    <div class="uk-margin-top">
+                        <input type="text" placeholder="search" onkeyup="search(this)">
+                    </div>
+                    <table class="uk-table uk-table-striped uk-table-hover">
+                        <col width="50px">
+                        <col>
+                        <col width="180px">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Criteria</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table">
+                        @lists.map { list=>
+                            <tr>
+                                <td id="@list.Id"></td>
+                                <td id="input_@list.Id">@list.name</td>
+                                <td style="text-align: right">
+                                    <a id="edit_@list.Id" class = "uk-width-4-10 uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.Id)">Edit</a>
+                                    <a id="save_@list.Id" class = "uk-width-4-10 uk-button ui-eucalyptus ui-text-white" onclick="save(@list.Id)" style="display: none">Save</a>
+                                    <a id="cancel_@list.Id" class = "uk-width-4-10 uk-button ui-darkorange ui-text-white" onclick="cancel(@list.Id)" style="display: none">Cancel</a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+
+                    <script>
+                        var count = 0;
+                        var size = @lists.size;
+                        @lists.map { list=>
+                           $('#'+@list.Id).text(++count + '.');
+                        }
+
+                        function edit(id){
+                          $('#input_'+id).html('<input type="text" class="uk-width-small-1-1 uk-width-medium-4-5 uk-width-large-7-10" value="'+ $('#input_'+id).text() +'">');
+                          $('#save_'+id).show();
+                          $('#cancel_'+id).show();
+                          $('#edit_'+id).hide();
+                        }
+
+                        function cancel(id){
+                          $('#input_'+id).html($('#input_'+id+' input').val());
+                          $('#save_'+id).hide();
+                          $('#cancel_'+id).hide();
+                          $('#edit_'+id).show();
+                        }
+
+                        function save(id){
+                            var data = {};
+                            data["id"] = id ;
+                            data["name"] =  $('#input_'+id+' input').val();
+                            console.log(data);
+                            $.post("@controllers.admin.routes.Criteria.edit()",data).done(function(data){
+                                UIkit.notify(data.text, {status : data.type , timeout : 5000});
+                                if (data.type == 'success'){
+                                  cancel(id);
+                                }
+                            });
+                        }
+                        function search(obj){
+                            var data = {};
+                            data["input"] = $(obj).val()
+                            $.post("@controllers.admin.routes.Criteria.searchCriteria()", data).done(function(output){
+                                  var temp = "";
+                                  for (var i=0;i<output.data.length;i++){
+                                    temp += '<tr id=' + output.data[i].id + '>';
+                                    temp += '<td id=no_'+ output.data[i].id + '>'+ (i+1) +'</td>';
+                                    temp += '<td id="input_'+ output.data[i].id + '">'+ output.data[i].name +'</td>';
+                                    temp += '<td style="text-align: right">';
+                                    temp += '<a id="edit_'+ output.data[i].id +'" class = "uk-width-4-10 uk-button ui-eucalyptus ui-text-white" onclick="edit('+ output.data[i].id +')">Edit</a>';
+                                    temp += '<a id="save_'+ output.data[i].id +'"class = "uk-width-4-10 uk-button ui-eucalyptus ui-text-white" onclick="save('+ output.data[i].id +')" style="display: none">Save</a>';
+                                    temp += '<a id="cancel_'+ output.data[i].id +'" class = "uk-width-4-10 uk-button ui-darkorange ui-text-white" onclick="cancel('+ output.data[i].id +')" style="display: none">Cancel</a>';
+                                    temp += '</td>';
+                                    temp += '</tr>';
+                                  }
+                                  $('#table').html(temp);
+
+                            });
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@css = {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/notify.almost-flat.min.css")">
+    <script src="@routes.Assets.at("uikit-2.17.0/js/components/notify.min.js")" type="text/javascript"></script>
+
+}
