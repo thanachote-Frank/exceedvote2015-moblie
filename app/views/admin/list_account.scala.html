@@ -1,4 +1,4 @@
-
+@(lists: List[Account])
 
 @main("Account")(css) {
     <div class="uk-grid uk-margin-large-top">
@@ -32,7 +32,19 @@
                             </tr>
                         </thead>
                         <tbody id = "content">
+                        @lists.map { list=>
+                            <tr id="@list.id">
+                                <td id="no_@list.id"></td>
+                                <td>@list.name</td>
+                                <td>@list.lastname</td>
+                                @if(list.team == null){
+                                    <td>NULL</td>
+                                }else {
+                                    <td>@list.team.name</td>
+                                }
 
+                            </tr>
+                        }
                         </tbody>
                     </table>
 

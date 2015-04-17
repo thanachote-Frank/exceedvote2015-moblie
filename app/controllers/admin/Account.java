@@ -20,7 +20,7 @@ public class Account extends Controller{
     @Security.Authenticated(Secured.class)
     public static Result listAccount() {
         if (request().method().equals("GET")){
-            return ok(list_account.render());
+            return ok(list_account.render(models.Account.getAll()));
         }
         else if (request().method().equals("POST")){
             String orderBy = request().body().asFormUrlEncoded().get("orderBy")[0];

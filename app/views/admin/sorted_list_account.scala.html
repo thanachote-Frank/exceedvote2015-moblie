@@ -1,11 +1,16 @@
 @(lists: List[Account])
 
 @lists.map { list=>
-    <tr>
+    <tr id="@list.id">
         <td id="no_@list.id"></td>
         <td>@list.name</td>
         <td>@list.lastname</td>
-        <td>@list.team.name</td>
+        @if(list.team == null){
+            <td>NULL</td>
+        }else {
+            <td>@list.team.name</td>
+        }
+
     </tr>
 }
 
