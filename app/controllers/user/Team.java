@@ -51,7 +51,11 @@ public class Team extends Controller{
     public static Result editDescription() {
         if (Setting.find.byId(Setting.EDIT_DESCRIPTION).isActivated) {
             if (request().method().equals("GET")) {
-                return ok(edit_description.render(Form.form(EditDescription.class), models.Team.findTeam(session("email")).name,
+                models.Team team = models.Team.findTeam(session("email"));
+                if (team == null){
+                    return redirect(controllers.user.routes.Menu.mainMenu());
+                }
+                return ok(edit_description.render(Form.form(EditDescription.class), team.name,
                         Setting.find.byId(Setting.UPLOAD_LOGO).isActivated,
                         Setting.find.byId(Setting.UPLOAD_SCREENSHOT).isActivated,
                         models.Team.findTeam(session("email"))));
