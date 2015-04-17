@@ -2,6 +2,9 @@ package controllers.admin;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import forms.Register;
+import models.*;
+import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -99,5 +102,31 @@ public class Account extends Controller{
         }
         return badRequest();
 
+    }
+    public static Result addAccount(){
+        if (request().method().equals("GET")){
+            return ok(add_account.render(Form.form(Register.class),models.Team.getAll(),models.UserType.getAllAdmin()));
+        }else if (request().method().equals("POST")){
+            Form<Register> form = Form.form(Register.class).bindFromRequest();
+            if (form.hasErrors()){
+                ObjectNode result = Json.newObject();
+                result.put("type", "danger");
+                result.put("text", form.globalError().message());
+                return ok(result);
+            }
+
+            if (form.get().team == null) {
+                models.Account account = new models.Account(form.get().name, form.get().lastname, form.get().email, form.get().password, null, models.UserType.findType(form.get().type));
+                account.save();
+            }else {
+                models.Account account = new models.Account(form.get().name, form.get().lastname, form.get().email, form.get().password, models.Team.find.byId(form.get().team), models.UserType.findType(form.get().type));
+                account.save();
+            }
+            ObjectNode result = Json.newObject();
+            result.put("type", "success");
+            result.put("text", "Success");
+            return ok(result);
+        }
+        return null;
     }
 }

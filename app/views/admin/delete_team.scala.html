@@ -43,7 +43,9 @@
                                     data["id"] = id ;
                                 $.post("@controllers.admin.routes.Team.deleteTeam()",data).done(function(data){
                                     UIkit.notify(data.text, {status : data.type , timeout : 5000});
-                                    $("#"+id ).remove();
+                                    if(data.text == 'success')){
+                                        $("#"+id ).remove();
+                                    }
                             });
                                 }
                             </script>

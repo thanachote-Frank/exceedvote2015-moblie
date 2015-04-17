@@ -1,4 +1,5 @@
 @(criterias: List[Criteria])(uid: String)(score: List[Integer])
+
 @main("Rating")(css) {
     <div class="uk-grid uk-text-center uk-grid-collapse">
         <div class="uk-panel uk-width-1-6">
@@ -21,15 +22,13 @@
                                 <div class="uk-panel uk-panel-box ">
                                     <legend>@criteria.name</legend>
                                     <form class="rating-form" action="#" method="post" name="rating-star" >
-                                    <fieldset class="form-group">
+                                    @*<fieldset class="form-group">*@
 
                                         <legend class="form-legend">Rating:</legend>
 
-                                        <div class="form-item">
-
-                                            <script>if(@score.size>@criteria.Id){console.log(@criteria.Id+"  "+@score.get(Integer.parseInt(criteria.Id+"")))}</script>
+                                        <div class="form-item" style="margin-bottom: 4%;">
                                             @if(score.size > criteria.Id && score.get(Integer.parseInt(criteria.Id+"")).equals(5)){
-                                                <input id="@Criteria.toStringId(criteria.Id, 5)" name="rating" type="radio" value="5"  onclick="colorOff(@criteria.Id)" checked />
+                                                <input id="@Criteria.toStringId(criteria.Id, 5)" name="rating" type="radio" value="5"  onclick="colorOff(@criteria.Id)"  checked />
                                             }else{
                                                 <input id="@Criteria.toStringId(criteria.Id, 5)" name="rating" type="radio" value="5"  onclick="colorOff(@criteria.Id)" />
                                             }
@@ -92,7 +91,7 @@
                                         <div class="form-action">
                                             <input id="noVote@criteria.Id" class="btn-reset" type="reset" value="No Vote" onclick="colorOn(@criteria.Id);reset1(@criteria.Id)" />
                                         </div>
-                                    </fieldset>
+                                    @*</fieldset>*@
                                 </form>
 
                                 </div>
@@ -147,8 +146,12 @@
 
 
             $.post ( "@controllers.user.routes.Rating.ratingPost()" , obj , function( data ){
-            console.log(obj);
-            window.location.replace ( "@controllers.user.routes.Team.teamList()");
+                UIkit.notify(data.text, {status : data.type , timeout : 5000});
+                if(data.type == 'success'){
+                    setTimeout(function() {
+                        window.location.replace ( "@controllers.user.routes.Team.teamList()");
+                    }, 2000);
+                }
             });
 
             }
@@ -164,6 +167,10 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="@routes.Assets.at("materialize/js/materialize.min.js")"></script>
+
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("uikit-2.17.0/css/components/notify.almost-flat.min.css")">
+    <script src="@routes.Assets.at("uikit-2.17.0/js/components/notify.min.js")" type="text/javascript"></script>
+
 
 
 }

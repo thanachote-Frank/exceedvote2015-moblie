@@ -33,10 +33,13 @@ public class Rating extends Controller{
                 for (int j = 0; j < team.size(); j++) {
                     List<models.Rating> data = models.Rating.getRatingSpecific(cri.get(i), team.get(j));
                     double scoreAvg = 0;
+                    int weight = 0;
                     for (int k = 0; k < data.size(); k++) {
-                        scoreAvg += data.get(k).rating;
+                        scoreAvg += data.get(k).rating*data.get(k).account.type.weight;
+                        weight += data.get(k).account.type.weight;
                     }
-                    scoreAvg = scoreAvg / data.size();
+                    scoreAvg = scoreAvg / weight;
+                    if(weight==0)scoreAvg=0;//for non vote team will be not NaN
                     //-----------------------------------------------//
                     overAll[j] += scoreAvg;
                     //-----------------------------------------------//
@@ -93,7 +96,6 @@ public class Rating extends Controller{
         j++;
         }
         return result;
-
     }
 
     @Security.Authenticated(Secured.class)
@@ -115,7 +117,10 @@ public class Rating extends Controller{
                     models.Rating obj = new models.Rating(account, Criteria.find.byId(Long.parseLong(key)), Integer.parseInt(value[0]), team);
                     obj.save();
                 }
-                return ok();
+                ObjectNode result = Json.newObject();
+                result.put("type", "success");
+                result.put("text", "Submitted");
+                return ok(result);
             } else return ok();
         }
         return badRequest("Disable this function by admin");

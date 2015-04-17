@@ -8,8 +8,9 @@
                     <fieldset data-uk-margin>
                         <legend class="uk-margin-bottom-remove">Account</legend>
                         <ul class="uk-tab">
-                            <li class="uk-active"><a href="@controllers.admin.routes.Account.listAccount()">List</a></li>
+                            <li><a href="@controllers.admin.routes.Account.addAccount()">Add</a></li>
                             <li><a href="@controllers.admin.routes.Account.deleteAccount()">Delete</a></li>
+                            <li class="uk-active"><a href="@controllers.admin.routes.Account.listAccount()">List</a></li>
                             <li><a href="@controllers.admin.routes.Account.edit()">Edit</a></li>
                         </ul>
                     </fieldset>
@@ -41,6 +42,8 @@
     </div>
 
     <script>
+
+
         function sortedBy(type){
             var data ={};
             data["orderBy"] = type;
@@ -48,6 +51,7 @@
                 $('#content' ).html(data);
             });
         }
+
         sortedBy("name");
 
     function search(obj){
