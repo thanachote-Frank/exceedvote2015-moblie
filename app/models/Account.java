@@ -48,6 +48,10 @@ public class Account extends Model {
         return Account.find.orderBy("name").findList();
     }
 
+    public static Account getByID(Long id) {
+        return Account.find.where().eq("id", id).findUnique();
+    }
+
     public static List<Account> getAllByTeam() {
         OrderBy<Account> orderBy = new OrderBy<>();
         orderBy.asc("team");
@@ -71,5 +75,21 @@ public class Account extends Model {
         }
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public static List<Account> search(String name) {
+        return Account.find.where().or(Expr.or(Expr.ilike("name", "%" + name + "%"),Expr.like("team.name", "%" + name + "%")),
+                Expr.ilike("lastname","%"+ name +"%")).findList();
+    }
 }
 
