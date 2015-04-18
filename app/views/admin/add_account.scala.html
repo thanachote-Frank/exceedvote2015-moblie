@@ -61,7 +61,7 @@
     $('#checker').val("@form.data.get("type")");
     $('#checker2').val("@form.data.get("team")");
     function checkType(self) {
-    if(self.value.toLowerCase() == "participant" ){
+    if(self.value.toLowerCase() == "participant" || self.value.toLowerCase() == "admin" ){
     $("#checker2").attr("disabled",false);
     }
     else {
