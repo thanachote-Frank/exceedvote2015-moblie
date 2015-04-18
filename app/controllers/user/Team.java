@@ -68,12 +68,11 @@ public class Team extends Controller{
                     return ok(result);
 
                 } else {
+                    models.Team team = models.Team.findTeam(session("email"));
+                    team.setDescription(form.get().content);
                     ObjectNode result = Json.newObject();
                     result.put("type", "success");
                     result.put("text", "Saved");
-                    models.Team team = models.Team.findTeam(session("email"));
-                    team.description=form.get().content;
-                    team.update();
                     return ok(result);
                 }
             }
