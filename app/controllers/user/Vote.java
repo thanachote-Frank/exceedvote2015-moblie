@@ -27,14 +27,22 @@ public class Vote extends Controller{
             } else if (request().method().equals("POST")) {
                 List<Catalog> catalogs = Catalog.getAll();
                 List<models.Team> teams = new LinkedList<>();
-                catalogs.forEach(catalog -> {
-                    String teamID = request().body().asFormUrlEncoded().get("catalog_" + catalog.Id)[0];
-                    if (!teamID.equals("-1")) {
-                        teams.add(models.Team.getByID(Long.parseLong(teamID)));
-                    } else {
-                        teams.add(null);
-                    }
-                });
+                try {
+                    catalogs.forEach(catalog -> {
+                        String teamID = request().body().asFormUrlEncoded().get("catalog_" + catalog.Id)[0];
+                        if (!teamID.equals("-1")) {
+                            teams.add(models.Team.getByID(Long.parseLong(teamID)));
+                        } else {
+                            teams.add(null);
+                        }
+                    });
+                } catch (Exception e){
+                    ObjectNode result = Json.newObject();
+                    result.put("type", "danger");
+                    result.put("text", "Fail");
+                    return ok(result);
+                }
+
                 if (teams.size() != catalogs.size()) {
                     ObjectNode result = Json.newObject();
                     result.put("type", "danger");
@@ -43,6 +51,9 @@ public class Vote extends Controller{
                 }
                 Iterator<Catalog> catalogIterator = catalogs.iterator();
                 Account account = Account.findEmail(session("email"));
+                models.Vote.findByAccount(account).forEach(vote -> {
+                    vote.delete();
+                });
                 teams.forEach(team -> {
                     (new models.Vote(account, catalogIterator.next(), team)).save();
                 });

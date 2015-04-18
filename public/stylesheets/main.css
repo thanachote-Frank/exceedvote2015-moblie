@@ -62,3 +62,10 @@ a:hover{
     color: #FFFFFF;
     border-color: rgba(101, 159, 19, 0.3);
 }
+
+.uk-notify-message-danger {
+    background: #d85030;
+    color: #FFFFFF;
+    border-color: rgba(216, 80, 48, 0.3);
+}
+

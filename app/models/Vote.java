@@ -38,6 +38,10 @@ public class Vote extends Model {
         return Vote.find.where().eq("catalog", catalog).eq("team", team).findList();
     }
 
+    public static List<Vote> findByAccount(Account account){
+        return Vote.find.where().eq("account", account).findList();
+    }
+
     public static Finder<Long, Vote> find =
             new Finder<Long, Vote>(Long.class, Vote.class);
 
