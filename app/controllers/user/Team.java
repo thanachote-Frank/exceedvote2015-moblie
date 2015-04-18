@@ -67,6 +67,8 @@ public class Team extends Controller{
                     result.put("text", "Fail");
                     return ok(result);
                 } else {
+                    models.Team team = models.Team.findTeam(session("email"));
+                    team.setDescription(form.get().content);
                     ObjectNode result = Json.newObject();
                     result.put("type", "success");
                     result.put("text", "Saved");
