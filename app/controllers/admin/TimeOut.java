@@ -2,6 +2,7 @@ package controllers.admin;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.joda.time.DateTime;
+import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -16,9 +17,11 @@ public class TimeOut extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result set(){
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
         }
         if (request().method().equals("GET")){
+            Logger.info(session("email") + " SET TIME PAGE");
             DateTime dateTime = new DateTime();
             dateTime = dateTime.withSecondOfMinute(0);
             dateTime = dateTime.withMillisOfSecond(0);
@@ -32,6 +35,7 @@ public class TimeOut extends Controller {
             models.TimeOut.deleteAll();
             models.TimeOut timeOut = new models.TimeOut(new DateTime(date_time));
             timeOut.save();
+            Logger.info(session("email") + " SET TIME TO "+(new DateTime(date_time)).toString());
             ObjectNode result = Json.newObject();
             result.put("type", "success");
             result.put("text", "Saved");
