@@ -33,6 +33,9 @@ GET         /upload_logo                        controllers.user.Upload.uploadLo
 POST        /upload_screenshot                  controllers.user.Upload.uploadScreenshot()
 GET         /upload_screenshot                  controllers.user.Upload.uploadScreenshot()
 
+POST        /vote                               controllers.user.Vote.vote()
+GET         /vote                               controllers.user.Vote.vote()
+
 GET         /rating_result                      controllers.user.Rating.ratingResult()
 
 POST        /upload_screenshot/deleteAll        controllers.user.Upload.deleteAllScreenshot()
