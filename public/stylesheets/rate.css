@@ -193,6 +193,10 @@
     right: 5px;
     opacity: 1;
 }
+.rating-form .form-item label  {
+    font-size: 1.051818rem;
+
+}
 
 @media screen and (min-width: 767px) {
     .form-item{
@@ -204,7 +208,7 @@
     .btn-reset {
         width: 100px;
     }
-    .rating-form label  {
+    .rating-form .form-item label  {
        left: 55px;
     }
 }

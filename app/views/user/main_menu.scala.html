@@ -33,10 +33,12 @@
     @if(team != null){
         <div class="uk-text-center">
             <div class="uk-grid uk-margin-small-top">
+                <div class="uk-panel uk-width-1-1">
                 <a id="link_edit_description" href="@controllers.user.routes.Team.editDescription()" class="uk-button uk-width-1-1 uk-icon-edit uk-margin-small-bottom ui-text-white ui-button ui-mountain-meadow" style="width : 100% ; font-size : 500% ; padding : 20px ;">
                     <div id="text_edit_description" class="uk-text-bottom" style="color : #ffffff ; font-size : 30% ; font-family : 'Signika', sans-serif ;">
                         Edit Team Description</div>
                 </a>
+            </div>
             </div>
         </div>
     }
@@ -55,14 +57,14 @@
     <div class="uk-text-center">
         <div class="uk-grid uk-margin-small-top">
             <div class="uk-panel uk-width-1-1">
-                <a id='link_vote_result' href="@controllers.user.routes.Vote.result()" class="uk-button uk-width-1-1 uk-icon-thumbs-o-up uk-margin-small-bottom ui-text-white ui-button ui-limegreen" style="font-size : 500% ; padding : 20px ;">
+                <a id='link_vote_result' href="@controllers.user.routes.Vote.result()" class="uk-button uk-width-1-1 uk-icon-line-chart uk-margin-small-bottom ui-text-white ui-button ui-limegreen" style="font-size : 500% ; padding : 20px ;">
                     <div id='text_vote_result' class="uk-text-bottom" style="color : #ffffff ; font-size : 30% ; font-family : 'Signika', sans-serif ;">Vote Result</div>
                 </a>
               </div>
         </div>
     </div>
     }
-    <div class="uk-text-center">
+    <div class="uk-text-center uk-margin-large-bottom">
         <div class="uk-grid uk-grid-small uk-margin-small-top">
             <div class="uk-panel uk-width-6-10">
                 <a id="link_rating_result" href="@controllers.user.routes.Rating.ratingResult()" class="uk-button uk-icon-trophy uk-margin-small-bottom ui-text-white ui-button ui-darkviolet" style="width : 100% ; font-size : 500% ; padding : 20px ;">

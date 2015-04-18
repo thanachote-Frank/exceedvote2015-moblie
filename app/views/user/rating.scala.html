@@ -126,7 +126,7 @@
                                                 <input id="@Criteria.toStringId(criteria.Id, 1)" name="rating" type="radio" value="1"  onclick="colorOff(@criteria.Id)" checked />
                                             }else{
                                                 <input id="@Criteria.toStringId(criteria.Id, 1)" name="rating" type="radio" value="1"  onclick="colorOff(@criteria.Id)" />
-                                            }<label for="@Criteria.toStringId(criteria.Id , 1 )" data-value="1" style="padding-left: 20px 10%;">
+                                            }<label for="@Criteria.toStringId(criteria.Id , 1 )" data-value="1" style="padding-left: 45px;">
                                                 <span class="rating-star">
                                                     <i class="fa fa-star-o"></i>
                                                     <i class="fa fa-star"></i>
@@ -136,7 +136,7 @@
 
                                         </div>
                                         <div class="form-action uk-width-small-1-1" style="position: inherit; display: inline-block;">
-                                            <a id="noVote@criteria.Id" class="uk-width-small-1-1 ui-text-white uk-button btn-reset uk-margin-top" type="reset" value="No Rating" onclick="colorOn(@criteria.Id);reset1(@criteria.Id)">No Rate</a>
+                                            <a id="noVote@criteria.Id" class="uk-width-small-1-1 ui-text-white uk-button uk-button-large btn-reset uk-margin-top" type="reset" value="No Rating" onclick="colorOn(@criteria.Id);reset1(@criteria.Id)">No Rate</a>
                                             @if(score.size < criteria.Id+1 || score.get(Integer.parseInt(criteria.Id+"")).equals(0)){
                                                 <script>
                                                    colorOn(@criteria.Id);
