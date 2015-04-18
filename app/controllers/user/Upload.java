@@ -5,6 +5,7 @@ import forms.UploadLogo;
 import forms.UploadScreenshot;
 import models.Screenshot;
 import models.Setting;
+import play.Logger;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -23,18 +24,21 @@ public class Upload extends Controller{
     public static Result uploadLogo() {
         if (Setting.find.byId(Setting.UPLOAD_LOGO).isActivated) {
             if (request().method().equals("GET")) {
+                Logger.info(session("email") + " ACCESS TO UPLOAD LOGO PAGE");
                 return ok(upload_logo.render(Form.form(UploadLogo.class), models.Team.findTeam(session("email")).name));
             } else if (request().method().equals("POST")) {
                 try {
-                models.Team team = models.Team.findTeam(session("email"));
-                Form<UploadLogo> registerForm = Form.form(UploadLogo.class).bindFromRequest();
-                team.setLogo(registerForm.get().url);
+                    models.Team team = models.Team.findTeam(session("email"));
+                    Form<UploadLogo> registerForm = Form.form(UploadLogo.class).bindFromRequest();
+                    team.setLogo(registerForm.get().url);
                 } catch (Exception e) {
+                    Logger.error(session("email") + " SUBMIT VALUE TO UPLOAD LOGO PAGE: FAIL");
                     ObjectNode result = Json.newObject();
                     result.put("type", "danger");
                     result.put("text", "Fail");
                     return badRequest(result);
                 }
+                Logger.info(session("email") + " SUBMIT VALUE TO UPLOAD LOGO PAGE: SUCCESS");
                 ObjectNode result = Json.newObject();
                 result.put("type", "success");
                 result.put("text", "Uploaded");
@@ -48,6 +52,7 @@ public class Upload extends Controller{
     public static Result uploadScreenshot() {
         if (Setting.find.byId(Setting.UPLOAD_SCREENSHOT).isActivated) {
             if (request().method().equals("GET")) {
+                Logger.info(session("email") + " ACCESS TO UPLOAD SCREENSHOT PAGE");
                 return ok(upload_screenshot.render(Form.form(UploadLogo.class), models.Team.findTeam(session("email")).name));
             } else if (request().method().equals("POST")) {
                 try {
@@ -56,15 +61,17 @@ public class Upload extends Controller{
                     Screenshot screenshot = new Screenshot(team, form.get().url);
                     screenshot.save();
                 }catch (Exception e) {
+                    Logger.error(session("email") + " SUBMIT VALUE TO UPLOAD LOGO PAGE: FAIL");
                     ObjectNode result = Json.newObject();
                     result.put("type", "danger");
                     result.put("text", "Fail");
                     return badRequest(result);
             }
-            ObjectNode result = Json.newObject();
-            result.put("type", "success");
-            result.put("text", "Uploaded");
-            return ok(result);
+                Logger.info(session("email") + " SUBMIT VALUE TO UPLOAD LOGO PAGE: SUCCESS");
+                ObjectNode result = Json.newObject();
+                result.put("type", "success");
+                result.put("text", "Uploaded");
+                return ok(result);
             }
         }
         return badRequest("Disable this function by admin");
@@ -81,8 +88,10 @@ public class Upload extends Controller{
                     ObjectNode result = Json.newObject();
                     result.put("type", "danger");
                     result.put("text", "Fail");
+                    Logger.error(session("email") + " DELETE ALL SCREENSHOTS: FAIL");
                     return badRequest(result);
                 }
+                Logger.error(session("email") + " DELETE ALL SCREENSHOTS: SUCCESS");
                 ObjectNode result = Json.newObject();
                 result.put("type", "success");
                 result.put("text", "Deleted");

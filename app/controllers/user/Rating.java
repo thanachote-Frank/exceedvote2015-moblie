@@ -6,6 +6,7 @@ import models.Account;
 import models.Criteria;
 import models.Setting;
 import models.Team;
+import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -23,6 +24,7 @@ public class Rating extends Controller{
     @Security.Authenticated(Secured.class)
     public static Result ratingResult() {
         if (Setting.find.byId(Setting.RATING_RESULT).isActivated) {
+            Logger.info(session("email") + " ACCESS TO RATING RESULT");
             List<Stuff<Criteria,Team,Double>> rankAll = new ArrayList();
             List<Criteria> cri = Criteria.getall();
             List<Team> team = Team.getAll();
@@ -79,11 +81,13 @@ public class Rating extends Controller{
 
     @Security.Authenticated(Secured.class)
     public static Result rating(String teamID ) {
+        Logger.info(session("email") + " ACCESS TO RATING PAGE OF TEAM_ID=" + teamID);
             return ok(rating.render(Criteria.getall(), teamID,getRatedScore(teamID)));
     }
 
     @Security.Authenticated(Secured.class)
     public static List<Integer> getRatedScore(String teamID){
+        Logger.info(session("email") + " ACCESS TO RATING PAGE(MODIFY) OF TEAM_ID=" + teamID);
         List<Integer> result = new ArrayList<Integer>();
         List<models.Rating>temp = models.Rating.findByAccountAndTeam(Account.findEmail(session().get("email")),
                 models.Team.getByID(Long.parseLong(teamID)));
@@ -108,6 +112,7 @@ public class Rating extends Controller{
                 Account account = Account.findEmail(session().get("email"));
                 Map<String, String[]> map = request().body().asFormUrlEncoded();
                 Long id = Long.parseLong(map.get("uid")[0]);
+                Logger.info(session("email") + " SUBMIT TO RATING OF TEAM_ID=" + id);
                 team = Team.find.byId(id);
                 for (models.Rating rating : models.Rating.findByTeamAndAccount(id, account.id)) {
                     rating.delete();

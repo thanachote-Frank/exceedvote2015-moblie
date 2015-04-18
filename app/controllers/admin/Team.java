@@ -3,6 +3,7 @@ package controllers.admin;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import forms.CreateTeam;
+import play.Logger;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -22,9 +23,11 @@ public class Team extends Controller{
     @Security.Authenticated(Secured.class)
     public static Result listTeam() {
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
         }
         if (request().method().equals("GET")){
+            Logger.info(session("email") + " TEAM LIST PAGE");
             return ok(list_team.render(models.Team.getAllAndOrder()));
         }
         return badRequest();
@@ -32,10 +35,12 @@ public class Team extends Controller{
     @Security.Authenticated(Secured.class)
     public static Result deleteTeam(){
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
         }
 
         if (request().method().equals("GET")){
+            Logger.info(session("email") + " DELETE TEAM PAGE");
             return ok(delete_team.render(models.Team.getAll()));
         }
         else if(request().method().equals("POST")) {
@@ -46,11 +51,13 @@ public class Team extends Controller{
                 ObjectNode result = Json.newObject();
                 result.put("type", "success");
                 result.put("text", "Deleted");
+                Logger.info(session("email") + " DELETE TEAM="+team.name);
                 return ok(result);
             }
             ObjectNode result = Json.newObject();
             result.put("type", "danger");
             result.put("text", "Delete Fail");
+            Logger.error(session("email") + " DELETE TEAM=" + team.name + ": FAIL");
             return ok(result);
         }
         return badRequest();
@@ -58,9 +65,11 @@ public class Team extends Controller{
     @Security.Authenticated(Secured.class)
     public static Result addTeam() {
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
         }
         if (request().method().equals("GET")) {
+            Logger.info(session("email") + " ADD TEAM PAGE");
             return ok(add_team.render(Form.form(CreateTeam.class)));
         } else if (request().method().equals("POST")) {
             Form<CreateTeam> form = Form.form(CreateTeam.class).bindFromRequest();
@@ -68,6 +77,7 @@ public class Team extends Controller{
                 ObjectNode result = Json.newObject();
                 result.put("type", "danger");
                 result.put("text", form.globalError().message());
+                Logger.error(session("email") + " ADD TEAM=" + form.get().name+": FAIL");
                 return ok(result);
             }
             models.Team team = new models.Team(form.get().name, "" + "/assets/images/logo.png");
@@ -75,6 +85,7 @@ public class Team extends Controller{
             ObjectNode result = Json.newObject();
             result.put("type", "success");
             result.put("text", "Success");
+            Logger.info(session("email") + " ADD TEAM=" + team.name);
             return ok(result);
         }
         return badRequest();
@@ -82,9 +93,11 @@ public class Team extends Controller{
     @Security.Authenticated(Secured.class)
     public static Result edit() {
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
         }
         if (request().method().equals("GET")){
+            Logger.info(session("email") + " EDIT TEAM PAGE");
             return ok(edit_team.render(models.Team.getAllAndOrder()));
         }
         else if(request().method().equals("POST")) {
@@ -108,11 +121,12 @@ public class Team extends Controller{
                 (new models.Screenshot(team, img2)).save();
                 (new models.Screenshot(team, img3)).save();
                 (new models.Screenshot(team, img4)).save();
+                Logger.info(session("email") + " EDIT TEAM="+team.name);
             } catch (Exception e){
-                System.out.println(e);
                 ObjectNode result = Json.newObject();
                 result.put("type", "danger");
                 result.put("text", "Save Fail");
+                Logger.error(session("email") + " EDIT TEAM: Fail");
                 return badRequest(result);
             }
             ObjectNode result = Json.newObject();
@@ -125,6 +139,7 @@ public class Team extends Controller{
     @Security.Authenticated(Secured.class)
     public static Result search(){
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
+            Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
         }
         if (request().method().equals("POST")){
