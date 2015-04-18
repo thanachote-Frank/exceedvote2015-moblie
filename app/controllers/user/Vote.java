@@ -52,6 +52,6 @@ public class Vote extends Controller{
 
             }
         }
-        return badRequest();
+        return badRequest("Disable this function by admin");
     }
 }

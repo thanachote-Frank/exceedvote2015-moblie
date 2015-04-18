@@ -36,5 +36,5 @@ public class Vote extends Model {
 
     public static Finder<Long, Vote> find =
             new Finder<Long, Vote>(Long.class, Vote.class);
-    
+
 }
