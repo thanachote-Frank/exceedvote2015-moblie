@@ -29,7 +29,7 @@ public class Catalog extends Model{
         this.name = name;
     }
 
-    public static List<Catalog> getall(){
+    public static List<Catalog> getAll(){
         return Catalog.find.all();
     }
 

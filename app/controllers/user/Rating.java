@@ -23,7 +23,7 @@ public class Rating extends Controller{
     @Security.Authenticated(Secured.class)
     public static Result ratingResult() {
         if (Setting.find.byId(Setting.RATING_RESULT).isActivated) {
-            List<Stuff> rankAll = new ArrayList();
+            List<Stuff<Criteria,Team,Double>> rankAll = new ArrayList();
             List<Criteria> cri = Criteria.getall();
             List<Team> team = Team.getAll();
             double[] overAll = new double[team.size()];
@@ -52,7 +52,7 @@ public class Rating extends Controller{
                         return (o2.getValue()).compareTo(o1.getValue());
                     }
                 });
-                Stuff stuff = new Stuff(list, cri.get(i));
+                Stuff<Criteria,Team,Double> stuff = new Stuff(list, cri.get(i));
                 rankAll.add(stuff);
             }
             for (int i = 0; i < overAll.length; i++) {

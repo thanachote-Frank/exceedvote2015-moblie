@@ -10,19 +10,19 @@ import models.Team;
 /**
  * Created by Win 8 Pro on 25/3/2558.
  */
-public class Stuff{
-    private Criteria type;
-    private List<Map.Entry<Team, Double>> rank;
+public class Stuff<T,K,V>{
+    private T type;
+    private List<Map.Entry<K, V>> rank;
 
-    public Stuff(List<Map.Entry<Team, Double>> rank, Criteria type) {
+    public Stuff(List<Map.Entry<K, V>> rank, T type) {
         this.rank = rank;
         this.type = type;
     }
 
-    public Criteria getType() {
+    public T getType() {
         return type;
     }
-    public List<Map.Entry<Team, Double>> getRank() {
+    public List<Map.Entry<K, V>> getRank() {
         return rank;
     }
 

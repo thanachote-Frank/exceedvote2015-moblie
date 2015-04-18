@@ -1,5 +1,4 @@
-@import java.util.Map.Entry;
-@(rankAll: List[Stuff[Criteria,Team,Double]])(rankOverAll: List[Entry[Team, Double]])
+@(list: List[Stuff[Catalog,Team,Integer]])
 
 @main("Group List")(css) {
     <div class="uk-grid uk-text-center uk-grid-collapse">
@@ -13,7 +12,7 @@
         </div>
     </div>
 
-    @rankAll.map { stuff =>
+    @list.map { stuff =>
 
         <div class="uk-grid uk-grid-small" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
@@ -33,22 +32,6 @@
         </div>
     }
 
-    <div class="uk-grid uk-grid-small" data-uk-grid-margin>
-        <div class="uk-width-9-10 uk-container-center">
-            <div class="panel panel-default border-zero-width" >
-                <div class="panel-heading border-zero-width" style="background-color : #27ae60">
-                    <h3 class="panel-title ui-text-white"><b>OverAll Ranking</b></h3>
-                </div>
-                <div class="panel-body border-zero-width" style="background-color : #2ecc71">
-                    <ol class="ui-text-white">
-                    @rankOverAll.map { list =>
-                        <li>@list.getKey.name  @list.getValue</li>
-                    }
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
 }
 @css = {
 

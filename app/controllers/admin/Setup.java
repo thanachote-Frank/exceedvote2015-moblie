@@ -34,7 +34,7 @@ public class Setup extends Controller{
             models.UserType.deleteAll();
             addUserType();
         }
-        if (Setting.find.all().size() != 10){
+        if (Setting.find.all().size() != 11){
             models.Setting.deleteAll();
             addFeatures();
         }
@@ -61,6 +61,7 @@ public class Setup extends Controller{
         (new Setting(new Long(8), "create account", true)).save();
         (new models.Setting(new Long(9), "rating result", false)).save();
         (new models.Setting(new Long(10), "vote", true)).save();
+        (new models.Setting(new Long(11), "vote result", true)).save();
     }
     private static void defaultAdmin(){
         (new Account("Admin","Midwars","admin@exceed.cf","1234",null,UserType.findType("Admin"))).save();
