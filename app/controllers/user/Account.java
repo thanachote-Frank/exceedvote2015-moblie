@@ -20,9 +20,10 @@ public class Account extends Controller {
 
     public static Result login() {
         if (request().method().equals("GET")) {
-            if (!controllers.admin.Setup.checkSystem())
+            if (!controllers.admin.Setup.checkSystem()) {
                 Logger.error("NOT ALLOW ACCESS TO LOGIN PAGE");
                 return badRequest();
+            }
             Logger.info("ACCESS TO LOGIN PAGE");
             return ok(login.render(Form.form(Login.class),
                     Setting.find.byId(Setting.CREATE_ACCOUNT).isActivated,

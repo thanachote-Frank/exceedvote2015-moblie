@@ -18,9 +18,10 @@ public class Menu extends Controller {
             Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
         }
-        if (request().method().equals("GET"))
+        if (request().method().equals("GET")) {
             Logger.info(session("email") + " ADMIN MENU PAGE");
             return ok(menu.render());
+        }
         return badRequest();
 
     }

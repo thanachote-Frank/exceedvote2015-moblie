@@ -31,7 +31,7 @@ public class Setting extends Controller{
                models.Setting setting = models.Setting.find.byId(Long.parseLong(key));
                setting.setIsActivated(Boolean.parseBoolean(value));
             }
-            )
+            );
             Logger.info(session("email") + " EDIT SETTING");;
             return ok();
         }
