@@ -43,7 +43,6 @@ public class Team extends Model implements Comparable<Team>{
     }
 
     public static Team getDescription(Long teamID) {
-        System.out.print(teamID);
         return Team.find.where().eq("id", teamID).findUnique();
     }
 

@@ -66,7 +66,6 @@ public class Team extends Controller{
                     result.put("type", "danger");
                     result.put("text", "Fail");
                     return ok(result);
-
                 } else {
                     ObjectNode result = Json.newObject();
                     result.put("type", "success");
