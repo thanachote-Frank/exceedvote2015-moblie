@@ -35,7 +35,7 @@ public class Rating extends Controller{
                     double scoreAvg = 0;
                     int weight = 0;
                     for (int k = 0; k < data.size(); k++) {
-//                        System.out.println("-----"+data.get(k).account.email+"------");
+                        System.out.println("-----"+data.get(k).account.email+"------");
                         scoreAvg += data.get(k).rating*data.get(k).account.type.weight;
                         weight += data.get(k).account.type.weight;
                     }
