@@ -40,7 +40,7 @@ public class Criteria extends Controller{
                 return ok(result);
             }
             Logger.info(session("email") + " ADD NEW CRITERIA="+form.get().name);
-            models.Criteria criteria = new models.Criteria(form.get().name.toLowerCase());
+            models.Criteria criteria = new models.Criteria(form.get().name);
             criteria.save();
             ObjectNode result = Json.newObject();
             result.put("type", "success");
