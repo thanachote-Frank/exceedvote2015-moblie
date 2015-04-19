@@ -47,7 +47,7 @@
                                     data["id"] = id ;
                                 $.post("@controllers.admin.routes.Team.deleteTeam()",data).done(function(data){
                                     UIkit.notify(data.text, {status : data.type , timeout : 5000});
-                                    if(data.text == 'success')){
+                                    if(data.text == 'success'){
                                         $("#"+id ).remove();
                                     }
                             });
@@ -69,7 +69,7 @@
 
         function search(obj){
             var data = {};
-            data["input"] = $(obj).val()
+            data["input"] = $(obj).val();
             $.post("@controllers.admin.routes.Team.search()", data).done(function(output){
               var temp = "";
               for (var i=0;i<output.data.length;i++){
