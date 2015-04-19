@@ -17,8 +17,8 @@
                 <div class="uk-panel uk-panel-box">
 
                     <div class="form-group">
-                        Email
-                        <input class="form-control" type="email" name="email">
+                        Username
+                        <input class="form-control" type="text" name="email">
                     </div>
                     <div class="form-group">
                         Password
@@ -28,43 +28,30 @@
 
         </div>
     </div>
-    <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+    <div class="uk-grid" data-uk-grid-margin>
         <div class="uk-width-9-10 uk-container-center">
             <button class="uk-button uk-button-primary uk-button-large uk-width-1-1" type="submit">Login</button> </div>
     </div>
 
-    <div class="uk-grid uk-grid-small" data-uk-grid-margin>
-        <div class="uk-width-9-10 uk-container-center">
-            <a id='link_register' class="uk-button uk-button-large uk-width-1-1" href="@controllers.user.routes.Account.regis()">
-                <div id='text_register'>Register</div>
-            </a>
-        </div>
-    </div>
-
-    <div class="uk-grid uk-grid-small" data-uk-grid-margin>
-        <div class="uk-width-9-10 uk-container-center">
-            <a id='link_create_team' class="uk-button uk-button-large uk-width-1-1" href="@controllers.user.routes.Team.createTeam">
-                <div id='text_create_team'>Create a team</div>
-            </a>
-        </div>
-    </div>
+        @if(createAccount) {
+            <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+                <div class="uk-width-9-10 uk-container-center">
+                    <a id='link_register' class="uk-button uk-button-large uk-width-1-1" href="@controllers.user.routes.Account.regis()">
+                        <div id='text_register'>Register</div>
+                    </a>
+                </div>
+            </div>
+        }
+        @if(createTeam) {
+            <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+                <div class="uk-width-9-10 uk-container-center">
+                    <a id='link_create_team' class="uk-button uk-button-large uk-width-1-1" href="@controllers.user.routes.Team.createTeam">
+                        <div id='text_create_team'>Create a team</div>
+                    </a>
+                </div>
+            </div>
+        }
     </form>
-    <script>
-        if (!@createAccount){
-         $('#link_register').click(function(){
-            return false;
-         });
-         $('#text_register').text($('#text_register').text()+ ' (Disable)');
-        }
-
-        if (!@createTeam){
-         $('#link_create_team').click(function(){
-            return false;
-         });
-         $('#text_create_team').text($('#text_create_team').text()+ ' (Disable)');
-        }
-
-    </script>
 
 
 

@@ -69,7 +69,7 @@
 
         function search(obj){
             var data = {};
-            data["input"] = $(obj).val()
+            data["input"] = $(obj).val();
             $.post("@controllers.admin.routes.Team.search()", data).done(function(output){
               var temp = "";
               for (var i=0;i<output.data.length;i++){
