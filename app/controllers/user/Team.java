@@ -95,7 +95,7 @@ public class Team extends Controller{
     public static Result team(Long teamID) {
         if (Setting.find.byId(Setting.TEAM_DESCRIPTION).isActivated) {
             Logger.error(session("email") + " ACCESS TO EDIT DESCRIPTION PAGE OF TEAM_ID="+ teamID);
-            return ok(team.render(models.Team.getDescription(teamID), models.Team.getAllMember(teamID), Screenshot.getURL(teamID), Setting.find.byId(Setting.RATING).isActivated));
+            return ok(team.render(models.Team.getDescription(teamID), models.Team.getSortedAllMember(teamID), Screenshot.getURL(teamID), Setting.find.byId(Setting.RATING).isActivated));
         }
         return badRequest("Disable this function by admin");
     }

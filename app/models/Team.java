@@ -1,9 +1,11 @@
 package models;
 
+import com.avaje.ebean.*;
 import play.db.ebean.*;
 
 
 import javax.persistence.*;
+import javax.persistence.OrderBy;
 import java.util.List;
 
 /**
@@ -49,8 +51,11 @@ public class Team extends Model implements Comparable<Team>{
         return Team.find.where().eq("id", teamID).findUnique();
     }
 
-    public static List<Account> getAllMember(Long teamID) {
-        return Account.find.where().eq("team_id", teamID).findList();
+    public static List<Account> getSortedAllMember(Long teamID) {
+        com.avaje.ebean.OrderBy<Account> orderBy = new com.avaje.ebean.OrderBy<>();
+        orderBy.asc("name");
+        orderBy.asc("lastname");
+        return Account.find.setOrder(orderBy).where().eq("team_id", teamID).findList();
     }
 
     //    public static void setDescription(Long teamID, String description) {
