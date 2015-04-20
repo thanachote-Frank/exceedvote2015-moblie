@@ -16,6 +16,8 @@ public class Team extends Model implements Comparable<Team>{
     @Id
     public Long id;
     public String name;
+
+    @Column(columnDefinition = "TEXT")
     public String description;
     public String logo;
 

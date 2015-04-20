@@ -1,4 +1,4 @@
-@(group: Team)(members: List[Account])(screenshots: List[Screenshot])(rating: Boolean)
+@(group: Team)(members: List[Account])(screenshots: List[Screenshot])(rating: Boolean)(description: Array[String])
 
 @main("Team Description")(css) {
     <div class="uk-grid uk-text-center uk-grid-collapse">
@@ -19,8 +19,8 @@
                 <div class="panel-heading border-zero-width" style="background-color:#16A085">
                     <h3 class="panel-title ui-text-white"><b>Description</b></h3>
                 </div>
-                <div id="description" class="panel-body border-zero-width ui-text-white" style="background-color:#66CC99">
-                    @Html(group.description)
+                <div id="description" class="panel-body border-zero-width ui-text-white" style="background-color:#66CC99;">
+
                 </div>
             </div>
         </div>
@@ -66,6 +66,7 @@
                 <div id='text_rating' style="font-size: 500%">Rate</div></a>
         </div>
     </div>
+
     <script>
         if (!@rating){
          $('#link_rating').click(function(){
@@ -73,9 +74,20 @@
          });
          $('#text_rating').text($('#text_rating').text() + ' (Disable)');
         }
+        var temp = "";
+        @description.map{ text=>
+            temp += "@text\n";
+        }
+        $('#description').html(marked(temp));
+        $('#description').children().css("color","white");
+        $('#description table').css("color","black");
+        $('#description table').css("background","white");
+        $('#description table').addClass("uk-table uk-table-hover uk-table-striped");
+        $('#description table thead').addClass("ui-text-white");
+        $('#description table thead').css("background","#16A085");
 
     </script>
 }
 @css = {
-
+    <script src="@routes.Assets.at("javascripts/marked.js")" type="text/javascript"></script>
 }
