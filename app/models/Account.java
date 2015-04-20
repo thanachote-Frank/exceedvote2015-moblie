@@ -91,5 +91,9 @@ public class Account extends Model {
         return Account.find.where().or(Expr.or(Expr.ilike("name", "%" + name + "%"),Expr.like("team.name", "%" + name + "%")),
                 Expr.ilike("lastname","%"+ name +"%")).findList();
     }
+    public static List<Account> getByUserType(UserType userType){
+        return Account.find.where().eq("type",userType).findList();
+    }
+
 }
 
