@@ -66,7 +66,7 @@
 .rating-form input[type='radio'] + label:before {
     content: attr(data-value);
     position: absolute;
-    right: 30px; top: 83px;
+    /*right: 30px; top: 83px;*/
     font-size: 30px; font-size: 0rem;
     opacity: 0;
     direction: ltr;
@@ -165,7 +165,7 @@
 
 .rating-form .btn-reset:hover,
 .rating-form .btn-reset:focus {
-    background: gold;
+    background: red;
     color: white;
 }
 
@@ -211,4 +211,8 @@
     .rating-form .form-item label  {
        left: 55px;
     }
+}
+.form-action a:hover{
+    color: white;
+    background: #7f8c8d;
 }

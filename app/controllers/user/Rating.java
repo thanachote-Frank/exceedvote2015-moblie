@@ -125,6 +125,7 @@ public class Rating extends Controller{
                         models.Rating obj = new models.Rating(account, Criteria.find.byId(Long.parseLong(key)), Integer.parseInt(value[0]), team);
                         obj.save();
                     } catch (Exception e){
+                        System.out.println(e);
                         ObjectNode result = Json.newObject();
                         result.put("type", "danger");
                         result.put("text", "Fail");

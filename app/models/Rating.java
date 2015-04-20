@@ -31,11 +31,11 @@ public class Rating extends Model {
         this.criteria=crit;
         this.team = team;
 
-        if( 0 >= rating && rating <= 5){
+        if( 0 <= rating && rating <= 5){
             this.rating=rating;
         }
         else{
-            throw new Exception("Rating is out of range.");
+            throw new Exception("Rating is out of range. " + rating);
         }
 
     }
