@@ -3,7 +3,7 @@
 @main("Rating")(css) {
     <div class="uk-grid uk-text-center uk-grid-collapse">
         <div class="uk-panel uk-width-1-6">
-            <a href="@controllers.user.routes.Team.team(uid.toLong)" class="uk-button uk-icon-arrow-left ui-text-white ui-button ui-redpink" style="width:100%; padding: 18px; border-width: 0; height : 55px; font-size: large;"></a>
+            <a href="@controllers.user.routes.Team.team(uid.toLong)" class="uk-button uk-icon-arrow-left ui-text-white ui-button ui-redpink" style="width:100%; padding: 18px; border-width: 0; height : 60px; font-size: large;"></a>
         </div>
         <div class="uk-width-5-6">
             <div class="uk-panel uk-panel-box ui-yellow ui-text-white" style="border-width: 0; font-size: large; height : 55px;">
@@ -163,7 +163,7 @@
 }
 
 @css = {
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="@routes.Assets.at("stylesheets/font-awesome.css")" rel="stylesheet">
 
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="@routes.Assets.at("materialize/css/materialize.min.css")">
