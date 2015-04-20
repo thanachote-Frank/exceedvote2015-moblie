@@ -1,5 +1,5 @@
 @import java.util.Map.Entry;
-@(rankAll: List[Stuff])(rankOverAll: List[Entry[Team, Double]])
+@(rankAll: List[Stuff[Criteria,Team,Double]])(rankOverAll: List[Entry[Team, Double]])
 
 @main("Group List")(css) {
     <div class="uk-grid uk-text-center uk-grid-collapse">
@@ -22,29 +22,81 @@
                         <h3 class="panel-title ui-text-white"><b>@stuff.getType().name</b></h3>
                     </div>
                     <div class="panel-body border-zero-width" style="background-color : #3498db">
-                        <ol class="ui-text-white">
-                        @stuff.getRank().map { nameList =>
-                            <li>@nameList.getKey.name  @nameList.getValue</li>
-                        }
-                        </ol>
+                        <div style="background: #ebebeb;width: 100%;">
+                        <table  class="uk-table uk-table-hover uk-table-striped" style="border-color: rgba ( 131, 131, 131, 0.27 ) ;">
+                            <col width="50px">
+                            <col>
+                            <col>
+                            <col>
+                            <thead style="color:#ffffff;background-color : #318aca">
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Team</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <script>
+                            var i=0;
+                            </script>
+                            <tbody class = "content">
+
+                            @stuff.getRank().map { nameList =>
+                                <tr>
+                                    <td id="@stuff.getType().Id-@nameList.getKey.id"> </td>
+                                    <td>@nameList.getKey.name</td>
+                                    <td>@BigDecimal(nameList.getValue).setScale(2,BigDecimal.RoundingMode.HALF_UP)</td>
+                                </tr>
+                                <script>
+                                    $("#@stuff.getType().Id-@nameList.getKey.id" ).text(++i);
+                                </script>
+                            }
+                            </tbody>
+                        </table>
+                            </div>
                     </div>
                 </div>
             </div>
         </div>
     }
 
-    <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+    <div class="uk-grid uk-grid-small uk-margin-bottom" >
         <div class="uk-width-9-10 uk-container-center">
             <div class="panel panel-default border-zero-width" >
                 <div class="panel-heading border-zero-width" style="background-color : #27ae60">
                     <h3 class="panel-title ui-text-white"><b>OverAll Ranking</b></h3>
                 </div>
-                <div class="panel-body border-zero-width" style="background-color : #2ecc71">
-                    <ol class="ui-text-white">
-                    @rankOverAll.map { list =>
-                        <li>@list.getKey.name  @list.getValue</li>
-                    }
-                    </ol>
+                <div class="panel-body border-zero-width" style="background-color : #2ecc71;">
+                    <div style="background: #ebebeb;width: 100%;">
+                    <table  class="uk-table uk-table-hover uk-table-striped" style="border-color: rgba ( 131, 131, 131, 0.27 ) ;">
+                        <col width="50px">
+                        <col>
+                        <col>
+                        <col>
+                        <thead style="color:#ffffff;background-color : #2dae5b">
+                            <tr>
+                                <th>No.</th>
+                                <th>Team</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <script>
+                        var i=0;
+                        </script>
+                        <tbody class = "content">
+
+                        @rankOverAll.map { list =>
+                            <tr>
+                                <td id="@list.getKey.id" > </td>
+                                <td >@list.getKey.name</td>
+                                <td >@BigDecimal(list.getValue).setScale(2,BigDecimal.RoundingMode.HALF_UP)</td>
+                            </tr>
+                            <script>
+                            $("#@list.getKey.id" ).text(++i);
+                            </script>
+                        }
+                        </tbody>
+                    </table>
+                        </div>
                 </div>
             </div>
         </div>

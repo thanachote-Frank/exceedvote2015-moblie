@@ -59,6 +59,18 @@ public class Account extends Model {
         return Account.find.setOrderBy(orderBy).findList();
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
     public static Account authenticate(
             String email, String password) {
         return Account.find.where().eq("email", email).eq("password", password).findUnique();
@@ -85,6 +97,10 @@ public class Account extends Model {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserType getType() {
+        return type;
     }
 
     public static List<Account> search(String name) {

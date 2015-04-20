@@ -11,10 +11,11 @@
                     <fieldset data-uk-margin>
                         <legend class="uk-margin-bottom-remove">Team</legend>
                         <ul class="uk-tab">
-                            <li><a href="@controllers.admin.routes.Team.listTeam()">List</a></li>
                             <li><a href="@controllers.admin.routes.Team.addTeam()">Add</a></li>
-                            <li class="uk-active"><a href="@controllers.admin.routes.Team.edit()">Edit</a></li>
                             <li><a href="@controllers.admin.routes.Team.deleteTeam()">Delete</a></li>
+                            <li><a href="@controllers.admin.routes.Team.listTeam()">List</a></li>
+                            <li class="uk-active"><a href="@controllers.admin.routes.Team.edit()">Edit</a></li>
+
 
                         </ul>
                     </fieldset>
@@ -26,7 +27,7 @@
                     <table class="uk-table uk-table-striped uk-table-hover">
                         <col width="50px">
                         <col>
-                        <col width="80px">
+                        <col width="180px">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -72,9 +73,9 @@
                                     </div>
                                 </td>
                                 <td style="text-align: right">
-                                    <a id="edit_@list.id" class = "uk-width-1-1 uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.id)">Edit</a>
-                                    <a id="save_@list.id" class = "uk-width-1-1 uk-button ui-eucalyptus ui-text-white" onclick="save(@list.id)" style="display: none">Save</a>
-                                    <a id="cancel_@list.id" class = "uk-margin-small-top uk-width-1-1 uk-button ui-darkorange ui-text-white" onclick="cancel(@list.id)" style="display: none">Cancel</a>
+                                    <a id="edit_@list.id" class = "uk-width-4-10 uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.id)">Edit</a>
+                                    <a id="save_@list.id" class = "uk-width-4-10 uk-button ui-eucalyptus ui-text-white" onclick="save(@list.id)" style="display: none">Save</a>
+                                    <a id="cancel_@list.id" class = "uk-width-4-10 uk-button ui-darkorange ui-text-white" onclick="cancel(@list.id)" style="display: none">Cancel</a>
                                 </td>
                             </tr>
                         }

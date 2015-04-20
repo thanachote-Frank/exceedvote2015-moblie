@@ -15,8 +15,13 @@
                             <li><a href="@controllers.admin.routes.Criteria.addCriteria()">Add</a></li>
                             <li><a href="@controllers.admin.routes.Criteria.deleteCriteria()">Delete</a></li>
                             <li class="uk-active"><a href="@controllers.admin.routes.Criteria.listCriteria()">List</a></li>
+                            <li><a href="@controllers.admin.routes.Criteria.edit()">Edit</a></li>
                         </ul>
                     </fieldset>
+
+                    <div class="uk-margin-top">
+                        <input type="text" placeholder="search" onkeyup="search(this)">
+                    </div>
 
                     <table class="uk-table uk-table-striped uk-table-hover">
                         <col width="50px">
@@ -42,7 +47,21 @@
                         @lists.map { list=>
                            $('#'+@list.Id).text(++count + '.');
                         }
+                         function search(obj){
+                            var data = {};
+                            data["input"] = $(obj).val()
+                            $.post("@controllers.admin.routes.Criteria.searchCriteria()", data).done(function(output){
+                                  var temp = "";
+                                  for (var i=0;i<output.data.length;i++){
+                                    temp += '<tr id=' + output.data[i].id + '>';
+                                    temp += '<td id=no_'+ output.data[i].id + '>'+ (i+1) +'</td>';
+                                    temp += '<td>'+ output.data[i].name +'</td>';
+                                    temp += '</tr>';
+                                  }
+                                  $('#table').html(temp);
 
+                            });
+                        }
                     </script>
                 </div>
             </div>

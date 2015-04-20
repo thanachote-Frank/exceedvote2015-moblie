@@ -23,25 +23,32 @@
                     </div>
                     
                     <table class="uk-table uk-table-striped uk-table-hover">
+                        <col width="50px">
+                        <col>
+                        <col>
+                        <col>
+                        <col width="80px">
                         <thead>
                             <tr>
                                 <th>No.</th>
                                 <th>Name</th>
                                 <th>Lastname</th>
                                 <th>Team</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id = "content">
                         @lists.map { list=>
                             <tr id="@list.id">
                                 <td id="no_@list.id"></td>
-                                <td>@list.name<br><a class = "uk-button ui-red ui-text-white u" onclick="deleteAccount(@list.id)">Delete</a></td>
+                                <td>@list.name<br></td>
                                 <td>@list.lastname</td>
                                 @if(list.team == null){
                                     <td>NULL</td>
                                 }else {
                                     <td>@list.team.name</td>
                                 }
+                                <td><a class = "uk-width-1-1 uk-button ui-red ui-text-white u" onclick="deleteAccount(@list.id)">Delete</a></td>
 
                             </tr>
                         }

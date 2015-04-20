@@ -20,7 +20,8 @@ public class Setting extends Model{
     public final static long CREATE_TEAM = 7;
     public final static long CREATE_ACCOUNT = 8;
     public final static long RATING_RESULT = 9;
-
+    public final static long VOTE =10;
+    public final static long VOTE_RESULT =11;
     @Id
     public Long id;
 

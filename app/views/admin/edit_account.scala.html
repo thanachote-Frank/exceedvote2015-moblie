@@ -1,4 +1,4 @@
-@(lists: List[Account])
+@(lists: List[Account])(teams: List[Team])(types: List[UserType])
 @main("Account")(css) {
 
     <div class="uk-grid uk-margin-large-top uk-margin-bottom">
@@ -24,11 +24,17 @@
 
                     <table class="uk-table uk-table-striped uk-table-hover">
                         <col width="50px">
+                        <col>
+                        <col>
+                        <col>
+                        <col width="180px">
                         <thead>
                             <tr>
                                 <th>No.</th>
                                 <th>Name</th>
                                 <th>Lastname</th>
+                                <th>Team</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="table">
@@ -40,29 +46,52 @@
                                         <div class="uk-form-row">
                                             <div id="name_@list.id">@list.name</div>
                                             <div id='info_@list.id' style="display: none;">
-                                                <label class="uk-form-label uk-margin-top">Password</label>
+                                                <label class="uk-form-label uk-margin-top">Email</label>
                                                 <div class="uk-form-controls">
-                                                    <input id='password_@list.id' type="text" value="@list.password" placeholder="URL">
+                                                    <input id='email_@list.id' type="text" value="@list.email" placeholder="URL">
                                                 </div>
-                                                @defining(Screenshot.getURL(list.id)){images=>
-                                                    <script>
-                                                    var i = 0;
-                                                        @images.map { image =>
-                                                        $('#img'+ ++i +'_@list.id').val('@image.url');
-                                                        }
-                                                    </script>
-                                                }
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div id="lastname_@list.id">@list.lastname</div>
+                                    <div id='info2_@list.id' style="display: none;">
+                                        <label class="uk-form-label uk-margin-top">Password</label>
+                                        <div class="uk-form-controls">
+                                            <input id='password_@list.id' type="text" value="@list.password" placeholder="URL">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                @if(list.team == null){
+                                    <div id="team_@list.id">NULL</div>
+                                }else {
+                                    <div id="team_@list.id">@list.team.name</div>
+                                }
+                                <div id='user_type_@list.id' style="display : none ;">
+                                    <label class="uk-form-label uk-margin-top">User Type</label>
+                                    <div class="uk-form-controls">
+                                        <select>
+                                            @types.map { type1=>
+                                                <option>@type1.name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <script>
+                                        $('#user_type_' + @list.id+' div select').val("@list.getType.name");
+
+                                    </script>
+
+                                </div>
+
+
+
                                 </td>
                                 <td style="text-align: right">
-                                    <a id="edit_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.id)">Edit</a>
-                                    <a id="save_@list.id" class = "uk-button ui-eucalyptus ui-text-white" onclick="save(@list.id)" style="display: none">Save</a>
-                                    <a id="cancel_@list.id" class = "uk-button ui-darkorange ui-text-white" onclick="cancel(@list.id)" style="display: none">Cancel</a>
+                                    <a id="edit_@list.id" class = "uk-width-4-10 uk-button ui-eucalyptus ui-text-white" onclick="edit(@list.id)">Edit</a>
+                                    <a id="save_@list.id" class = "uk-width-4-10 uk-button ui-eucalyptus ui-text-white" onclick="save(@list.id)" style="display: none">Save</a>
+                                    <a id="cancel_@list.id" class = "uk-width-4-10 uk-button ui-darkorange ui-text-white" onclick="cancel(@list.id)" style="display: none">Cancel</a>
                                 </td>
                             </tr>
                         }
@@ -85,13 +114,33 @@
     temp += '<input type="text" value="'+ $('#name_'+id).text() +'">';
     temp += '</div>';
     $('#name_'+id).html(temp);
+
     var temp = '<label class="uk-form-label">Lastname</label>';
     temp += '<div class="uk-form-controls">';
     temp += '<input type="text" value="'+ $('#lastname_'+id).text() +'">';
     temp += '</div>';
     $('#lastname_'+id).html(temp);
 
+    var temp = '<label class="uk-form-label">Team</label>';
+    temp += '<div class="uk-form-controls">';
+    temp += '<select>';
+    temp += '<option>NULL</option>';
+    @teams.map { team=>
+        temp += '<option>@team.name</option>';
+    }
+    temp += '</select>';
+    temp += '</div>';
+    $('#team_'+id).html(temp);
+
+    var value = $('#team_'+id).text();
+    if (value == null){
+        $('#team_'+id+' select').val("NULL");
+    }
+
+
     $('#info_'+id).show();
+    $('#user_type_'+id).show();
+    $('#info2_'+id).show();
     $('#save_'+id).show();
     $('#cancel_'+id).show();
     $('#edit_'+id).hide();
@@ -100,7 +149,10 @@
     function cancel(id){
     $('#name_'+id).html($('#name_'+id+' input').val());
     $('#lastname_'+id).html($('#lastname_'+id+' input').val());
+    $('#team_'+id).html($('#team_'+id+' select option:selected').val());
+    $('#user_type_'+id).hide();
     $('#info_'+id).hide();
+    $('#info2_'+id).hide();
     $('#save_'+id).hide();
     $('#cancel_'+id).hide();
     $('#edit_'+id).show();
@@ -112,6 +164,9 @@
     data["name"] =  $('#name_'+id+' input').val();
     data["lastname"] = $('#lastname_'+id+' input').val();
     data["password"] = $('#password_'+id).val();
+    data["team"] = $('#team_'+id+' select option:selected').val();
+    data["email"] = $('#email_'+id).val();
+    data["userType"] = $('#user_type_'+id+' div select option:selected').val();
     $.post("@controllers.admin.routes.Account.edit()",data).done(function(data){
     UIkit.notify(data.text, {status : data.type , timeout : 5000});
     if (data.type == 'success'){

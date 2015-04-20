@@ -14,6 +14,12 @@ create table account (
   constraint pk_account primary key (id))
 ;
 
+create table catalog (
+  id                        bigint not null,
+  name                      varchar(255),
+  constraint pk_catalog primary key (id))
+;
+
 create table criteria (
   id                        bigint not null,
   name                      varchar(255),
@@ -64,7 +70,17 @@ create table user_type (
   constraint pk_user_type primary key (id))
 ;
 
+create table vote (
+  id                        bigint not null,
+  account_id                bigint,
+  catalog_id                bigint,
+  team_id                   bigint,
+  constraint pk_vote primary key (id))
+;
+
 create sequence account_seq;
+
+create sequence catalog_seq;
 
 create sequence criteria_seq;
 
@@ -80,6 +96,8 @@ create sequence time_out_seq;
 
 create sequence user_type_seq;
 
+create sequence vote_seq;
+
 alter table account add constraint fk_account_type_1 foreign key (type_id) references user_type (id);
 create index ix_account_type_1 on account (type_id);
 alter table account add constraint fk_account_team_2 foreign key (team_id) references team (id);
@@ -92,12 +110,20 @@ alter table rating add constraint fk_rating_team_5 foreign key (team_id) referen
 create index ix_rating_team_5 on rating (team_id);
 alter table screenshot add constraint fk_screenshot_team_6 foreign key (team_id) references team (id);
 create index ix_screenshot_team_6 on screenshot (team_id);
+alter table vote add constraint fk_vote_account_7 foreign key (account_id) references account (id);
+create index ix_vote_account_7 on vote (account_id);
+alter table vote add constraint fk_vote_catalog_8 foreign key (catalog_id) references catalog (id);
+create index ix_vote_catalog_8 on vote (catalog_id);
+alter table vote add constraint fk_vote_team_9 foreign key (team_id) references team (id);
+create index ix_vote_team_9 on vote (team_id);
 
 
 
 # --- !Downs
 
 drop table if exists account cascade;
+
+drop table if exists catalog cascade;
 
 drop table if exists criteria cascade;
 
@@ -113,7 +139,11 @@ drop table if exists time_out cascade;
 
 drop table if exists user_type cascade;
 
+drop table if exists vote cascade;
+
 drop sequence if exists account_seq;
+
+drop sequence if exists catalog_seq;
 
 drop sequence if exists criteria_seq;
 
@@ -128,4 +158,6 @@ drop sequence if exists team_seq;
 drop sequence if exists time_out_seq;
 
 drop sequence if exists user_type_seq;
+
+drop sequence if exists vote_seq;
 

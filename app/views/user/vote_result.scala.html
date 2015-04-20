@@ -1,0 +1,64 @@
+@(list: List[Stuff[Catalog,Team,Integer]])
+
+@main("Group List")(css) {
+    <div class="uk-grid uk-text-center uk-grid-collapse">
+        <div class="uk-panel uk-width-1-6">
+            <a href="@controllers.user.routes.Team.teamList()" class="uk-button uk-icon-arrow-left uk-margin-small-bottom ui-text-white ui-button ui-redpink" style="width:100%; padding: 18px; border-width: 0; height: 100%"></a>
+        </div>
+        <div class="uk-width-5-6">
+            <div class="uk-panel uk-panel-box ui-yellow ui-text-white" style="border-width: 0;">
+                <b>Rating Result</b>
+            </div>
+        </div>
+    </div>
+
+    @list.map { stuff =>
+
+        <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+            <div class="uk-width-9-10 uk-container-center">
+                <div class="panel panel-default border-zero-width" >
+                    <div class="panel-heading border-zero-width" style="background-color : #2980b9">
+                        <h3 class="panel-title ui-text-white"><b>@stuff.getType().name</b></h3>
+                    </div>
+                    <div class="panel-body border-zero-width" style="background-color : #3498db">
+                        <div style="background: #ebebeb;width: 100%;">
+                            <table  class="uk-table uk-table-hover uk-table-striped" style="border-color: rgba ( 131, 131, 131, 0.27 ) ;">
+                                <col width="50px">
+                                <col>
+                                <col>
+                                <col>
+                                <thead style="color:#ffffff;background-color : #318aca">
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Team</th>
+                                        <th>Score</th>
+                                    </tr>
+                                </thead>
+                                <script>
+                                var i=0;
+                                </script>
+                                <tbody class = "content">
+
+                                @stuff.getRank().map { nameList =>
+                                    <tr>
+                                        <td id="@stuff.getType().Id-@nameList.getKey.id"> </td>
+                                        <td>@nameList.getKey.name</td>
+                                        <td>@BigDecimal(nameList.getValue).setScale(2,BigDecimal.RoundingMode.HALF_UP)</td>
+                                    </tr>
+                                    <script>
+                                    $("#@stuff.getType().Id-@nameList.getKey.id" ).text(++i);
+                                    </script>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}
+@css = {
+
+}
