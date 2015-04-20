@@ -26,11 +26,18 @@ public class Rating extends Model {
 
     public Integer rating;
 
-    public Rating(Account acc,Criteria crit,Integer rating,Team team){
+    public Rating(Account acc,Criteria crit,Integer rating,Team team) throws Exception {
         this.account=acc;
         this.criteria=crit;
-        this.rating=rating;
         this.team = team;
+
+        if( 0 >= rating && rating <= 5){
+            this.rating=rating;
+        }
+        else{
+            throw new Exception("Rating is out of range.");
+        }
+
     }
 
     public static Finder<Long, Rating> find =
@@ -78,5 +85,8 @@ public class Rating extends Model {
 
     public static List<Rating> findByAccountAndTeam(Account account, Team team){
         return Rating.find.where().eq("account", account).eq("team", team).findList();
+    }
+    public static List<Rating> getRateList(Team team){
+        return Rating.find.where().eq("team",team).findList();
     }
 }

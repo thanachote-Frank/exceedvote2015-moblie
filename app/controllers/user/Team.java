@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import forms.*;
 import models.*;
 import models.Account;
+import org.pegdown.PegDownProcessor;
 import play.Logger;
 import play.core.Router;
 import play.data.Form;
@@ -12,12 +13,18 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import play.twirl.api.Html;
 import views.html.user.create_team;
 import views.html.user.edit_description;
 import views.html.user.team;
 import views.html.user.team_list;
 import play.data.*;
 import play.mvc.*;
+
+import javax.swing.text.html.HTML;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLWriter;
+import javax.xml.ws.spi.http.HttpContext;
 
 /**
  * Created by thanachote on 14/4/2558.
@@ -68,7 +75,7 @@ public class Team extends Controller{
                 return ok(edit_description.render(Form.form(EditDescription.class), team.name,
                         Setting.find.byId(Setting.UPLOAD_LOGO).isActivated,
                         Setting.find.byId(Setting.UPLOAD_SCREENSHOT).isActivated,
-                        models.Team.findTeam(session("email"))));
+                        team));
             } else if (request().method().equals("POST")) {
                 Form<EditDescription> form = Form.form(EditDescription.class).bindFromRequest();
                 if (form.hasErrors()) {
@@ -80,7 +87,14 @@ public class Team extends Controller{
                 } else {
                     Logger.error(session("email") + " SUBMIT VALUE TO EDIT DESCRIPTION PAGE: SUCCESS");
                     models.Team team = models.Team.findTeam(session("email"));
-                    team.setDescription(form.get().content);
+                    try {
+                        team.setDescription(form.get().content);
+                    }catch (Exception e){
+                        ObjectNode result = Json.newObject();
+                        result.put("type", "danger");
+                        result.put("text", "Fail");
+                        return ok(result);
+                    }
                     ObjectNode result = Json.newObject();
                     result.put("type", "success");
                     result.put("text", "Saved");
@@ -95,7 +109,10 @@ public class Team extends Controller{
     public static Result team(Long teamID) {
         if (Setting.find.byId(Setting.TEAM_DESCRIPTION).isActivated) {
             Logger.error(session("email") + " ACCESS TO EDIT DESCRIPTION PAGE OF TEAM_ID="+ teamID);
-            return ok(team.render(models.Team.getDescription(teamID), models.Team.getAllMember(teamID), Screenshot.getURL(teamID), Setting.find.byId(Setting.RATING).isActivated));
+            models.Team team1 = models.Team.find.byId(teamID);
+            String[] description = team1.description.split("\r\n");
+            return ok(team.render(team1, models.Team.getSortedAllMember(teamID), Screenshot.getURL(teamID),
+                    Setting.find.byId(Setting.RATING).isActivated, description));
         }
         return badRequest("Disable this function by admin");
     }
