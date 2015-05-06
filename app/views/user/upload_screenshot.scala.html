@@ -1,6 +1,16 @@
 @(form: Form[forms.UploadLogo])(name: String)
 @main("Upload team screenshot")(css) {
     <form id="data" method='POST' enctype='multipart/form-data'>
+        <div class="uk-grid uk-text-center uk-grid-collapse">
+            <div class="uk-panel uk-width-1-6">
+                <a href="@controllers.user.routes.Team.editDescription()" class="uk-button uk-icon-arrow-left ui-text-white ui-button ui-redpink" style="width:100%; padding: 18px; border-width: 0; height : 55px; font-size: large;"></a>
+            </div>
+            <div class="uk-width-5-6">
+                <div class="uk-panel uk-panel-box ui-yellow ui-text-white" style="border-width: 0; font-size: large; height : 55px;">
+                    <b>Upload Screenshot</b>
+                </div>
+            </div>
+        </div>
 
         <div class="uk-grid uk-grid-small uk-margin-large-top" data-uk-grid-margin>
             <div class="uk-width-9-10 uk-container-center">
@@ -42,11 +52,6 @@
             </div>
         </div>
 
-        <div class="uk-grid uk-grid-small uk-margin-top" data-uk-grid-margin>
-            <div class="uk-width-9-10 uk-container-center">
-                <a class="uk-button uk-button-large uk-width-1-1" href="@controllers.user.routes.Team.editDescription()">Back</a>
-            </div>
-        </div>
     </form>
 
     <script>
