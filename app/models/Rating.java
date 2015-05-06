@@ -31,6 +31,10 @@ public class Rating extends Model {
         this.criteria=crit;
         this.team = team;
 
+        if(team == null){
+            throw new NullPointerException("Team is null");
+        }
+
         if( 0 <= rating && rating <= 5){
             this.rating=rating;
         }

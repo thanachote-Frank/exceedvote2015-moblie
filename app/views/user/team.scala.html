@@ -80,6 +80,8 @@
         }
         $('#description').html(marked(temp));
         $('#description').children().css("color","white");
+        $('#description').children().css("overflow","hidden");
+        $('#description').children().css("text-overflow","ellipsis");
         $('#description table').css("color","black");
         $('#description table').css("background","white");
         $('#description table').addClass("uk-table uk-table-hover uk-table-striped");
