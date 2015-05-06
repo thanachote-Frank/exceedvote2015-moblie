@@ -76,16 +76,18 @@
         }
         var temp = "";
         @description.map{ text=>
-            temp += "@text\n";
+            temp += "@Html(text)\n";
         }
         $('#description').html(marked(temp));
         $('#description').children().css("color","white");
-        $('#description').children().css("overflow","hidden");
-        $('#description').children().css("text-overflow","ellipsis");
-        $('#description table').css("color","black");
+        $('#description').find('*').css("overflow","hidden");
+        $('#description').find('*').css("text-overflow","ellipsis");
+        $('#description blockquote').css("color","black");
+        $('#description blockquote').css("border-color","white");
+        $('#description table').children().css("color","black");
         $('#description table').css("background","white");
         $('#description table').addClass("uk-table uk-table-hover uk-table-striped");
-        $('#description table thead').addClass("ui-text-white");
+        $('#description table thead th').addClass("ui-text-white");
         $('#description table thead').css("background","#16A085");
 
     </script>

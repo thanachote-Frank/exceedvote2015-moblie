@@ -21,7 +21,7 @@ import views.html.admin.list_criteria;
  */
 public class Criteria extends Controller{
     @Security.Authenticated(Secured.class)
-    public static Result addCriteria(){
+    public static synchronized Result addCriteria(){
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
             Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
@@ -62,7 +62,7 @@ public class Criteria extends Controller{
         return badRequest();
     }
     @Security.Authenticated(Secured.class)
-    public static Result deleteCriteria(){
+    public static synchronized Result deleteCriteria(){
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
             Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
@@ -111,7 +111,7 @@ public class Criteria extends Controller{
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result edit(){
+    public static synchronized Result edit(){
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
             Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());

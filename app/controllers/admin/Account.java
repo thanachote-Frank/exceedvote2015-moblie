@@ -42,7 +42,7 @@ public class Account extends Controller{
         return badRequest();
     }
     @Security.Authenticated(Secured.class)
-    public static Result deleteAccount(){
+    public static synchronized Result deleteAccount(){
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
             Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
@@ -71,7 +71,7 @@ public class Account extends Controller{
         return badRequest();
     }
     @Security.Authenticated(Secured.class)
-    public static Result edit() {
+    public static synchronized Result edit() {
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
             Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
@@ -137,7 +137,7 @@ public class Account extends Controller{
 
     }
     @Security.Authenticated(Secured.class)
-    public static Result addAccount(){
+    public static synchronized Result addAccount(){
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
             Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());

@@ -15,7 +15,7 @@ import views.html.admin.setting;
  */
 public class Setting extends Controller{
     @Security.Authenticated(Secured.class)
-    public static Result setting(){
+    public static synchronized Result setting(){
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
             Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
