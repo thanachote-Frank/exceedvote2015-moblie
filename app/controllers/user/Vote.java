@@ -23,7 +23,7 @@ public class Vote extends Controller{
     public static synchronized Result vote(){
         if (Setting.find.byId(Setting.VOTE).isActivated) {
             if (request().method().equals("GET")) {
-                return ok(vote.render(Catalog.getAllAndOrder(), models.Team.getAllAndOrder()));
+                return ok(vote.render(Catalog.getAllAndOrder(), models.Team.getAllAndOrder(), models.Vote.findByAccount(Account.findEmail(session().get("email")))));
             } else if (request().method().equals("POST")) {
                 List<Catalog> catalogs = Catalog.getAll();
                 List<models.Team> teams = new LinkedList<>();

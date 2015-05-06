@@ -1,4 +1,4 @@
-@(catalogs: List[Catalog])(teams: List[Team])
+@(catalogs: List[Catalog])(teams: List[Team])(votes: List[Vote])
 
 @main("Vote")(css) {
     <div class="uk-grid uk-text-center uk-grid-collapse">
@@ -24,8 +24,8 @@
                             <legend>@catalog.name</legend>
                             @teams.map { team=>
                                 <p class="uk-margin-left">
-                                    <input class="with-gap" name="catalog_@catalog.Id" type="radio" id="catalog_@catalog.Id @team.id" value="@team.id" />
-                                    <label for="catalog_@catalog.Id @team.id" style="color : black ;">@team.name</label>
+                                    <input class="with-gap" name="catalog_@catalog.Id" type="radio" id="catalog_@catalog.Id-@team.id" value="@team.id" />
+                                    <label for="catalog_@catalog.Id-@team.id" style="color : black ;">@team.name</label>
                                 </p>
                             }
                             <p class="uk-margin-left">
@@ -64,6 +64,14 @@
             });
 
         });
+        @votes.map{ vote=>
+            @if(vote.team == null){
+            $("#catalog_@vote.catalog.Id").prop( "checked", true );
+            }else{
+            $("#catalog_@vote.catalog.Id-@vote.team.id").prop( "checked", true );
+            }
+        }
+
     </script>
 }
 

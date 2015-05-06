@@ -35,7 +35,13 @@
         <div class="uk-grid uk-margin-small-top">
             <div class="uk-panel uk-width-1-1">
                 <a id='link_vote' href="@controllers.user.routes.Vote.vote()" class="uk-button uk-width-1-1 uk-icon-thumbs-o-up uk-margin-small-bottom ui-text-white ui-button ui-dodgerblue" style="font-size: 500%; padding: 20px;">
-                    <div id='text_vote' class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">Vote</div>
+                    <div id='text_vote' class="uk-text-bottom" style="color: #ffffff; font-size: 30%; font-family: 'Signika', sans-serif;">
+                        @if(models.Vote.findByAccount(Account.findEmail(message)) == null) {
+                            Vote
+                        }else{
+                            Edit Vote
+                        }
+                    </div>
                 </a>
             </div>
         </div>
