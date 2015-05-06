@@ -18,3 +18,5 @@ libraryDependencies ++= Seq(
 )
 
 javaOptions += "-XX:MaxMetaspaceSize=2g"
+
+javaOptions += "-Xmx512m"
