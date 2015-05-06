@@ -11,6 +11,7 @@ libraryDependencies ++= Seq(
   javaEbean,
   cache,
   javaWs,
-  javaOptions += "-Xmx512m",
   "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
 )
+
+javaOptions += "-XX:MaxMetaspaceSize=512m"
