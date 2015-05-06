@@ -33,7 +33,7 @@ public class Team extends Controller{
         return badRequest();
     }
     @Security.Authenticated(Secured.class)
-    public static Result deleteTeam(){
+    public static synchronized Result deleteTeam(){
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
             Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
@@ -63,7 +63,7 @@ public class Team extends Controller{
         return badRequest();
     }
     @Security.Authenticated(Secured.class)
-    public static Result addTeam() {
+    public static synchronized Result addTeam() {
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
             Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
@@ -91,7 +91,7 @@ public class Team extends Controller{
         return badRequest();
     }
     @Security.Authenticated(Secured.class)
-    public static Result edit() {
+    public static synchronized Result edit() {
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
             Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());

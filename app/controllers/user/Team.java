@@ -29,7 +29,7 @@ import javax.xml.ws.spi.http.HttpContext;
  * Created by thanachote on 14/4/2558.
  */
 public class Team extends Controller{
-    public static Result createTeam() {
+    public static synchronized Result createTeam() {
         if (Setting.find.byId(Setting.CREATE_TEAM).isActivated){
             if (request().method().equals("GET")) {
                 Logger.info("ACCESS TO CREATE TEAM PAGE");
@@ -62,7 +62,7 @@ public class Team extends Controller{
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result editDescription() {
+    public static synchronized Result editDescription() {
         if (Setting.find.byId(Setting.EDIT_DESCRIPTION).isActivated) {
             if (request().method().equals("GET")) {
                 models.Team team = models.Team.findTeam(session("email"));
@@ -105,7 +105,7 @@ public class Team extends Controller{
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result team(Long teamID) {
+    public static synchronized Result team(Long teamID) {
         if (Setting.find.byId(Setting.TEAM_DESCRIPTION).isActivated) {
             Logger.error(session("email") + " ACCESS TO EDIT DESCRIPTION PAGE OF TEAM_ID="+ teamID);
             models.Team team1 = models.Team.find.byId(teamID);

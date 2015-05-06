@@ -14,7 +14,7 @@ import views.html.admin.list_criteria;
  */
 public class UserType extends Controller{
     @Security.Authenticated(Secured.class)
-    public static Result edit(){
+    public static synchronized Result edit(){
         if(!models.Account.findEmail(session().get("email")).type.equals(models.UserType.findType("Admin"))){
             Logger.error(session("email") + " TRY TO BE ADMIN");
             return redirect(controllers.user.routes.Menu.mainMenu());
