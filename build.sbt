@@ -17,4 +17,4 @@ libraryDependencies ++= Seq(
   "org.mindrot" % "jbcrypt" % "0.3m"
 )
 
-javaOptions += "-XX:MaxMetaspaceSize=512m"
+javaOptions += "-XX:MaxMetaspaceSize=2g"
