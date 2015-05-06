@@ -52,7 +52,7 @@ create table setting (
 create table team (
   id                        bigint not null,
   name                      varchar(255),
-  description               varchar(255),
+  description               TEXT,
   logo                      varchar(255),
   constraint pk_team primary key (id))
 ;
