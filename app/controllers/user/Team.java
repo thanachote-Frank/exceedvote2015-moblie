@@ -109,7 +109,7 @@ public class Team extends Controller{
         if (Setting.find.byId(Setting.TEAM_DESCRIPTION).isActivated) {
             Logger.error(session("email") + " ACCESS TO EDIT DESCRIPTION PAGE OF TEAM_ID="+ teamID);
             models.Team team1 = models.Team.find.byId(teamID);
-            String[] description = team1.description.split("\r\n");
+            String[] description = team1.description.replaceAll("\\r", "").split("\n");
             return ok(team.render(team1, models.Team.getSortedAllMember(teamID), Screenshot.getURL(teamID),
                     Setting.find.byId(Setting.RATING).isActivated, description));
         }
