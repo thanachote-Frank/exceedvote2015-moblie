@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 import javax.persistence.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * Created by Frank on 2/25/15 AD.
@@ -39,7 +40,7 @@ public class Account extends Model {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
-        this.password = password;
+        this.password = BCrypt.hashpw(password,BCrypt.gensalt());
         this.team = team;
         this.type = type;
     }
@@ -73,7 +74,11 @@ public class Account extends Model {
 
     public static Account authenticate(
             String email, String password) {
-        return Account.find.where().eq("email", email).eq("password", password).findUnique();
+        Account account =  Account.find.where().eq("email", email).findUnique();
+        if (BCrypt.checkpw(password, account.password)){
+            return  account;
+        }
+        return null;
     }
 
     public static Account findEmail(String email) {
@@ -96,7 +101,7 @@ public class Account extends Model {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = BCrypt.hashpw(password,BCrypt.gensalt());
     }
 
     public UserType getType() {

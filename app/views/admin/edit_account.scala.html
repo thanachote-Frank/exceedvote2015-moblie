@@ -59,7 +59,7 @@
                                     <div id='info2_@list.id' style="display: none;">
                                         <label class="uk-form-label uk-margin-top">Password</label>
                                         <div class="uk-form-controls">
-                                            <input id='password_@list.id' type="text" value="@list.password" placeholder="URL">
+                                            <input id='password_@list.id' type="text" placeholder="Type new password">
                                         </div>
                                     </div>
                                 </td>
@@ -121,6 +121,7 @@
     temp += '</div>';
     $('#lastname_'+id).html(temp);
 
+    var value = $('#team_'+id).text();
     var temp = '<label class="uk-form-label">Team</label>';
     temp += '<div class="uk-form-controls">';
     temp += '<select>';
@@ -132,9 +133,12 @@
     temp += '</div>';
     $('#team_'+id).html(temp);
 
-    var value = $('#team_'+id).text();
+
     if (value == null){
         $('#team_'+id+' select').val("NULL");
+    }
+    else{
+        $('#team_'+id+' select').val(value);
     }
 
 

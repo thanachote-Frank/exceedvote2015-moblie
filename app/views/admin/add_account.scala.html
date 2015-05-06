@@ -21,10 +21,10 @@
 
                     <form id="form" action="@controllers.admin.routes.Account.addAccount()" method="post" class="uk-form uk-margin-top">
                         <fieldset data-uk-margin>
-                            <input name="email" type="username" placeholder="username" class="uk-width-1-1" value="@form.data.get("email")">
+                            <input name="email" type="text" placeholder="username" class="uk-width-1-1" value="@form.data.get("email")">
 
 
-                            <input name="password" type="password" placeholder="password" class="uk-width-1-1">
+                            <input name="password" type="password" placeholder="password" class="uk-width-1-    1">
                             <input name="repassword" type="password" placeholder="re-password" class="uk-width-1-1">
 
                             <input name="name" type="text" placeholder="name" class="uk-width-1-1" value="@form.data.get("name")">
