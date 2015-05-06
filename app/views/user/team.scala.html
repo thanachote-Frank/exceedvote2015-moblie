@@ -79,15 +79,15 @@
             temp += "@Html(text)\n";
         }
         $('#description').html(marked(temp));
-        $('#description').css("color","white");
+        $('#description').children().css("color","white");
         $('#description').find('*').css("overflow","hidden");
         $('#description').find('*').css("text-overflow","ellipsis");
         $('#description blockquote').css("color","black");
         $('#description blockquote').css("border-color","white");
-        $('#description table').find('*').css("color","black");
+        $('#description table').children().css("color","black");
         $('#description table').css("background","white");
         $('#description table').addClass("uk-table uk-table-hover uk-table-striped");
-        $('#description table thead').addClass("ui-text-white");
+        $('#description table thead th').addClass("ui-text-white");
         $('#description table thead').css("background","#16A085");
 
     </script>
