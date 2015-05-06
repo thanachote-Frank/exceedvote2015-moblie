@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class Upload extends Controller{
     @Security.Authenticated(Secured.class)
-    public static Result uploadLogo() {
+    public static synchronized Result uploadLogo() {
         if (Setting.find.byId(Setting.UPLOAD_LOGO).isActivated) {
             if (request().method().equals("GET")) {
                 Logger.info(session("email") + " ACCESS TO UPLOAD LOGO PAGE");
@@ -49,7 +49,7 @@ public class Upload extends Controller{
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result uploadScreenshot() {
+    public static synchronized Result uploadScreenshot() {
         if (Setting.find.byId(Setting.UPLOAD_SCREENSHOT).isActivated) {
             if (request().method().equals("GET")) {
                 Logger.info(session("email") + " ACCESS TO UPLOAD SCREENSHOT PAGE");
@@ -78,7 +78,7 @@ public class Upload extends Controller{
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result deleteAllScreenshot(){
+    public static synchronized Result deleteAllScreenshot(){
         if (Setting.find.byId(Setting.UPLOAD_SCREENSHOT).isActivated) {
             if (request().method().equals("POST")) {
                 try {

@@ -20,7 +20,7 @@ import java.util.*;
 public class Vote extends Controller{
 
     @Security.Authenticated(Secured.class)
-    public static Result vote(){
+    public static synchronized Result vote(){
         if (Setting.find.byId(Setting.VOTE).isActivated) {
             if (request().method().equals("GET")) {
                 return ok(vote.render(Catalog.getAllAndOrder(), models.Team.getAllAndOrder()));

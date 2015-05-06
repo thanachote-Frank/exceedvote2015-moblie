@@ -18,7 +18,7 @@ import views.html.user.register;
 public class Account extends Controller {
 
 
-    public static Result login() {
+    public static synchronized Result login() {
         if (request().method().equals("GET")) {
             if (!controllers.admin.Setup.checkSystem()) {
                 Logger.error("NOT ALLOW ACCESS TO LOGIN PAGE");
@@ -48,7 +48,7 @@ public class Account extends Controller {
         return badRequest();
     }
 
-    public static Result regis() {
+    public static synchronized Result regis() {
         if (Setting.find.byId(Setting.CREATE_ACCOUNT).isActivated) {
             if (request().method().equals("GET")) {
                 Logger.info("ACCESS TO REGISTER PAGE");

@@ -80,7 +80,7 @@ public class Rating extends Controller{
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result rating(String teamID ) {
+    public static synchronized Result rating(String teamID ) {
         Logger.info(session("email") + " ACCESS TO RATING PAGE OF TEAM_ID=" + teamID);
             return ok(rating.render(Criteria.getall(), teamID,getRatedScore(teamID)));
     }
@@ -105,7 +105,7 @@ public class Rating extends Controller{
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result ratingPost() {
+    public static synchronized Result ratingPost() {
         if (Setting.find.byId(Setting.RATING).isActivated) {
             if (request().method().equals("POST")) {
                 Team team = null;
