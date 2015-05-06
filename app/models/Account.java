@@ -75,10 +75,13 @@ public class Account extends Model {
     public static Account authenticate(
             String email, String password) {
         Account account =  Account.find.where().eq("email", email).findUnique();
+        if (account == null){
+            return null;
+        }
         if (BCrypt.checkpw(password, account.password)){
             return  account;
         }
-        return null;
+        return  null;
     }
 
     public static Account findEmail(String email) {

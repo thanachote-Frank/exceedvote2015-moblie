@@ -75,13 +75,13 @@
     done(function(data){
     UIkit.notify(data.text, {status : data.type , timeout : 5000});
     if (data.type == 'success'){
-    $('#email').val("");
-    $('#password').val("");
-    $('#repassword').val("");
-    $('#name').val("");
-    $('#lastname').val("");
-    $('#checker').val("");
-    $('#checker2').val("");
+    $('input[name="email"]').val("");
+    $('input[name="password"]').val("");
+    $('input[name="repassword"]').val("");
+    $('input[name="name"]').val("");
+    $('input[name="lastname"]').val("");
+    $('input[name="checker"]').val("");
+    $('input[name="checker2"]').val("");
     }
     });
     });
